@@ -61,7 +61,8 @@ export default function HomePage() {
       <FloatingMusicToggle />
       <RTXToggle />
       <main className="min-h-screen bg-[#030303] text-white selection:bg-[#00f0ff] selection:text-black">
-        <Navigation />
+        {/* Only show Navigation after loader completes */}
+        {!isLoading && <Navigation />}
         <HeroSection />
         <ProcessSection />
         <WorkSection />
