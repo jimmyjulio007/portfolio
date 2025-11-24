@@ -12,7 +12,7 @@ interface Scene3DProps {
 
 /**
  * 3D Scene wrapper with React Three Fiber
- * Optimized for performance with better camera distance
+ * Camera pulled back for better view of entire model
  */
 export function Scene3D({
     children,
@@ -22,7 +22,7 @@ export function Scene3D({
     return (
         <div className={`w-full h-full ${className}`}>
             <Canvas
-                camera={{ position: [0, 0, 8], fov: 50 }}
+                camera={{ position: [0, 0, 130], fov: 40 }}
                 gl={{
                     antialias: true,
                     powerPreference: "high-performance"

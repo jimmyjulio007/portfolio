@@ -17,10 +17,10 @@ function ComputerModel({ enableRTX }: { enableRTX: boolean }) {
     });
 
     return (
-        <group ref={groupRef} position={[0, -0.5, 0]} rotation={[0, -0.3, 0]}>
+        <group ref={groupRef} position={[0, -1, 0]} rotation={[0, -0.3, 0]}>
             <primitive
                 object={gltf.scene.clone()}
-                scale={2.2}
+                scale={0.8}
             />
         </group>
     );
