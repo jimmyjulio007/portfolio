@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useLocale } from "next-intl";
 import { gsap } from "gsap";
+import { Link } from "@/i18n/routing";
 
 // Cookie consent translations
 const COOKIE_TRANSLATIONS = {
@@ -213,12 +214,12 @@ export function CookieConsent() {
                         <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-900">
                             <p className="text-[10px] sm:text-xs text-gray-600 font-mono">
                                 <span className="text-[#ccff00]">→</span> {t.learnMore}{" "}
-                                <a
+                                <Link
                                     href="/privacy"
                                     className="text-[#00f0ff] hover:underline underline-offset-2"
                                 >
                                     {t.privacyPolicy}
-                                </a>
+                                </Link>
                             </p>
                         </div>
                     </div>
