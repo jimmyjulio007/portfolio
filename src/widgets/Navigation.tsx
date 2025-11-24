@@ -75,16 +75,16 @@ export function Navigation() {
                 className={cn(
                     "fixed top-0 left-0 right-0 z-[10001] transition-all duration-500 border-b border-transparent",
                     isScrolled
-                        ? "bg-black/80 backdrop-blur-md border-gray-800 py-4"
-                        : "bg-transparent py-6",
+                        ? "bg-black/80 backdrop-blur-md border-gray-800 py-3 md:py-4"
+                        : "bg-transparent py-4 md:py-6",
                 )}
             >
-                <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
                     <Magnetic strength={0.5}>
                         <Link
                             href="#home"
                             onClick={(e) => handleScrollTo(e, "#home")}
-                            className="text-2xl font-bold text-white tracking-tighter inline-block"
+                            className="text-lg sm:text-xl md:text-2xl font-bold text-white tracking-tighter inline-block"
                             style={{ fontFamily: "var(--font-family-grotesk)" }}
                         >
                             JIMMY<span className="text-[#00f0ff]">.JULIO</span>
@@ -112,25 +112,27 @@ export function Navigation() {
                         ))}
                     </ul>
 
-                    <div className="flex items-center gap-6">
+                    <div className="flex items-center gap-3 sm:gap-4 md:gap-6">
                         {/* Language Switcher */}
-                        <LanguageSwitcher />
+                        <div className="scale-90 sm:scale-100">
+                            <LanguageSwitcher />
+                        </div>
 
                         <Magnetic strength={0.5}>
                             <button
                                 type="button"
                                 onClick={toggleSound}
-                                className="text-gray-300 hover:text-[#00f0ff] transition-colors p-2"
+                                className="text-gray-300 hover:text-[#00f0ff] transition-colors p-1.5 sm:p-2"
                                 aria-label="Toggle sound"
                             >
                                 {soundEnabled ? (
-                                    <div className="flex gap-[2px] items-end h-4">
-                                        <span className="w-[2px] h-2 bg-current animate-pulse" />
-                                        <span className="w-[2px] h-4 bg-current animate-pulse delay-75" />
-                                        <span className="w-[2px] h-3 bg-current animate-pulse delay-150" />
+                                    <div className="flex gap-[2px] items-end h-3 sm:h-4">
+                                        <span className="w-[2px] h-1.5 sm:h-2 bg-current animate-pulse" />
+                                        <span className="w-[2px] h-3 sm:h-4 bg-current animate-pulse delay-75" />
+                                        <span className="w-[2px] h-2 sm:h-3 bg-current animate-pulse delay-150" />
                                     </div>
                                 ) : (
-                                    <div className="w-4 h-[2px] bg-current" />
+                                    <div className="w-3 sm:w-4 h-[2px] bg-current" />
                                 )}
                             </button>
                         </Magnetic>
@@ -150,13 +152,14 @@ export function Navigation() {
 
                         {/* Mobile Menu Toggle */}
                         <button
-                            className="md:hidden text-white p-2"
+                            className="md:hidden text-white p-1.5 sm:p-2"
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            aria-label="Toggle menu"
                         >
-                            <div className="space-y-1.5">
-                                <span className={`block w-6 h-0.5 bg-white transition-transform duration-300 ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
-                                <span className={`block w-6 h-0.5 bg-white transition-opacity duration-300 ${isMenuOpen ? "opacity-0" : ""}`} />
-                                <span className={`block w-6 h-0.5 bg-white transition-transform duration-300 ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+                            <div className="space-y-1 sm:space-y-1.5">
+                                <span className={`block w-5 sm:w-6 h-0.5 bg-white transition-transform duration-300 ${isMenuOpen ? "rotate-45 translate-y-1.5 sm:translate-y-2" : ""}`} />
+                                <span className={`block w-5 sm:w-6 h-0.5 bg-white transition-opacity duration-300 ${isMenuOpen ? "opacity-0" : ""}`} />
+                                <span className={`block w-5 sm:w-6 h-0.5 bg-white transition-transform duration-300 ${isMenuOpen ? "-rotate-45 -translate-y-1.5 sm:-translate-y-2" : ""}`} />
                             </div>
                         </button>
 
