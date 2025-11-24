@@ -3,17 +3,23 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 
-const TIPS = [
-    "Building neural pathways...",
-    "Compiling quantum algorithms...",
-    "Initializing AI protocols...",
-    "Loading digital consciousness...",
-    "Synchronizing experience layers...",
-];
+import { useTranslations } from 'next-intl';
 
 export function CinematicLoader({ onComplete }: { onComplete: () => void }) {
+    const t = useTranslations('Common');
+    const tAbout = useTranslations('About');
     const containerRef = useRef<HTMLDivElement>(null);
     const [progress, setProgress] = useState(0);
+    const currentYear = new Date().getFullYear();
+
+    const TIPS = [
+        t('loadingTip1'),
+        t('loadingTip2'),
+        t('loadingTip3'),
+        t('loadingTip4'),
+        t('loadingTip5'),
+    ];
+
     const [currentTip, setCurrentTip] = useState(TIPS[0]);
 
     useEffect(() => {
@@ -193,7 +199,7 @@ export function CinematicLoader({ onComplete }: { onComplete: () => void }) {
                 <div className="loader-subtitle flex items-center justify-center gap-4 mb-16">
                     <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-[#ccff00]" />
                     <p className="text-lg md:text-xl text-gray-400 font-light tracking-[0.2em] uppercase">
-                        Full Stack JS AI Developer
+                        {tAbout('role')}
                     </p>
                     <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-[#ccff00]" />
                 </div>
@@ -232,7 +238,7 @@ export function CinematicLoader({ onComplete }: { onComplete: () => void }) {
 
                 {/* Footer text */}
                 <p className="mt-12 text-xs text-gray-700 font-mono tracking-widest">
-                    ANTANANARIVO • MADAGASCAR • 2026
+                    ANTANANARIVO • MADAGASCAR • {currentYear}
                 </p>
             </div>
 

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { gsap } from "gsap";
+import { useTranslations } from 'next-intl';
 
 // Lazy load Scene3D for performance
 const Scene3D = dynamic(() => import("@/shared/ui/Scene3D").then((mod) => mod.Scene3D), {
@@ -16,6 +17,7 @@ import { Magnetic } from "@/shared/ui/Magnetic";
 import { ScrollLink } from "@/shared/ui/ScrollLink";
 
 export function HeroSection() {
+    const t = useTranslations('Hero');
     const containerRef = useRef<HTMLDivElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
     const subtitleRef = useRef<HTMLParagraphElement>(null);
@@ -99,7 +101,7 @@ export function HeroSection() {
                         </Scene3D>
                     </div>
                     <p className="text-center text-gray-500 text-xs font-mono mt-4">
-                        👆 Drag to rotate • RTX {rtxEnabled ? "ON" : "OFF"}
+                        {t('dragToRotate', { rtxStatus: rtxEnabled ? t('rtxOn') : t('rtxOff') })}
                     </p>
                 </div>
 
@@ -111,9 +113,9 @@ export function HeroSection() {
                             className="text-5xl md:text-6xl lg:text-7xl leading-tight font-bold tracking-tighter text-white font-migumono"
                         >
                             <div className="flex flex-col">
-                                <SplitText>ARCHITECTING</SplitText>
+                                <SplitText>{t('title_line1')}</SplitText>
                                 <span className="text-[#00f0ff]">
-                                    <SplitText>INTELLIGENCE</SplitText>
+                                    <SplitText>{t('title_line2')}</SplitText>
                                 </span>
                             </div>
                         </h1>
@@ -123,10 +125,10 @@ export function HeroSection() {
                         ref={subtitleRef}
                         className="text-xl md:text-2xl text-gray-300 max-w-2xl mb-12 font-light tracking-wide"
                     >
-                        Forging the next generation of autonomous agents and immersive digital realities.
+                        {t('subtitle')}
                         <br />
                         <span className="text-[#ccff00] font-mono text-sm mt-2 block">
-                            // 120 FPS NEURAL LINK ESTABLISHED
+                            {t('neuralLink')}
                         </span>
                     </p>
 
@@ -138,7 +140,7 @@ export function HeroSection() {
                                     className="bg-[#00f0ff] text-black hover:bg-white hover:scale-105 transition-all duration-300 font-bold tracking-widest"
                                     withSound={false}
                                 >
-                                    VIEW WORK
+                                    {t('viewWork')}
                                 </Button>
                             </ScrollLink>
                         </Magnetic>
@@ -150,7 +152,7 @@ export function HeroSection() {
                                     className="border border-[#ccff00] text-[#ccff00] hover:bg-[#ccff00] hover:text-black font-bold tracking-widest"
                                     withSound={false}
                                 >
-                                    CONTACT NETWORK
+                                    {t('contactNetwork')}
                                 </Button>
                             </ScrollLink>
                         </Magnetic>
@@ -160,13 +162,13 @@ export function HeroSection() {
                     <div ref={statsRef} className="mt-12">
                         <div className="glass-panel p-6 rounded-none border-l-4 border-[#00f0ff] inline-block">
                             <span className="block text-xs text-gray-400 uppercase tracking-widest mb-1">
-                                Location
+                                {t('location')}
                             </span>
                             <span className="text-xl font-bold text-white">
-                                Antananarivo, Tsiadana
+                                {t('locationName')}
                             </span>
                             <span className="text-xs text-[#00f0ff] font-mono mt-1 block">
-                                LAT: -18.8792 | LON: 47.5079
+                                {t('coordinates')}
                             </span>
                         </div>
                     </div>
@@ -175,7 +177,7 @@ export function HeroSection() {
 
             {/* Decorative Elements */}
             <div className="absolute bottom-10 left-6 text-xs text-gray-500 font-mono hidden lg:block">
-                SYSTEM: ONLINE // V3.0 // GPU_ACCELERATED
+                {t('systemStatus')}
             </div>
         </section>
     );

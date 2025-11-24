@@ -5,21 +5,9 @@ import { gsap } from "gsap";
 import { X } from "lucide-react";
 import { Magnetic } from "@/shared/ui/Magnetic";
 import { soundManager } from "@/shared/lib/sound-manager";
+import { useTranslations } from 'next-intl';
 
-const MENU_ITEMS = [
-    { label: "HOME", href: "#home", index: "01" },
-    { label: "PROCESS", href: "#process", index: "02" },
-    { label: "WORK", href: "#work", index: "03" },
-    { label: "PLAYGROUND", href: "#playground", index: "04" },
-    { label: "ABOUT", href: "#about", index: "05" },
-    { label: "CONTACT", href: "#contact", index: "06" },
-];
 
-const SOCIAL_LINKS = [
-    { label: "GitHub", href: "#" },
-    { label: "LinkedIn", href: "#" },
-    { label: "Twitter", href: "#" },
-];
 
 interface AwardMenuProps {
     isOpen: boolean;
@@ -27,9 +15,27 @@ interface AwardMenuProps {
 }
 
 export function AwardMenu({ isOpen, onClose }: AwardMenuProps) {
+    const t = useTranslations('Navigation');
+    const tContact = useTranslations('Contact');
     const menuRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
     const [isAnimating, setIsAnimating] = useState(false);
+    const currentYear = new Date().getFullYear();
+
+    const MENU_ITEMS = [
+        { label: "HOME", href: "#home", index: "01" },
+        { label: t('process'), href: "#process", index: "02" },
+        { label: t('work'), href: "#work", index: "03" },
+        { label: t('playground'), href: "#playground", index: "04" },
+        { label: t('about'), href: "#about", index: "05" },
+        { label: t('contact'), href: "#contact", index: "06" },
+    ];
+
+    const SOCIAL_LINKS = [
+        { label: tContact('socialGithub'), href: "#" },
+        { label: tContact('socialLinkedin'), href: "#" },
+        { label: tContact('socialTwitter'), href: "#" },
+    ];
 
     useEffect(() => {
         if (!menuRef.current || !overlayRef.current) return;
@@ -215,7 +221,7 @@ export function AwardMenu({ isOpen, onClose }: AwardMenuProps) {
                         </div>
 
                         <p className="text-gray-700 text-xs font-mono mt-8">
-                            © 2026 JIMMY JULIO
+                            © {currentYear} JIMMY JULIO
                             <br />
                             Antananarivo, Madagascar
                         </p>

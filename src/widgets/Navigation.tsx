@@ -9,6 +9,8 @@ import { soundManager } from "@/shared/lib/sound-manager";
 import { Magnetic } from "@/shared/ui/Magnetic";
 import { ScrollLink } from "@/shared/ui/ScrollLink";
 import { AwardMenu } from "@/widgets/AwardMenu";
+import { LanguageSwitcher } from "@/features/LanguageSwitcher";
+import { useTranslations } from 'next-intl';
 
 if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
@@ -22,11 +24,20 @@ const NAV_ITEMS = [
 ];
 
 export function Navigation() {
+    const t = useTranslations('Navigation');
     const navRef = useRef<HTMLElement>(null);
     const [isScrolled, setIsScrolled] = useState(false);
     const [soundEnabled, setSoundEnabled] = useState(true);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const NAV_ITEMS = [
+        { label: t('work'), href: "#work" },
+        { label: t('process'), href: "#process" },
+        { label: t('playground'), href: "#playground" },
+        { label: t('about'), href: "#about" },
+        { label: t('contact'), href: "#contact" },
+    ];
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -103,6 +114,9 @@ export function Navigation() {
                     </ul>
 
                     <div className="flex items-center gap-6">
+                        {/* Language Switcher */}
+                        <LanguageSwitcher />
+
                         <Magnetic strength={0.5}>
                             <button
                                 type="button"
@@ -130,7 +144,7 @@ export function Navigation() {
                                     className="hidden md:inline-flex bg-white text-black hover:bg-[#00f0ff] font-bold tracking-widest text-xs"
                                     withSound={false}
                                 >
-                                    LET'S TALK
+                                    {t('contact')}
                                 </Button>
                             </ScrollLink>
                         </Magnetic>

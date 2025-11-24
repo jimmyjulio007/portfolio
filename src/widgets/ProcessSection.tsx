@@ -3,41 +3,45 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTranslations } from 'next-intl';
 
 if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
 }
 
-const STEPS = [
-    {
-        id: "01",
-        title: "Discovery",
-        desc: "Unearthing the core essence of the brand through deep analysis and strategy.",
-        color: "#00f0ff",
-    },
-    {
-        id: "02",
-        title: "Architecture",
-        desc: "Structuring the digital landscape for optimal flow and user engagement.",
-        color: "#ccff00",
-    },
-    {
-        id: "03",
-        title: "Creation",
-        desc: "Forging the visual and interactive elements with precision code.",
-        color: "#ffffff",
-    },
-    {
-        id: "04",
-        title: "Evolution",
-        desc: "Refining and scaling the experience based on real-world data.",
-        color: "#00f0ff",
-    },
-];
+
 
 export function ProcessSection() {
+    const t = useTranslations('Process');
     const sectionRef = useRef<HTMLElement>(null);
     const cardsRef = useRef<HTMLDivElement>(null);
+
+    const STEPS = [
+        {
+            id: "01",
+            title: t('step1Title'),
+            desc: t('step1Description'),
+            color: "#00f0ff",
+        },
+        {
+            id: "02",
+            title: t('step2Title'),
+            desc: t('step2Description'),
+            color: "#ccff00",
+        },
+        {
+            id: "03",
+            title: t('step3Title'),
+            desc: t('step3Description'),
+            color: "#ffffff",
+        },
+        {
+            id: "04",
+            title: t('step4Title'),
+            desc: t('step4Description'),
+            color: "#00f0ff",
+        },
+    ];
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -70,10 +74,10 @@ export function ProcessSection() {
             <div className="max-w-7xl mx-auto px-6">
                 <div className="mb-20">
                     <span className="text-[#ccff00] font-mono text-sm tracking-widest uppercase">
-            // Methodology
+                        {t('sectionLabel')}
                     </span>
                     <h2 className="text-5xl md:text-7xl font-bold text-white mt-4 tracking-tighter">
-                        THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#ccff00]">ALGORITHM</span>
+                        {t('title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#ccff00]">{t('titleHighlight')}</span>
                     </h2>
                 </div>
 

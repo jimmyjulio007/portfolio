@@ -1,0 +1,117 @@
+{
+    "Navigation": {
+        "work": "作品",
+        "process": "流程",
+        "playground": "实验室",
+        "about": "关于",
+        "contact": "联系"
+    },
+    "Hero": {
+        "title_line1": "构建",
+        "title_line2": "智能",
+        "subtitle": "打造下一代自主代理和沉浸式数字现实。",
+        "neuralLink": "// 120 FPS 神经链接已建立",
+        "viewWork": "查看作品",
+        "contactNetwork": "联系网络",
+        "location": "位置",
+        "locationName": "塔那那利佛, Tsiadana",
+        "coordinates": "纬度: -18.8792 | 经度: 47.5079",
+        "dragToRotate": "👆 拖动旋转 • RTX {rtxStatus}",
+        "rtxOn": "开启",
+        "rtxOff": "关闭",
+        "systemStatus": "系统: 在线 // V3.0 // GPU加速"
+    },
+    "Process": {
+        "sectionLabel": "// 蓝图",
+        "title": "久经考验的",
+        "titleHighlight": "工作流",
+        "step1Title": "发现与策略",
+        "step1Description": "深入挖掘需求、用户痛点和技术限制。定义路线图。",
+        "step2Title": "架构与设计",
+        "step2Description": "设计兼具形式与功能的可扩展系统和惊艳视觉效果。",
+        "step3Title": "开发与优化",
+        "step3Description": "精准构建。为极致性能和用户愉悦感进行优化。",
+        "step4Title": "部署与演进",
+        "step4Description": "自信发布。监控、迭代并持续改进。"
+    },
+    "Work": {
+        "sectionLabel": "// 精选项目",
+        "title": "作品",
+        "titleHighlight": "展示",
+        "project1Title": "LANGCHAIN 代理",
+        "project1Description": "用于复杂任务执行的自主AI代理系统。",
+        "project1Tags": "TypeScript • LangChain.js • OpenAI",
+        "project2Title": "神经接口",
+        "project2Description": "用于监控AI模型性能的下一代仪表板。",
+        "project2Tags": "Next.js 15 • D3.js • Node.js",
+        "project3Title": "赛博电商",
+        "project3Description": "具有3D产品配置的无头电商平台。",
+        "project3Tags": "R3F • Shopify Headless • WebGL"
+    },
+    "Playground": {
+        "sectionLabel": "// 互动实验室",
+        "title": "实验",
+        "titleHighlight": "基地",
+        "description": "创意成真的地方。探索前沿实验和互动演示。",
+        "feature1": "WebGL 流体",
+        "feature2": "神经网络",
+        "feature3": "音频反应",
+        "feature4": "光线步进",
+        "comingSoon": "敬请期待"
+    },
+    "About": {
+        "sectionLabel": "// 架构师",
+        "title": "构建",
+        "titleHighlight": "未来",
+        "name": "JIMMY JULIO",
+        "role": "全栈AI架构师",
+        "paragraph1": "我是一名常驻<span>塔那那利佛, Tsiadana</span>的<strong>全栈JS & AI开发者</strong>。我的热情在于构建自主AI代理和沉浸式Web体验，不断拓展浏览器可能性的边界。",
+        "paragraph2": "专注于<strong>LangChain实现</strong>和现代JavaScript生态系统，我创造的系统不仅功能强大，而且智能且具有适应性。",
+        "softSkillsTitle": "软技能",
+        "softSkill1": "战略领导力",
+        "softSkill2": "复杂问题解决",
+        "softSkill3": "有效沟通",
+        "softSkill4": "敏捷方法论",
+        "softSkill5": "团队指导",
+        "technicalArsenal": "技术武库",
+        "techSkill1": "LangChain / AI代理",
+        "techSkill2": "JavaScript / TypeScript",
+        "techSkill3": "React / Next.js",
+        "techSkill4": "Node.js / Python",
+        "techSkill5": "WebGL / Three.js"
+    },
+    "Contact": {
+        "sectionLabel": "// 传输",
+        "title": "发起",
+        "titleHighlight": "联系",
+        "namePlaceholder": "姓名_ID",
+        "emailPlaceholder": "电子邮件地址",
+        "messagePlaceholder": "输入消息数据...",
+        "submitIdle": "发送传输",
+        "submitSending": "传输中...",
+        "submitSuccess": "传输已发送",
+        "submitError": "错误 - 重试",
+        "socialGithub": "GITHUB",
+        "socialLinkedin": "LINKEDIN",
+        "socialTwitter": "TWITTER",
+        "socialInstagram": "INSTAGRAM"
+    },
+    "Footer": {
+        "systemOnline": "系统在线。"
+    },
+    "Common": {
+        "loading": "加载中...",
+        "error": "发生错误",
+        "loadingTip1": "构建神经通路...",
+        "loadingTip2": "编译量子算法...",
+        "loadingTip3": "初始化AI协议...",
+        "loadingTip4": "加载数字意识...",
+        "loadingTip5": "同步体验层...",
+        "muteMusic": "静音背景音乐",
+        "playMusic": "播放背景音乐"
+    },
+    "Metadata": {
+        "title": "作品集 | 创意开发者",
+        "description": "以技术为导向的创意作品集，打造数字时代的体验"
+    }
+}

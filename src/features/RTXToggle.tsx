@@ -3,8 +3,10 @@
 import { useState } from "react";
 import { Zap, ZapOff } from "lucide-react";
 import { soundManager } from "@/shared/lib/sound-manager";
+import { useTranslations } from 'next-intl';
 
 export function RTXToggle() {
+    const t = useTranslations('Hero');
     const [rtxEnabled, setRTXEnabled] = useState(false);
 
     const toggleRTX = () => {
@@ -21,20 +23,20 @@ export function RTXToggle() {
         <button
             onClick={toggleRTX}
             className={`fixed bottom-24 right-6 z-50 px-4 py-3 rounded-lg font-mono text-xs tracking-widest transition-all duration-300 flex items-center gap-2 ${rtxEnabled
-                    ? "bg-gradient-to-r from-[#00f0ff] to-[#ccff00] text-black shadow-[0_0_20px_rgba(0,240,255,0.5)]"
-                    : "bg-gray-900 text-gray-400 border border-gray-700 hover:border-gray-500"
+                ? "bg-gradient-to-r from-[#00f0ff] to-[#ccff00] text-black shadow-[0_0_20px_rgba(0,240,255,0.5)]"
+                : "bg-gray-900 text-gray-400 border border-gray-700 hover:border-gray-500"
                 }`}
             aria-label="Toggle RTX Mode"
         >
             {rtxEnabled ? (
                 <>
                     <Zap className="w-4 h-4" />
-                    <span>RTX ON</span>
+                    <span>RTX {t('rtxOn')}</span>
                 </>
             ) : (
                 <>
                     <ZapOff className="w-4 h-4" />
-                    <span>RTX OFF</span>
+                    <span>RTX {t('rtxOff')}</span>
                 </>
             )}
         </button>

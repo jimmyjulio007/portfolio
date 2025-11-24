@@ -6,54 +6,49 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { Project } from "@/shared/types";
 import { Button } from "@/shared/ui/Button";
 import { Magnetic } from "@/shared/ui/Magnetic";
+import { useTranslations } from 'next-intl';
 
 if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
 }
 
-const PROJECTS: Project[] = [
-    {
-        id: "1",
-        title: "LANGCHAIN AGENT",
-        description: "Autonomous AI agent system for complex task execution.",
-        category: "AI / LangChain",
-        year: 2025,
-        tags: ["TypeScript", "LangChain.js", "OpenAI"],
-        image: "/projects/project1.jpg",
-    },
-    {
-        id: "2",
-        title: "NEURAL INTERFACE",
-        description: "Next-gen dashboard for monitoring AI model performance.",
-        category: "Full Stack",
-        year: 2024,
-        tags: ["Next.js 15", "D3.js", "Node.js"],
-        image: "/projects/project2.jpg",
-    },
-    {
-        id: "3",
-        title: "CYBER COMMERCE",
-        description: "Headless e-commerce platform with 3D product config.",
-        category: "E-Commerce",
-        year: 2024,
-        tags: ["R3F", "Shopify Headless", "WebGL"],
-        image: "/projects/project3.jpg",
-    },
-    {
-        id: "4",
-        title: "SMART CITY OS",
-        description: "IoT visualization platform for urban management.",
-        category: "Data Viz",
-        year: 2023,
-        tags: ["Mapbox GL", "WebSockets", "Redis"],
-        image: "/projects/project4.jpg",
-    },
-];
+
 
 export function WorkSection() {
+    const t = useTranslations('Work');
     const sectionRef = useRef<HTMLElement>(null);
     const triggerRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+
+    const PROJECTS: Project[] = [
+        {
+            id: "1",
+            title: t('project1Title'),
+            description: t('project1Description'),
+            category: "AI / LangChain",
+            year: 2025,
+            tags: t('project1Tags').split(' • '),
+            image: "/projects/project1.jpg",
+        },
+        {
+            id: "2",
+            title: t('project2Title'),
+            description: t('project2Description'),
+            category: "Full Stack",
+            year: 2024,
+            tags: t('project2Tags').split(' • '),
+            image: "/projects/project2.jpg",
+        },
+        {
+            id: "3",
+            title: t('project3Title'),
+            description: t('project3Description'),
+            category: "E-Commerce",
+            year: 2024,
+            tags: t('project3Tags').split(' • '),
+            image: "/projects/project3.jpg",
+        },
+    ];
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -120,13 +115,13 @@ export function WorkSection() {
                     {/* Intro Slide */}
                     <div className="flex-shrink-0 w-full md:w-[40vw] flex flex-col justify-center">
                         <span className="text-[#ccff00] font-mono text-sm tracking-widest uppercase mb-4">
-              // Selected Works
+                            {t('sectionLabel')}
                         </span>
                         <h2 className="text-6xl md:text-9xl font-bold text-white tracking-tighter leading-[0.9] md:leading-[0.8]">
-                            PROJECT
+                            {t('title')}
                             <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#ccff00]">
-                                GALLERY
+                                {t('titleHighlight')}
                             </span>
                         </h2>
                         <p className="text-gray-300 mt-8 max-w-md text-lg font-light">

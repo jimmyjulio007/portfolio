@@ -1,0 +1,117 @@
+{
+    "Navigation": {
+        "work": "ARBEIT",
+        "process": "PROZESS",
+        "playground": "SPIELPLATZ",
+        "about": "ÜBER",
+        "contact": "KONTAKT"
+    },
+    "Hero": {
+        "title_line1": "ARCHITEKTUR DER",
+        "title_line2": "INTELLIGENZ",
+        "subtitle": "Schmieden der nächsten Generation autonomer Agenten und immersiver digitaler Realitäten.",
+        "neuralLink": "// 120 FPS NEURALE VERBINDUNG HERGESTELLT",
+        "viewWork": "ARBEIT ANSEHEN",
+        "contactNetwork": "NETZWERK KONTAKTIEREN",
+        "location": "Standort",
+        "locationName": "Antananarivo, Tsiadana",
+        "coordinates": "LAT: -18.8792 | LON: 47.5079",
+        "dragToRotate": "👆 Ziehen zum Drehen • RTX {rtxStatus}",
+        "rtxOn": "AN",
+        "rtxOff": "AUS",
+        "systemStatus": "SYSTEM: ONLINE // V3.0 // GPU_BESCHLEUNIGT"
+    },
+    "Process": {
+        "sectionLabel": "// Der Bauplan",
+        "title": "MEIN KAMPFERPROBTER",
+        "titleHighlight": "WORKFLOW",
+        "step1Title": "ENTDECKUNG & STRATEGIE",
+        "step1Description": "Tiefes Eintauchen in Anforderungen, Nutzerbedürfnisse und technische Einschränkungen. Definition der Roadmap.",
+        "step2Title": "ARCHITEKTUR & DESIGN",
+        "step2Description": "Entwurf skalierbarer Systeme und atemberaubender Visuals, die Form und Funktion vereinen.",
+        "step3Title": "ENTWICKLUNG & OPTIMIERUNG",
+        "step3Description": "Präzises Bauen. Optimierung für maximale Leistung und Nutzerfreude.",
+        "step4Title": "BEREITSTELLUNG & EVOLUTION",
+        "step4Description": "Mit Zuversicht starten. Überwachen, iterieren und kontinuierlich verbessern."
+    },
+    "Work": {
+        "sectionLabel": "// Ausgewählte Projekte",
+        "title": "PROJEKT",
+        "titleHighlight": "GALERIE",
+        "project1Title": "LANGCHAIN AGENT",
+        "project1Description": "Autonomes KI-Agentensystem für komplexe Aufgabenausführung.",
+        "project1Tags": "TypeScript • LangChain.js • OpenAI",
+        "project2Title": "NEURALE SCHNITTSTELLE",
+        "project2Description": "Dashboard der nächsten Generation zur Überwachung der KI-Modellleistung.",
+        "project2Tags": "Next.js 15 • D3.js • Node.js",
+        "project3Title": "CYBER COMMERCE",
+        "project3Description": "Headless E-Commerce-Plattform mit 3D-Produktkonfiguration.",
+        "project3Tags": "R3F • Shopify Headless • WebGL"
+    },
+    "Playground": {
+        "sectionLabel": "// Interaktives Labor",
+        "title": "EXPERIMENTELLES",
+        "titleHighlight": "GELÄNDE",
+        "description": "Wo Ideen Realität werden. Entdecken Sie modernste Experimente und interaktive Demos.",
+        "feature1": "WebGL Fluid",
+        "feature2": "Neuronales Netz",
+        "feature3": "Audio Reaktion",
+        "feature4": "Ray Marching",
+        "comingSoon": "DEMNÄCHST"
+    },
+    "About": {
+        "sectionLabel": "// Der Architekt",
+        "title": "BAUEN DER",
+        "titleHighlight": "ZUKUNFT",
+        "name": "JIMMY JULIO",
+        "role": "FULL STACK KI ARCHITEKT",
+        "paragraph1": "Ich bin ein <strong>Full Stack JS & KI Entwickler</strong> mit Sitz in <span>Antananarivo, Tsiadana</span>. Meine Leidenschaft liegt im Bau autonomer KI-Agenten und immersiver Web-Erlebnisse, die die Grenzen des im Browser Möglichen erweitern.",
+        "paragraph2": "Mit einem tiefen Fokus auf <strong>LangChain-Implementierung</strong> und moderne JavaScript-Ökosysteme erstelle ich Systeme, die nicht nur funktional, sondern intelligent und anpassungsfähig sind.",
+        "softSkillsTitle": "Soft Skills Kraftpaket",
+        "softSkill1": "Strategische Führung",
+        "softSkill2": "Komplexe Problemlösung",
+        "softSkill3": "Effektive Kommunikation",
+        "softSkill4": "Agile Methodik",
+        "softSkill5": "Team-Mentoring",
+        "technicalArsenal": "Technisches Arsenal",
+        "techSkill1": "LangChain / KI Agenten",
+        "techSkill2": "JavaScript / TypeScript",
+        "techSkill3": "React / Next.js",
+        "techSkill4": "Node.js / Python",
+        "techSkill5": "WebGL / Three.js"
+    },
+    "Contact": {
+        "sectionLabel": "// Übertragung",
+        "title": "KONTAKT",
+        "titleHighlight": "INITIIEREN",
+        "namePlaceholder": "NAME_ID",
+        "emailPlaceholder": "E-MAIL_ADRESSE",
+        "messagePlaceholder": "NACHRICHTENDATEN EINGEBEN...",
+        "submitIdle": "ÜBERTRAGUNG SENDEN",
+        "submitSending": "ÜBERTRAGUNG LÄUFT...",
+        "submitSuccess": "ÜBERTRAGUNG GESENDET",
+        "submitError": "FEHLER - WIEDERHOLEN",
+        "socialGithub": "GITHUB",
+        "socialLinkedin": "LINKEDIN",
+        "socialTwitter": "TWITTER",
+        "socialInstagram": "INSTAGRAM"
+    },
+    "Footer": {
+        "systemOnline": "SYSTEM ONLINE."
+    },
+    "Common": {
+        "loading": "Laden...",
+        "error": "Ein Fehler ist aufgetreten",
+        "loadingTip1": "Baue neurale Pfade...",
+        "loadingTip2": "Kompiliere Quantenalgorithmen...",
+        "loadingTip3": "Initialisiere KI-Protokolle...",
+        "loadingTip4": "Lade digitales Bewusstsein...",
+        "loadingTip5": "Synchronisiere Erlebnisschichten...",
+        "muteMusic": "Hintergrundmusik stummschalten",
+        "playMusic": "Hintergrundmusik abspielen"
+    },
+    "Metadata": {
+        "title": "Portfolio | Kreativer Entwickler",
+        "description": "Ein technologieorientiertes kreatives Portfolio, das Erlebnisse für das digitale Zeitalter schafft"
+    }
+}

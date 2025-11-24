@@ -1,0 +1,117 @@
+{
+    "Navigation": {
+        "work": "PROJETS",
+        "process": "PROCESSUS",
+        "playground": "LABO",
+        "about": "À PROPOS",
+        "contact": "CONTACT"
+    },
+    "Hero": {
+        "title_line1": "ARCHITECTE",
+        "title_line2": "D'INTELLIGENCE",
+        "subtitle": "Forger la prochaine génération d'agents autonomes et de réalités numériques immersives.",
+        "neuralLink": "// LIEN NEURONAL 120 FPS ÉTABLI",
+        "viewWork": "VOIR PROJETS",
+        "contactNetwork": "CONTACTER RÉSEAU",
+        "location": "Localisation",
+        "locationName": "Antananarivo, Tsiadana",
+        "coordinates": "LAT: -18.8792 | LON: 47.5079",
+        "dragToRotate": "👆 Glisser pour tourner • RTX {rtxStatus}",
+        "rtxOn": "ON",
+        "rtxOff": "OFF",
+        "systemStatus": "SYSTÈME: EN LIGNE // V3.0 // GPU_ACCÉLÉRÉ"
+    },
+    "Process": {
+        "sectionLabel": "// Le Plan",
+        "title": "MON FLUX DE TRAVAIL",
+        "titleHighlight": "ÉPROUVÉ",
+        "step1Title": "DÉCOUVERTE & STRATÉGIE",
+        "step1Description": "Plongée profonde dans les besoins, les utilisateurs et les contraintes techniques. Définir la feuille de route.",
+        "step2Title": "ARCHITECTURE & DESIGN",
+        "step2Description": "Concevoir des systèmes évolutifs et des visuels époustouflants qui allient forme et fonction.",
+        "step3Title": "DÉVELOPPEMENT & OPTIMISATION",
+        "step3Description": "Construire avec précision. Optimiser pour une performance maximale et le plaisir de l'utilisateur.",
+        "step4Title": "DÉPLOIEMENT & ÉVOLUTION",
+        "step4Description": "Lancer en toute confiance. Surveiller, itérer et améliorer continuellement."
+    },
+    "Work": {
+        "sectionLabel": "// Projets Sélectionnés",
+        "title": "GALERIE DE",
+        "titleHighlight": "PROJETS",
+        "project1Title": "AGENT LANGCHAIN",
+        "project1Description": "Système d'agent IA autonome pour l'exécution de tâches complexes.",
+        "project1Tags": "TypeScript • LangChain.js • OpenAI",
+        "project2Title": "INTERFACE NEURONALE",
+        "project2Description": "Tableau de bord nouvelle génération pour le suivi des performances des modèles IA.",
+        "project2Tags": "Next.js 15 • D3.js • Node.js",
+        "project3Title": "CYBER COMMERCE",
+        "project3Description": "Plateforme e-commerce headless avec configuration produit 3D.",
+        "project3Tags": "R3F • Shopify Headless • WebGL"
+    },
+    "Playground": {
+        "sectionLabel": "// Labo Interactif",
+        "title": "TERRAIN",
+        "titleHighlight": "EXPÉRIMENTAL",
+        "description": "Où les idées deviennent réalité. Explorez des expériences de pointe et des démos interactives.",
+        "feature1": "Fluide WebGL",
+        "feature2": "Réseau Neuronal",
+        "feature3": "Réaction Audio",
+        "feature4": "Ray Marching",
+        "comingSoon": "BIENTÔT DISPONIBLE"
+    },
+    "About": {
+        "sectionLabel": "// L'Architecte",
+        "title": "CONSTRUIRE LE",
+        "titleHighlight": "FUTUR",
+        "name": "JIMMY JULIO",
+        "role": "ARCHITECTE IA FULL STACK",
+        "paragraph1": "Je suis un <strong>Développeur Full Stack JS & IA</strong> basé à <span>Antananarivo, Tsiadana</span>. Ma passion réside dans la création d'agents IA autonomes et d'expériences web immersives qui repoussent les limites du possible dans le navigateur.",
+        "paragraph2": "Avec un accent particulier sur <strong>l'implémentation LangChain</strong> et les écosystèmes JavaScript modernes, je crée des systèmes qui ne sont pas seulement fonctionnels, mais intelligents et adaptatifs.",
+        "softSkillsTitle": "Compétences Humaines",
+        "softSkill1": "Leadership Stratégique",
+        "softSkill2": "Résolution de Problèmes Complexes",
+        "softSkill3": "Communication Efficace",
+        "softSkill4": "Méthodologie Agile",
+        "softSkill5": "Mentorat d'Équipe",
+        "technicalArsenal": "Arsenal Technique",
+        "techSkill1": "LangChain / Agents IA",
+        "techSkill2": "JavaScript / TypeScript",
+        "techSkill3": "React / Next.js",
+        "techSkill4": "Node.js / Python",
+        "techSkill5": "WebGL / Three.js"
+    },
+    "Contact": {
+        "sectionLabel": "// Transmission",
+        "title": "INITIER",
+        "titleHighlight": "CONTACT",
+        "namePlaceholder": "NOM_ID",
+        "emailPlaceholder": "ADRESSE_EMAIL",
+        "messagePlaceholder": "ENTRER_DONNÉES_MESSAGE...",
+        "submitIdle": "ENVOYER TRANSMISSION",
+        "submitSending": "TRANSMISSION EN COURS...",
+        "submitSuccess": "TRANSMISSION ENVOYÉE",
+        "submitError": "ERREUR - RÉESSAYER",
+        "socialGithub": "GITHUB",
+        "socialLinkedin": "LINKEDIN",
+        "socialTwitter": "TWITTER",
+        "socialInstagram": "INSTAGRAM"
+    },
+    "Footer": {
+        "systemOnline": "SYSTÈME EN LIGNE."
+    },
+    "Common": {
+        "loading": "Chargement...",
+        "error": "Une erreur est survenue",
+        "loadingTip1": "Construction des voies neuronales...",
+        "loadingTip2": "Compilation des algorithmes quantiques...",
+        "loadingTip3": "Initialisation des protocoles IA...",
+        "loadingTip4": "Chargement de la conscience numérique...",
+        "loadingTip5": "Synchronisation des couches d'expérience...",
+        "muteMusic": "Couper la musique de fond",
+        "playMusic": "Jouer la musique de fond"
+    },
+    "Metadata": {
+        "title": "Portfolio | Développeur Créatif",
+        "description": "Un portfolio créatif axé sur la technologie, créant des expériences pour l'ère numérique"
+    }
+}

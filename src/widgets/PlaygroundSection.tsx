@@ -4,23 +4,27 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Magnetic } from "@/shared/ui/Magnetic";
+import { useTranslations } from 'next-intl';
 
 if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
 }
 
-const EXPERIMENTS = [
-    { id: 1, name: "WebGL Fluid", type: "Simulation", color: "#00f0ff" },
-    { id: 2, name: "Neural Net", type: "AI Viz", color: "#ccff00" },
-    { id: 3, name: "Audio React", type: "Sound", color: "#ff0055" },
-    { id: 4, name: "Ray Marching", type: "Shader", color: "#ffffff" },
-];
+
 
 export function PlaygroundSection() {
+    const t = useTranslations('Playground');
     const sectionRef = useRef<HTMLElement>(null);
     const listRef = useRef<HTMLUListElement>(null);
     const cursorRef = useRef<HTMLDivElement>(null);
     const [activeColor, setActiveColor] = useState("#00f0ff");
+
+    const EXPERIMENTS = [
+        { id: 1, name: t('feature1'), type: "Simulation", color: "#00f0ff" },
+        { id: 2, name: t('feature2'), type: "AI Viz", color: "#ccff00" },
+        { id: 3, name: t('feature3'), type: "Sound", color: "#ff0055" },
+        { id: 4, name: t('feature4'), type: "Shader", color: "#ffffff" },
+    ];
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -108,14 +112,13 @@ export function PlaygroundSection() {
             <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 relative z-10">
                 <div>
                     <span className="text-[#00f0ff] font-mono text-sm tracking-widest uppercase">
-            // R&D Lab
+                        {t('sectionLabel')}
                     </span>
                     <h2 className="text-5xl md:text-7xl font-bold text-white mt-4 mb-8 tracking-tighter">
-                        DIGITAL<br />PLAYGROUND
+                        {t('title')}<br />{t('titleHighlight')}
                     </h2>
                     <p className="text-gray-400 max-w-md mb-12">
-                        Where code meets chaos. A collection of WebGL experiments,
-                        shader studies, and interactive prototypes.
+                        {t('description')}
                     </p>
 
                     <ul ref={listRef} className="space-y-4">

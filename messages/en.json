@@ -1,0 +1,117 @@
+{
+    "Navigation": {
+        "work": "WORK",
+        "process": "PROCESS",
+        "playground": "PLAYGROUND",
+        "about": "ABOUT",
+        "contact": "CONTACT"
+    },
+    "Hero": {
+        "title_line1": "ARCHITECTING",
+        "title_line2": "INTELLIGENCE",
+        "subtitle": "Forging the next generation of autonomous agents and immersive digital realities.",
+        "neuralLink": "// 120 FPS NEURAL LINK ESTABLISHED",
+        "viewWork": "VIEW WORK",
+        "contactNetwork": "CONTACT NETWORK",
+        "location": "Location",
+        "locationName": "Antananarivo, Tsiadana",
+        "coordinates": "LAT: -18.8792 | LON: 47.5079",
+        "dragToRotate": "👆 Drag to rotate • RTX {rtxStatus}",
+        "rtxOn": "ON",
+        "rtxOff": "OFF",
+        "systemStatus": "SYSTEM: ONLINE // V3.0 // GPU_ACCELERATED"
+    },
+    "Process": {
+        "sectionLabel": "// The Blueprint",
+        "title": "MY BATTLE-TESTED",
+        "titleHighlight": "WORKFLOW",
+        "step1Title": "DISCOVERY & STRATEGY",
+        "step1Description": "Deep dive into requirements, user needs, and technical constraints. Define the roadmap.",
+        "step2Title": "ARCHITECTURE & DESIGN",
+        "step2Description": "Craft scalable systems and stunning visuals that merge form with function.",
+        "step3Title": "DEVELOPMENT & OPTIMIZATION",
+        "step3Description": "Build with precision. Optimize for maximum performance and user delight.",
+        "step4Title": "DEPLOYMENT & EVOLUTION",
+        "step4Description": "Launch with confidence. Monitor, iterate, and continuously improve."
+    },
+    "Work": {
+        "sectionLabel": "// Selected Projects",
+        "title": "SHOWCASED",
+        "titleHighlight": "WORK",
+        "project1Title": "LANGCHAIN AGENT",
+        "project1Description": "Autonomous AI agent system for complex task execution.",
+        "project1Tags": "TypeScript • LangChain.js • OpenAI",
+        "project2Title": "NEURAL INTERFACE",
+        "project2Description": "Next-gen dashboard for monitoring AI model performance.",
+        "project2Tags": "Next.js 15 • D3.js • Node.js",
+        "project3Title": "CYBER COMMERCE",
+        "project3Description": "Headless e-commerce platform with 3D product config.",
+        "project3Tags": "R3F • Shopify Headless • WebGL"
+    },
+    "Playground": {
+        "sectionLabel": "// Interactive Lab",
+        "title": "EXPERIMENTAL",
+        "titleHighlight": "GROUND",
+        "description": "Where ideas become reality. Explore cutting-edge experiments and interactive demos.",
+        "feature1": "WebGL Fluid",
+        "feature2": "Neural Net",
+        "feature3": "Audio React",
+        "feature4": "Ray Marching",
+        "comingSoon": "COMING SOON"
+    },
+    "About": {
+        "sectionLabel": "// The Architect",
+        "title": "BUILDING THE",
+        "titleHighlight": "FUTURE",
+        "name": "JIMMY JULIO",
+        "role": "FULL STACK AI ARCHITECT",
+        "paragraph1": "I am a <strong>Full Stack JS & AI Developer</strong> based in <span>Antananarivo, Tsiadana</span>. My passion lies in building autonomous AI agents and immersive web experiences that push the boundaries of what's possible in the browser.",
+        "paragraph2": "With a deep focus on <strong>LangChain implementation</strong> and modern JavaScript ecosystems, I create systems that are not just functional, but intelligent and adaptive.",
+        "softSkillsTitle": "Soft Skills Powerhouse",
+        "softSkill1": "Strategic Leadership",
+        "softSkill2": "Complex Problem Solving",
+        "softSkill3": "Effective Communication",
+        "softSkill4": "Agile Methodology",
+        "softSkill5": "Team Mentorship",
+        "technicalArsenal": "Technical Arsenal",
+        "techSkill1": "LangChain / AI Agents",
+        "techSkill2": "JavaScript / TypeScript",
+        "techSkill3": "React / Next.js",
+        "techSkill4": "Node.js / Python",
+        "techSkill5": "WebGL / Three.js"
+    },
+    "Contact": {
+        "sectionLabel": "// Transmission",
+        "title": "INITIATE",
+        "titleHighlight": "CONTACT",
+        "namePlaceholder": "NAME_ID",
+        "emailPlaceholder": "EMAIL_ADDRESS",
+        "messagePlaceholder": "ENTER_MESSAGE_DATA...",
+        "submitIdle": "SEND TRANSMISSION",
+        "submitSending": "TRANSMITTING...",
+        "submitSuccess": "TRANSMISSION SENT",
+        "submitError": "ERROR - RETRY",
+        "socialGithub": "GITHUB",
+        "socialLinkedin": "LINKEDIN",
+        "socialTwitter": "TWITTER",
+        "socialInstagram": "INSTAGRAM"
+    },
+    "Footer": {
+        "systemOnline": "SYSTEM ONLINE."
+    },
+    "Common": {
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "loadingTip1": "Building neural pathways...",
+        "loadingTip2": "Compiling quantum algorithms...",
+        "loadingTip3": "Initializing AI protocols...",
+        "loadingTip4": "Loading digital consciousness...",
+        "loadingTip5": "Synchronizing experience layers...",
+        "muteMusic": "Mute Background Music",
+        "playMusic": "Play Background Music"
+    },
+    "Metadata": {
+        "title": "Portfolio | Creative Developer",
+        "description": "A technology-led creative portfolio crafting experiences for the digital age"
+    }
+}

@@ -1,0 +1,117 @@
+{
+    "Navigation": {
+        "work": "実績",
+        "process": "プロセス",
+        "playground": "実験室",
+        "about": "私について",
+        "contact": "お問い合わせ"
+    },
+    "Hero": {
+        "title_line1": "知能の",
+        "title_line2": "設計者",
+        "subtitle": "次世代の自律エージェントと没入型デジタルリアリティを構築する。",
+        "neuralLink": "// 120 FPS ニューラルリンク確立",
+        "viewWork": "実績を見る",
+        "contactNetwork": "ネットワークに接続",
+        "location": "場所",
+        "locationName": "アンタナナリボ、チアダナ",
+        "coordinates": "緯度: -18.8792 | 経度: 47.5079",
+        "dragToRotate": "👆 ドラッグして回転 • RTX {rtxStatus}",
+        "rtxOn": "ON",
+        "rtxOff": "OFF",
+        "systemStatus": "システム: オンライン // V3.0 // GPU加速"
+    },
+    "Process": {
+        "sectionLabel": "// 設計図",
+        "title": "実戦で磨かれた",
+        "titleHighlight": "ワークフロー",
+        "step1Title": "発見と戦略",
+        "step1Description": "要件、ユーザーニーズ、技術的制約を深く掘り下げ、ロードマップを定義します。",
+        "step2Title": "アーキテクチャと設計",
+        "step2Description": "機能と美しさを融合させた、スケーラブルなシステムと魅力的なビジュアルを設計します。",
+        "step3Title": "開発と最適化",
+        "step3Description": "精密に構築します。最大のパフォーマンスとユーザーの喜びのために最適化します。",
+        "step4Title": "展開と進化",
+        "step4Description": "自信を持ってローンチします。監視し、反復し、継続的に改善します。"
+    },
+    "Work": {
+        "sectionLabel": "// 厳選されたプロジェクト",
+        "title": "実績",
+        "titleHighlight": "紹介",
+        "project1Title": "LANGCHAIN エージェント",
+        "project1Description": "複雑なタスク実行のための自律型AIエージェントシステム。",
+        "project1Tags": "TypeScript • LangChain.js • OpenAI",
+        "project2Title": "ニューラルインターフェース",
+        "project2Description": "AIモデルのパフォーマンスを監視するための次世代ダッシュボード。",
+        "project2Tags": "Next.js 15 • D3.js • Node.js",
+        "project3Title": "サイバーコマース",
+        "project3Description": "3D製品構成を備えたヘッドレスEコマースプラットフォーム。",
+        "project3Tags": "R3F • Shopify Headless • WebGL"
+    },
+    "Playground": {
+        "sectionLabel": "// インタラクティブラボ",
+        "title": "実験的",
+        "titleHighlight": "グラウンド",
+        "description": "アイデアが現実になる場所。最先端の実験とインタラクティブなデモを探索してください。",
+        "feature1": "WebGL 流体",
+        "feature2": "ニューラルネット",
+        "feature3": "オーディオリアクト",
+        "feature4": "レイマーチング",
+        "comingSoon": "近日公開"
+    },
+    "About": {
+        "sectionLabel": "// アーキテクト",
+        "title": "未来を",
+        "titleHighlight": "構築する",
+        "name": "ジミー・フリオ",
+        "role": "フルスタックAIアーキテクト",
+        "paragraph1": "私は<span>アンタナナリボ、チアダナ</span>を拠点とする<strong>フルスタックJS & AI開発者</strong>です。私の情熱は、ブラウザで可能なことの限界を押し広げる自律型AIエージェントと没入型Web体験を構築することにあります。",
+        "paragraph2": "<strong>LangChainの実装</strong>と最新のJavaScriptエコシステムに深く焦点を当て、機能的であるだけでなく、知的で適応性のあるシステムを作成します。",
+        "softSkillsTitle": "ソフトスキル",
+        "softSkill1": "戦略的リーダーシップ",
+        "softSkill2": "複雑な問題解決",
+        "softSkill3": "効果的なコミュニケーション",
+        "softSkill4": "アジャイル手法",
+        "softSkill5": "チームメンターシップ",
+        "technicalArsenal": "技術的武器",
+        "techSkill1": "LangChain / AIエージェント",
+        "techSkill2": "JavaScript / TypeScript",
+        "techSkill3": "React / Next.js",
+        "techSkill4": "Node.js / Python",
+        "techSkill5": "WebGL / Three.js"
+    },
+    "Contact": {
+        "sectionLabel": "// 送信",
+        "title": "接触を",
+        "titleHighlight": "開始",
+        "namePlaceholder": "名前_ID",
+        "emailPlaceholder": "メールアドレス",
+        "messagePlaceholder": "メッセージデータを入力...",
+        "submitIdle": "送信を開始",
+        "submitSending": "送信中...",
+        "submitSuccess": "送信完了",
+        "submitError": "エラー - 再試行",
+        "socialGithub": "GITHUB",
+        "socialLinkedin": "LINKEDIN",
+        "socialTwitter": "TWITTER",
+        "socialInstagram": "INSTAGRAM"
+    },
+    "Footer": {
+        "systemOnline": "システムオンライン。"
+    },
+    "Common": {
+        "loading": "読み込み中...",
+        "error": "エラーが発生しました",
+        "loadingTip1": "神経回路を構築中...",
+        "loadingTip2": "量子アルゴリズムをコンパイル中...",
+        "loadingTip3": "AIプロトコルを初期化中...",
+        "loadingTip4": "デジタル意識をロード中...",
+        "loadingTip5": "体験レイヤーを同期中...",
+        "muteMusic": "BGMをミュート",
+        "playMusic": "BGMを再生"
+    },
+    "Metadata": {
+        "title": "ポートフォリオ | クリエイティブ開発者",
+        "description": "デジタル時代の体験を作り出す、テクノロジー主導のクリエイティブポートフォリオ"
+    }
+}

@@ -1,43 +1,9 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import "./hero-animations.css";
-import { SITE_CONFIG } from "@/shared/config/constants";
-import { CustomCursor } from "@/features/CustomCursor";
+import { ReactNode } from 'react';
 
-export const metadata: Metadata = {
-  title: SITE_CONFIG.title,
-  description: SITE_CONFIG.description,
-  openGraph: {
-    title: SITE_CONFIG.title,
-    description: SITE_CONFIG.description,
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: SITE_CONFIG.title,
-    description: SITE_CONFIG.description,
-  },
+type Props = {
+  children: ReactNode;
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en" className="scroll-smooth">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-      </head>
-      <body className="antialiased">
-        <CustomCursor />
-        {children}
-      </body>
-    </html>
-  );
+export default function RootLayout({ children }: Props) {
+  return children;
 }

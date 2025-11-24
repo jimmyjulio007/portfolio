@@ -4,12 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/shared/ui/Button";
+import { useTranslations } from 'next-intl';
 
 if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
 }
 
 export function ContactSection() {
+    const t = useTranslations('Contact');
     const sectionRef = useRef<HTMLElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
     const formRef = useRef<HTMLFormElement>(null);
@@ -82,13 +84,13 @@ export function ContactSection() {
             <div className="relative z-10 max-w-4xl mx-auto px-6">
                 <div className="text-center mb-16">
                     <span className="text-[#ccff00] font-mono text-sm tracking-widest uppercase">
-            // Transmission
+                        {t('sectionLabel')}
                     </span>
                     <h2
                         ref={titleRef}
                         className="text-6xl md:text-8xl font-bold text-white tracking-tighter mt-4"
                     >
-                        INITIATE <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#ccff00]">CONTACT</span>
+                        {t('title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#ccff00]">{t('titleHighlight')}</span>
                     </h2>
                 </div>
 
@@ -108,7 +110,7 @@ export function ContactSection() {
                                 required
                                 disabled={status === "sending"}
                                 className="w-full bg-transparent border-b border-gray-800 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-[#00f0ff] transition-colors duration-300 font-mono disabled:opacity-50"
-                                placeholder="NAME_ID"
+                                placeholder={t('namePlaceholder')}
                             />
                         </div>
 
@@ -122,7 +124,7 @@ export function ContactSection() {
                                 required
                                 disabled={status === "sending"}
                                 className="w-full bg-transparent border-b border-gray-800 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-[#00f0ff] transition-colors duration-300 font-mono disabled:opacity-50"
-                                placeholder="EMAIL_ADDRESS"
+                                placeholder={t('emailPlaceholder')}
                             />
                         </div>
                     </div>
@@ -137,7 +139,7 @@ export function ContactSection() {
                             disabled={status === "sending"}
                             rows={6}
                             className="w-full bg-transparent border-b border-gray-800 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-[#00f0ff] transition-colors duration-300 font-mono resize-none disabled:opacity-50"
-                            placeholder="ENTER_MESSAGE_DATA..."
+                            placeholder={t('messagePlaceholder')}
                         />
                     </div>
 
@@ -149,16 +151,16 @@ export function ContactSection() {
                             className={`bg-white text-black hover:bg-[#00f0ff] hover:scale-105 transition-all duration-300 font-bold tracking-widest px-12 ${status === "success" ? "bg-[#ccff00] hover:bg-[#ccff00]" : ""
                                 }`}
                         >
-                            {status === "idle" && "SEND TRANSMISSION"}
-                            {status === "sending" && "TRANSMITTING..."}
-                            {status === "success" && "TRANSMISSION SENT"}
-                            {status === "error" && "ERROR - RETRY"}
+                            {status === "idle" && t('submitIdle')}
+                            {status === "sending" && t('submitSending')}
+                            {status === "success" && t('submitSuccess')}
+                            {status === "error" && t('submitError')}
                         </Button>
                     </div>
                 </form>
 
                 <div className="mt-20 flex justify-center gap-12 border-t border-gray-900 pt-12">
-                    {["GITHUB", "LINKEDIN", "TWITTER", "INSTAGRAM"].map((social) => (
+                    {[t('socialGithub'), t('socialLinkedin'), t('socialTwitter'), t('socialInstagram')].map((social) => (
                         <a
                             key={social}
                             href="#"

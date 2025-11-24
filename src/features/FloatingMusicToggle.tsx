@@ -3,8 +3,10 @@
 import { useState, useEffect } from "react";
 import { soundManager } from "@/shared/lib/sound-manager";
 import { Volume2, VolumeX } from "lucide-react";
+import { useTranslations } from 'next-intl';
 
 export function FloatingMusicToggle() {
+    const t = useTranslations('Common');
     const [isMusicPlaying, setIsMusicPlaying] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
 
@@ -58,7 +60,7 @@ export function FloatingMusicToggle() {
 
             {/* Tooltip */}
             <span className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-3 py-1 bg-black/90 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                {isMusicPlaying ? "Mute Background Music" : "Play Background Music"}
+                {isMusicPlaying ? t('muteMusic') : t('playMusic')}
             </span>
         </button>
     );
