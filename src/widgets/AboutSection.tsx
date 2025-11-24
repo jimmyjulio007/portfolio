@@ -146,7 +146,7 @@ export function AboutSection() {
                         </span>
                         <h2
                             ref={titleRef}
-                            className="text-5xl md:text-7xl font-bold mb-8 text-white tracking-tighter font-migumono"
+                            className="text-5xl md:text-7xl font-bold mb-8 text-white font-migumono"
                         >
                             {t('title')} <span className="text-[#00f0ff]">{t('titleHighlight')}</span>
                         </h2>
@@ -156,7 +156,7 @@ export function AboutSection() {
                             <p dangerouslySetInnerHTML={{ __html: t.raw('paragraph2') }} />
 
                             <div className="pt-4">
-                                <h3 className="text-white font-bold mb-4 text-xl">{t('softSkillsTitle')}</h3>
+                                <h3 className="text-white font-bold mb-4 text-xl font-migumono">{t('softSkillsTitle')}</h3>
                                 <div className="flex flex-wrap gap-3">
                                     {SOFT_SKILLS.map(skill => (
                                         <span key={skill} className="px-4 py-2 border border-gray-800 rounded-full text-sm text-gray-300 hover:border-[#ccff00] hover:text-[#ccff00] transition-colors duration-300 cursor-default">
@@ -168,7 +168,7 @@ export function AboutSection() {
                         </div>
 
                         <div ref={skillsRef} className="space-y-8 bg-[#050505] p-8 border border-gray-800">
-                            <h3 className="text-2xl font-bold text-white mb-6 border-b border-gray-800 pb-4">
+                            <h3 className="text-2xl font-bold text-white mb-6 border-b border-gray-800 pb-4 font-migumono">
                                 {t('technicalArsenal')}
                             </h3>
                             {TECH_SKILLS.map((skill) => (

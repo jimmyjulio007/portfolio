@@ -115,7 +115,7 @@ export function PlaygroundSection() {
                     <span className="text-[#00f0ff] font-mono text-sm tracking-widest uppercase">
                         {t('sectionLabel')}
                     </span>
-                    <h2 className="text-5xl md:text-7xl font-bold text-white mt-4 mb-8 tracking-tighter">
+                    <h2 className="text-5xl md:text-7xl font-bold text-white mt-4 mb-8 font-migumono">
                         {t('title')}<br />{t('titleHighlight')}
                     </h2>
                     <p className="text-gray-400 max-w-md mb-12">

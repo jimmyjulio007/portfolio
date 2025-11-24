@@ -148,7 +148,7 @@ export function ContactSection() {
                     </span>
                     <h2
                         ref={titleRef}
-                        className="text-6xl md:text-8xl font-bold text-white tracking-tighter mt-4"
+                        className="text-6xl md:text-8xl font-bold text-white mt-4 font-migumono"
                     >
                         {t("title")}{" "}
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#ccff00]">

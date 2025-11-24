@@ -117,7 +117,7 @@ export function WorkSection() {
                         <span className="text-[#ccff00] font-mono text-sm tracking-widest uppercase mb-4">
                             {t('sectionLabel')}
                         </span>
-                        <h2 className="text-6xl md:text-9xl font-bold text-white tracking-tighter leading-[0.9] md:leading-[0.8]">
+                        <h2 className="text-6xl md:text-9xl font-bold text-white leading-[0.9] md:leading-[0.8] font-migumono">
                             {t('title')}
                             <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#ccff00]">
@@ -149,7 +149,7 @@ export function WorkSection() {
                                         <span className="text-[#00f0ff] font-mono text-xs mb-2 block">
                                             {project.category}
                                         </span>
-                                        <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                                        <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 font-migumono">
                                             {project.title}
                                         </h3>
                                         <p className="text-gray-300 text-sm mb-6 max-w-sm hidden md:block">
@@ -181,7 +181,7 @@ export function WorkSection() {
                     {/* End Slide */}
                     <div className="flex-shrink-0 w-full md:w-[30vw] flex items-center justify-center py-12 md:py-0">
                         <div className="text-center">
-                            <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                            <h3 className="text-3xl md:text-4xl font-bold text-white mb-6 font-migumono">
                                 {t('seeMoreTitle')}
                             </h3>
                             <Magnetic strength={1}>

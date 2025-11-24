@@ -77,7 +77,7 @@ export function ProcessSection() {
                     <span className="text-[#ccff00] font-mono text-sm tracking-widest uppercase">
                         {t('sectionLabel')}
                     </span>
-                    <h2 className="text-5xl md:text-7xl font-bold text-white mt-4 tracking-tighter">
+                    <h2 className="text-5xl md:text-7xl font-bold text-white mt-4 font-migumono">
                         {t('title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#ccff00]">{t('titleHighlight')}</span>
                     </h2>
                 </div>
@@ -99,7 +99,7 @@ export function ProcessSection() {
                                     className="w-12 h-1 mb-6 transition-all duration-500 group-hover:w-full"
                                     style={{ backgroundColor: step.color }}
                                 />
-                                <h3 className="text-2xl font-bold text-white mb-4">
+                                <h3 className="text-2xl font-bold text-white mb-4 font-migumono">
                                     {step.title}
                                 </h3>
                                 <p className="text-gray-400 text-sm leading-relaxed">

@@ -76,7 +76,7 @@ export function HeroSection() {
 
     // Helper to split text for animation
     const SplitText = ({ children, className }: { children: string; className?: string }) => (
-        <span className={`inline-block overflow-hidden ${className}`}>
+        <span className={`inline-block overflow-hidden  ${className}`}>
             {children.split("").map((char, i) => (
                 <span key={i} className="char inline-block" style={{ whiteSpace: "pre" }}>
                     {char}
@@ -111,12 +111,12 @@ export function HeroSection() {
                     <div className="mb-6">
                         <h1
                             ref={titleRef}
-                            className="text-5xl md:text-6xl lg:text-7xl leading-tight font-bold tracking-tighter text-white font-migumono"
+                            className="text-4xl md:text-5xl lg:text-6xl leading-tight font-bold text-white font-migumono"
                         >
                             <div className="flex flex-col">
-                                <SplitText>{t('title_line1')}</SplitText>
+                                <SplitText className="font-migumono">{t('title_line1')}</SplitText>
                                 <span className="text-[#00f0ff]">
-                                    <SplitText>{t('title_line2')}</SplitText>
+                                    <SplitText className="font-migumono">{t('title_line2')}</SplitText>
                                 </span>
                             </div>
                         </h1>

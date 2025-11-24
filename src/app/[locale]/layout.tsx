@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google"; // Optimized font loading
+import { Outfit, Space_Grotesk } from "next/font/google"; // Optimized font loading
 import "../globals.css";
 import "../hero-animations.css";
 import { SITE_CONFIG } from "@/shared/config/constants";
@@ -11,12 +11,37 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 
 import { getTranslations } from 'next-intl/server';
+import localFont from 'next/font/local';
 
-// Initialize Inter font
-const inter = Inter({
+// Initialize fonts
+const outfit = Outfit({
     subsets: ['latin'],
     display: 'swap',
-    variable: '--font-inter',
+    variable: '--font-outfit',
+});
+
+const spaceGrotesk = Space_Grotesk({
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--font-grotesk',
+});
+
+
+const migumono = localFont({
+    src: [
+        {
+            path: '../../../public/fonts/Migumono.otf',
+            weight: '400',
+            style: 'normal',
+        },
+        {
+            path: '../../../public/fonts/Migumono.ttf',
+            weight: '400',
+            style: 'normal',
+        },
+    ],
+    variable: '--font-migumono',
+    display: 'swap',
 });
 
 export async function generateMetadata({
@@ -134,7 +159,7 @@ export default async function LocaleLayout({
     const messages = await getMessages();
 
     return (
-        <html lang={locale} className={`scroll-smooth ${inter.variable}`} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+        <html lang={locale} className={`scroll-smooth ${outfit.variable} ${spaceGrotesk.variable} ${migumono.variable}`} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
             <head>
                 {/* PWA Manifest */}
                 <link rel="manifest" href="/manifest.json" />
