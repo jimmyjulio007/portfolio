@@ -4,6 +4,7 @@ import "../globals.css";
 import "../hero-animations.css";
 import { SITE_CONFIG } from "@/shared/config/constants";
 import { CustomCursor } from "@/features/CustomCursor";
+import { CookieConsent } from "@/features/CookieConsent";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -139,6 +140,7 @@ export default async function LocaleLayout({
             <body className="antialiased font-sans">
                 <NextIntlClientProvider messages={messages}>
                     <CustomCursor />
+                    <CookieConsent />
                     {children}
                 </NextIntlClientProvider>
             </body>

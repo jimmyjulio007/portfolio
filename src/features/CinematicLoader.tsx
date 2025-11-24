@@ -170,16 +170,16 @@ export function CinematicLoader({ onComplete }: { onComplete: () => void }) {
             </div>
 
             {/* Main content */}
-            <div className="relative z-10 text-center px-6 max-w-5xl">
+            <div className="relative z-10 text-center px-4 sm:px-6 max-w-5xl w-full">
 
                 {/* Logo/Emblem (RDR2 style) */}
-                <div className="loader-logo mb-8 flex items-center justify-center">
+                <div className="loader-logo mb-6 sm:mb-8 flex items-center justify-center">
                     <div className="relative">
                         {/* Outer ring */}
-                        <div className="w-24 h-24 rounded-full border-2 border-[#00f0ff]/30 flex items-center justify-center">
+                        <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full border-2 border-[#00f0ff]/30 flex items-center justify-center">
                             {/* Inner glow */}
-                            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#00f0ff]/20 to-[#ccff00]/20 flex items-center justify-center">
-                                <div className="text-2xl font-bold text-[#00f0ff]">JJ</div>
+                            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-[#00f0ff]/20 to-[#ccff00]/20 flex items-center justify-center">
+                                <div className="text-lg sm:text-xl md:text-2xl font-bold text-[#00f0ff]">JJ</div>
                             </div>
                         </div>
                         {/* Rotating ring */}
@@ -188,27 +188,27 @@ export function CinematicLoader({ onComplete }: { onComplete: () => void }) {
                 </div>
 
                 {/* Main Title (RDR2 inspired typography) */}
-                <div className="mb-6 overflow-hidden">
-                    <h1 className="text-7xl md:text-9xl font-bold tracking-tighter flex items-center justify-center gap-3">
+                <div className="mb-4 sm:mb-6 overflow-hidden">
+                    <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-bold tracking-tighter flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
                         <span className="loader-title-first text-white">JIMMY</span>
                         <span className="loader-title-last text-[#00f0ff]">JULIO</span>
                     </h1>
                 </div>
 
                 {/* Subtitle with decorative lines */}
-                <div className="loader-subtitle flex items-center justify-center gap-4 mb-16">
-                    <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-[#ccff00]" />
-                    <p className="text-lg md:text-xl text-gray-400 font-light tracking-[0.2em] uppercase">
+                <div className="loader-subtitle flex items-center justify-center gap-3 sm:gap-4 mb-12 sm:mb-16">
+                    <div className="h-[1px] w-8 sm:w-12 bg-gradient-to-r from-transparent to-[#ccff00]" />
+                    <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-400 font-light tracking-[0.15em] sm:tracking-[0.2em] uppercase">
                         {tAbout('role')}
                     </p>
-                    <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-[#ccff00]" />
+                    <div className="h-[1px] w-8 sm:w-12 bg-gradient-to-l from-transparent to-[#ccff00]" />
                 </div>
 
                 {/* Progress Section (RDR2 style) */}
-                <div className="space-y-6 max-w-2xl mx-auto">
+                <div className="space-y-4 sm:space-y-6 max-w-2xl mx-auto">
 
                     {/* Progress Track */}
-                    <div className="loader-progress-track relative h-2 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 overflow-hidden border border-gray-700/50">
+                    <div className="loader-progress-track relative h-1.5 sm:h-2 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 overflow-hidden border border-gray-700/50">
                         <div
                             className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#00f0ff] via-[#00d4ff] to-[#ccff00] transition-all duration-300"
                             style={{ width: `${progress}%` }}
@@ -219,10 +219,10 @@ export function CinematicLoader({ onComplete }: { onComplete: () => void }) {
 
                         {/* Progress percentage indicator */}
                         <div
-                            className="absolute -top-8 transition-all duration-300 flex flex-col items-center"
+                            className="absolute -top-6 sm:-top-8 transition-all duration-300 flex flex-col items-center"
                             style={{ left: `${progress}%`, transform: 'translateX(-50%)' }}
                         >
-                            <span className="text-[#00f0ff] font-mono text-sm font-bold">
+                            <span className="text-[#00f0ff] font-mono text-xs sm:text-sm font-bold">
                                 {Math.floor(progress)}%
                             </span>
                         </div>
@@ -230,32 +230,32 @@ export function CinematicLoader({ onComplete }: { onComplete: () => void }) {
 
                     {/* Loading tip (RDR2 style) */}
                     <div className="loader-tip">
-                        <p className="text-sm text-gray-500 font-mono animate-pulse">
+                        <p className="text-xs sm:text-sm text-gray-500 font-mono animate-pulse px-4">
                             {currentTip}
                         </p>
                     </div>
                 </div>
 
                 {/* Footer text */}
-                <p className="mt-12 text-xs text-gray-700 font-mono tracking-widest">
+                <p className="mt-8 sm:mt-12 text-[10px] sm:text-xs text-gray-700 font-mono tracking-widest">
                     ANTANANARIVO • MADAGASCAR • {currentYear}
                 </p>
             </div>
 
             {/* Corner ornaments (RDR2 style) */}
-            <div className="corner-decor absolute top-8 left-8 w-20 h-20">
+            <div className="corner-decor absolute top-4 left-4 sm:top-6 sm:left-6 md:top-8 md:left-8 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20">
                 <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-[#00f0ff] to-transparent" />
                 <div className="absolute top-0 left-0 w-[2px] h-full bg-gradient-to-b from-[#00f0ff] to-transparent" />
             </div>
-            <div className="corner-decor absolute top-8 right-8 w-20 h-20">
+            <div className="corner-decor absolute top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20">
                 <div className="absolute top-0 right-0 w-full h-[2px] bg-gradient-to-l from-[#00f0ff] to-transparent" />
                 <div className="absolute top-0 right-0 w-[2px] h-full bg-gradient-to-b from-[#00f0ff] to-transparent" />
             </div>
-            <div className="corner-decor absolute bottom-8 left-8 w-20 h-20">
+            <div className="corner-decor absolute bottom-4 left-4 sm:bottom-6 sm:left-6 md:bottom-8 md:left-8 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20">
                 <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-[#ccff00] to-transparent" />
                 <div className="absolute bottom-0 left-0 w-[2px] h-full bg-gradient-to-t from-[#ccff00] to-transparent" />
             </div>
-            <div className="corner-decor absolute bottom-8 right-8 w-20 h-20">
+            <div className="corner-decor absolute bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20">
                 <div className="absolute bottom-0 right-0 w-full h-[2px] bg-gradient-to-l from-[#ccff00] to-transparent" />
                 <div className="absolute bottom-0 right-0 w-[2px] h-full bg-gradient-to-t from-[#ccff00] to-transparent" />
             </div>

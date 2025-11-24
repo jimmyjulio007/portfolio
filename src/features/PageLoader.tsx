@@ -91,21 +91,21 @@ export function PageLoader() {
             </div>
 
             {/* Loading Content (Centered) */}
-            <div ref={textRef} className="relative z-20 flex flex-col items-center gap-4 pointer-events-auto">
-                <div className="flex items-center gap-3 font-mono text-xs text-[#00f0ff] tracking-widest">
-                    <span className="w-2 h-2 bg-[#00f0ff] rounded-full animate-pulse" />
+            <div ref={textRef} className="relative z-20 flex flex-col items-center gap-3 sm:gap-4 pointer-events-auto px-4">
+                <div className="flex items-center gap-2 sm:gap-3 font-mono text-[10px] sm:text-xs text-[#00f0ff] tracking-widest">
+                    <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#00f0ff] rounded-full animate-pulse" />
                     SYSTEM_INITIALIZING
                     <span ref={percentRef}>0%</span>
                 </div>
 
-                <div className="w-64 h-[1px] bg-gray-800 overflow-hidden">
+                <div className="w-48 sm:w-56 md:w-64 h-[1px] bg-gray-800 overflow-hidden">
                     <div
                         ref={progressRef}
                         className="h-full w-0 bg-[#ccff00] shadow-[0_0_15px_#ccff00]"
                     />
                 </div>
 
-                <div className="font-mono text-[10px] text-gray-500 tracking-[0.2em]">
+                <div className="font-mono text-[8px] sm:text-[10px] text-gray-500 tracking-[0.15em] sm:tracking-[0.2em]">
                     ESTABLISHING_NEURAL_LINK
                 </div>
             </div>
