@@ -4,11 +4,15 @@
  */
 
 export const SITE_CONFIG = {
-    name: "Your Name",
-    title: "Portfolio | Creative Developer",
+    name: "Jimmy Julio",
+    title: "Jimmy Julio | Full Stack JS AI Developer",
     description:
-        "A technology-led creative portfolio crafting experiences for the digital age",
-    url: "https://yourportfolio.com",
+        "Full Stack JavaScript & AI Developer specializing in LangChain integration and modern web technologies. Based in Antananarivo, Madagascar.",
+    url: process.env.NEXT_PUBLIC_SITE_URL
+        ? process.env.NEXT_PUBLIC_SITE_URL
+        : (process.env.VERCEL_URL
+            ? `https://${process.env.VERCEL_URL}`
+            : "https://portfolio-pi-one-i0stm0u02e.vercel.app"),
 } as const;
 
 export const ANIMATION_CONFIG = {

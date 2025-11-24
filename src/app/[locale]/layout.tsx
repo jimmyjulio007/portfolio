@@ -38,12 +38,12 @@ export async function generateMetadata({
         ],
         authors: [
             {
-                name: 'Jimmy Julio',
-                url: 'https://portfolio-pi-one-i0stm0u02e.vercel.app',
+                name: SITE_CONFIG.name,
+                url: SITE_CONFIG.url,
             },
         ],
-        creator: 'Jimmy Julio',
-        metadataBase: new URL('https://portfolio-pi-one-i0stm0u02e.vercel.app'),
+        creator: SITE_CONFIG.name,
+        metadataBase: new URL(SITE_CONFIG.url),
         alternates: {
             canonical: '/',
             languages: {
@@ -60,7 +60,7 @@ export async function generateMetadata({
             description: t('description'),
             type: 'website',
             locale: locale,
-            url: 'https://portfolio-pi-one-i0stm0u02e.vercel.app',
+            url: SITE_CONFIG.url,
             siteName: t('title'),
         },
         twitter: {

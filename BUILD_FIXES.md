@@ -83,23 +83,6 @@ POST /api/analytics 404 in 9.0s
 ✅ Ready for analytics service integration (GA, Vercel Analytics, etc.)
 ```
 
----
-
-### 4. ✅ Next.js Image & Link Components
-**Verified**:
-- ✅ No raw `<img>` tags found in codebase
-- ✅ No raw `<a href>` tags found in codebase
-- Already using Next.js components correctly
-
----
-
-### 5. ✅ Content Security Policy - Blob URLs
-**Problem**:
-```
-Fetch API cannot load blob:http://localhost:3000/...
-Refused to connect because it violates the document's Content Security Policy.
-
-THREE.GLTFLoader: Couldn't load texture blob:...
 ```
 
 **Solution**:
@@ -121,6 +104,19 @@ THREE.GLTFLoader: Couldn't load texture blob:...
  object-src 'self' blob:; 
  child-src 'self' blob:;"
 ```
+
+---
+
+### 6. ✅ MetadataBase Warning
+**Problem**:
+```
+⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images
+```
+
+**Solution**:
+- Added `metadataBase` to root layout `src/app/layout.tsx`
+- Fixed URL resolution logic in `src/shared/config/constants.ts`
+- Centralized configuration in `SITE_CONFIG`
 
 ---
 
