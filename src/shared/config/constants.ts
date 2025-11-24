@@ -13,6 +13,9 @@ export const SITE_CONFIG = {
         : (process.env.VERCEL_URL
             ? `https://${process.env.VERCEL_URL}`
             : "https://portfolio-pi-one-i0stm0u02e.vercel.app"),
+    verification: {
+        google: "google0fddec7407a43cfb.html"
+    }
 } as const;
 
 export const ANIMATION_CONFIG = {
