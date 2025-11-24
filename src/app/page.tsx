@@ -11,11 +11,19 @@ import { AboutSection } from "@/widgets/AboutSection";
 import { ContactSection } from "@/widgets/ContactSection";
 import { CinematicLoader } from "@/features/CinematicLoader";
 import { FloatingMusicToggle } from "@/features/FloatingMusicToggle";
+import { RTXToggle } from "@/features/RTXToggle";
 import { soundManager } from "@/shared/lib/sound-manager";
 import { SOUND_CONFIG } from "@/shared/config/constants";
 
 export default function HomePage() {
-  const [isLoading, setIsLoading] = useState(true);
+  // Start with false to match server rendering, then show loader on client
+  const [isLoading, setIsLoading] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    setIsLoading(true);
+  }, []);
   useEffect(() => {
     // Initialize Lenis for ultra-smooth scrolling
     const lenis = new Lenis({
@@ -49,14 +57,9 @@ export default function HomePage() {
 
   return (
     <>
-      {isLoading && (
-        <CinematicLoader
-          onComplete={() => {
-            setIsLoading(false);
-          }}
-        />
-      )}
+      {isMounted && isLoading && <CinematicLoader onComplete={() => setIsLoading(false)} />}
       <FloatingMusicToggle />
+      <RTXToggle />
       <main className="min-h-screen bg-[#030303] text-white selection:bg-[#00f0ff] selection:text-black">
         <Navigation />
         <HeroSection />
@@ -69,7 +72,7 @@ export default function HomePage() {
         <footer className="relative py-12 bg-black border-t border-gray-900">
           <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <p className="text-gray-600 text-xs font-mono">
-              © 2026 [YOUR NAME]. SYSTEM ONLINE.
+              © 2026 JIMMY. SYSTEM ONLINE.
             </p>
             <div className="flex gap-4">
               <span className="w-2 h-2 bg-[#00f0ff] rounded-full animate-pulse" />

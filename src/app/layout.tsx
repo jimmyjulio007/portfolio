@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./hero-animations.css";
 import { SITE_CONFIG } from "@/shared/config/constants";
 import { CustomCursor } from "@/features/CustomCursor";
 

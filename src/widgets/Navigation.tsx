@@ -30,13 +30,7 @@ export function Navigation() {
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            gsap.from(navRef.current, {
-                y: -100,
-                opacity: 0,
-                duration: 1,
-                delay: 0.5,
-                ease: "power3.out",
-            });
+            // Navigation visible immediately - no entrance animation!
 
             ScrollTrigger.create({
                 trigger: document.body,
@@ -69,7 +63,7 @@ export function Navigation() {
             <nav
                 ref={navRef}
                 className={cn(
-                    "fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b border-transparent",
+                    "fixed top-0 left-0 right-0 z-[10001] transition-all duration-500 border-b border-transparent",
                     isScrolled
                         ? "bg-black/80 backdrop-blur-md border-gray-800 py-4"
                         : "bg-transparent py-6",

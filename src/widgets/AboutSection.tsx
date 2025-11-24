@@ -4,6 +4,13 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+import { BaobabTree } from "@/entities/BaobabTree";
+
+const Scene3D = dynamic(() => import("@/shared/ui/Scene3D").then(mod => ({ default: mod.Scene3D })), {
+    ssr: false,
+    loading: () => <div className="absolute inset-0 bg-transparent" />,
+});
 
 if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
@@ -97,6 +104,13 @@ export function AboutSection() {
             ref={sectionRef}
             className="relative py-32 bg-[#0a0a0a] overflow-hidden"
         >
+            {/* 3D Background */}
+            <div className="absolute inset-0 opacity-20">
+                <Scene3D>
+                    <BaobabTree />
+                </Scene3D>
+            </div>
+
             <div className="relative z-10 max-w-7xl mx-auto px-6">
                 <div className="grid lg:grid-cols-12 gap-16 items-start">
 

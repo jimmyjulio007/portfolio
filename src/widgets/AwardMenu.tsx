@@ -138,14 +138,14 @@ export function AwardMenu({ isOpen, onClose }: AwardMenuProps) {
             {/* Overlay */}
             <div
                 ref={overlayRef}
-                className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[998] opacity-0"
+                className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[10002] opacity-0"
                 onClick={onClose}
             />
 
             {/* Menu Panel */}
             <div
                 ref={menuRef}
-                className="fixed top-0 right-0 h-full w-full md:w-[600px] bg-gradient-to-br from-black via-[#0a0a0a] to-black border-l border-[#00f0ff]/20 z-[999] translate-x-full overflow-y-auto"
+                className="fixed top-0 right-0 h-full w-full md:w-[600px] bg-gradient-to-br from-black via-[#0a0a0a] to-black border-l border-[#00f0ff]/20 z-[10003] translate-x-full overflow-y-auto"
             >
                 <div className="relative h-full p-12 flex flex-col">
 
