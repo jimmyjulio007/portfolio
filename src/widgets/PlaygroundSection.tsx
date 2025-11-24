@@ -158,7 +158,7 @@ export function PlaygroundSection() {
                     />
 
                     <span className="relative z-10 font-mono text-xs bg-black/50 px-4 py-2 border border-white/10 backdrop-blur-md text-white">
-                        PREVIEW_MODULE_LOADED
+                        {t('previewLoaded')}
                     </span>
                 </div>
             </div>

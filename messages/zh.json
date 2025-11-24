@@ -5,7 +5,10 @@
         "process": "流程",
         "playground": "实验室",
         "about": "关于",
-        "contact": "联系"
+        "contact": "联系",
+        "menuLabel": "菜单",
+        "navigationLabel": "// 导航",
+        "connectLabel": "// 联系"
     },
     "Hero": {
         "title_line1": "构建",
@@ -39,6 +42,8 @@
         "sectionLabel": "// 精选项目",
         "title": "作品",
         "titleHighlight": "展示",
+        "introDescription": "精心策划的AI驱动应用程序和沉浸式Web体验集合。",
+        "scrollHint": "< 滚动探索 >",
         "project1Title": "LANGCHAIN 代理",
         "project1Description": "用于复杂任务执行的自主AI代理系统。",
         "project1Tags": "TypeScript • LangChain.js • OpenAI",
@@ -47,7 +52,10 @@
         "project2Tags": "Next.js 15 • D3.js • Node.js",
         "project3Title": "赛博电商",
         "project3Description": "具有3D产品配置的无头电商平台。",
-        "project3Tags": "R3F • Shopify Headless • WebGL"
+        "project3Tags": "R3F • Shopify Headless • WebGL",
+        "viewCaseStudy": "查看案例研究",
+        "seeMoreTitle": "想看更多？",
+        "viewGithub": "查看GITHUB"
     },
     "Playground": {
         "sectionLabel": "// 互动实验室",
@@ -58,7 +66,8 @@
         "feature2": "神经网络",
         "feature3": "音频反应",
         "feature4": "光线步进",
-        "comingSoon": "敬请期待"
+        "comingSoon": "敬请期待",
+        "previewLoaded": "预览模块已加载"
     },
     "About": {
         "sectionLabel": "// 架构师",

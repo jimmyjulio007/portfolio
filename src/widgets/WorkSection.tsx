@@ -125,10 +125,10 @@ export function WorkSection() {
                             </span>
                         </h2>
                         <p className="text-gray-300 mt-8 max-w-md text-lg font-light">
-                            A curated collection of AI-driven applications and immersive web experiences.
+                            {t('introDescription')}
                             <br />
                             <span className="text-xs font-mono text-[#00f0ff] mt-4 block hidden md:block">
-                                &lt; SCROLL TO EXPLORE &gt;
+                                {t('scrollHint')}
                             </span>
                         </p>
                     </div>
@@ -164,7 +164,7 @@ export function WorkSection() {
                                         </div>
                                         <Magnetic strength={0.5}>
                                             <Button size="sm" className="md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500">
-                                                VIEW CASE STUDY
+                                                {t('viewCaseStudy')}
                                             </Button>
                                         </Magnetic>
                                     </div>
@@ -182,11 +182,11 @@ export function WorkSection() {
                     <div className="flex-shrink-0 w-full md:w-[30vw] flex items-center justify-center py-12 md:py-0">
                         <div className="text-center">
                             <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                                Want to see more?
+                                {t('seeMoreTitle')}
                             </h3>
                             <Magnetic strength={1}>
                                 <Button size="lg" variant="secondary">
-                                    VIEW GITHUB
+                                    {t('viewGithub')}
                                 </Button>
                             </Magnetic>
                         </div>

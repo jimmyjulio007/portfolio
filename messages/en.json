@@ -5,7 +5,10 @@
         "process": "PROCESS",
         "playground": "PLAYGROUND",
         "about": "ABOUT",
-        "contact": "CONTACT"
+        "contact": "CONTACT",
+        "menuLabel": "MENU",
+        "navigationLabel": "// NAVIGATION",
+        "connectLabel": "// CONNECT"
     },
     "Hero": {
         "title_line1": "ARCHITECTING",
@@ -39,6 +42,8 @@
         "sectionLabel": "// Selected Projects",
         "title": "SHOWCASED",
         "titleHighlight": "WORK",
+        "introDescription": "A curated collection of AI-driven applications and immersive web experiences.",
+        "scrollHint": "< SCROLL TO EXPLORE >",
         "project1Title": "LANGCHAIN AGENT",
         "project1Description": "Autonomous AI agent system for complex task execution.",
         "project1Tags": "TypeScript • LangChain.js • OpenAI",
@@ -47,7 +52,10 @@
         "project2Tags": "Next.js 15 • D3.js • Node.js",
         "project3Title": "CYBER COMMERCE",
         "project3Description": "Headless e-commerce platform with 3D product config.",
-        "project3Tags": "R3F • Shopify Headless • WebGL"
+        "project3Tags": "R3F • Shopify Headless • WebGL",
+        "viewCaseStudy": "VIEW CASE STUDY",
+        "seeMoreTitle": "Want to see more?",
+        "viewGithub": "VIEW GITHUB"
     },
     "Playground": {
         "sectionLabel": "// Interactive Lab",
@@ -58,7 +66,8 @@
         "feature2": "Neural Net",
         "feature3": "Audio React",
         "feature4": "Ray Marching",
-        "comingSoon": "COMING SOON"
+        "comingSoon": "COMING SOON",
+        "previewLoaded": "PREVIEW_MODULE_LOADED"
     },
     "About": {
         "sectionLabel": "// The Architect",

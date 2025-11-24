@@ -5,7 +5,10 @@
         "process": "العملية",
         "playground": "المختبر",
         "about": "عني",
-        "contact": "تواصل"
+        "contact": "تواصل",
+        "menuLabel": "القائمة",
+        "navigationLabel": "// التنقل",
+        "connectLabel": "// اتصل"
     },
     "Hero": {
         "title_line1": "هندسة",
@@ -39,6 +42,8 @@
         "sectionLabel": "// مشاريع مختارة",
         "title": "معرض",
         "titleHighlight": "الأعمال",
+        "introDescription": "مجموعة منسقة من التطبيقات المدعومة بالذكاء الاصطناعي وتجارب الويب الغامرة.",
+        "scrollHint": "< قم بالتمرير للاستكشاف >",
         "project1Title": "وكيل LANGCHAIN",
         "project1Description": "نظام وكيل ذكاء اصطناعي مستقل لتنفيذ المهام المعقدة.",
         "project1Tags": "TypeScript • LangChain.js • OpenAI",
@@ -47,7 +52,10 @@
         "project2Tags": "Next.js 15 • D3.js • Node.js",
         "project3Title": "التجارة السيبرانية",
         "project3Description": "منصة تجارة إلكترونية مع تكوين منتج ثلاثي الأبعاد.",
-        "project3Tags": "R3F • Shopify Headless • WebGL"
+        "project3Tags": "R3F • Shopify Headless • WebGL",
+        "viewCaseStudy": "عرض دراسة الحالة",
+        "seeMoreTitle": "هل تريد رؤية المزيد؟",
+        "viewGithub": "عرض GITHUB"
     },
     "Playground": {
         "sectionLabel": "// مختبر تفاعلي",
@@ -58,7 +66,8 @@
         "feature2": "شبكة عصبية",
         "feature3": "تفاعل صوتي",
         "feature4": "تتبع الأشعة",
-        "comingSoon": "قريباً"
+        "comingSoon": "قريباً",
+        "previewLoaded": "تم_تحميل_وحدة_المعاينة"
     },
     "About": {
         "sectionLabel": "// المهندس",

@@ -5,7 +5,10 @@
         "process": "PROZESS",
         "playground": "SPIELPLATZ",
         "about": "ÜBER",
-        "contact": "KONTAKT"
+        "contact": "KONTAKT",
+        "menuLabel": "MENÜ",
+        "navigationLabel": "// NAVIGATION",
+        "connectLabel": "// VERBINDEN"
     },
     "Hero": {
         "title_line1": "ARCHITEKTUR DER",
@@ -39,6 +42,8 @@
         "sectionLabel": "// Ausgewählte Projekte",
         "title": "PROJEKT",
         "titleHighlight": "GALERIE",
+        "introDescription": "Eine kuratierte Sammlung KI-gesteuerter Anwendungen und immersiver Web-Erlebnisse.",
+        "scrollHint": "< SCROLLEN ZUM ERKUNDEN >",
         "project1Title": "LANGCHAIN AGENT",
         "project1Description": "Autonomes KI-Agentensystem für komplexe Aufgabenausführung.",
         "project1Tags": "TypeScript • LangChain.js • OpenAI",
@@ -47,7 +52,10 @@
         "project2Tags": "Next.js 15 • D3.js • Node.js",
         "project3Title": "CYBER COMMERCE",
         "project3Description": "Headless E-Commerce-Plattform mit 3D-Produktkonfiguration.",
-        "project3Tags": "R3F • Shopify Headless • WebGL"
+        "project3Tags": "R3F • Shopify Headless • WebGL",
+        "viewCaseStudy": "FALLSTUDIE ANSEHEN",
+        "seeMoreTitle": "Möchten Sie mehr sehen?",
+        "viewGithub": "GITHUB ANSEHEN"
     },
     "Playground": {
         "sectionLabel": "// Interaktives Labor",
@@ -58,7 +66,8 @@
         "feature2": "Neuronales Netz",
         "feature3": "Audio Reaktion",
         "feature4": "Ray Marching",
-        "comingSoon": "DEMNÄCHST"
+        "comingSoon": "DEMNÄCHST",
+        "previewLoaded": "VORSCHAU_MODUL_GELADEN"
     },
     "About": {
         "sectionLabel": "// Der Architekt",

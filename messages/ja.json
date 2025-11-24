@@ -5,7 +5,10 @@
         "process": "プロセス",
         "playground": "実験室",
         "about": "私について",
-        "contact": "お問い合わせ"
+        "contact": "お問い合わせ",
+        "menuLabel": "メニュー",
+        "navigationLabel": "// ナビゲーション",
+        "connectLabel": "// 接続"
     },
     "Hero": {
         "title_line1": "知能の",
@@ -39,6 +42,8 @@
         "sectionLabel": "// 厳選されたプロジェクト",
         "title": "実績",
         "titleHighlight": "紹介",
+        "introDescription": "AIを駆使したアプリケーションと没入型Web体験の厳選コレクション。",
+        "scrollHint": "< スクロールして探索 >",
         "project1Title": "LANGCHAIN エージェント",
         "project1Description": "複雑なタスク実行のための自律型AIエージェントシステム。",
         "project1Tags": "TypeScript • LangChain.js • OpenAI",
@@ -47,7 +52,10 @@
         "project2Tags": "Next.js 15 • D3.js • Node.js",
         "project3Title": "サイバーコマース",
         "project3Description": "3D製品構成を備えたヘッドレスEコマースプラットフォーム。",
-        "project3Tags": "R3F • Shopify Headless • WebGL"
+        "project3Tags": "R3F • Shopify Headless • WebGL",
+        "viewCaseStudy": "ケーススタディを見る",
+        "seeMoreTitle": "もっと見たいですか？",
+        "viewGithub": "GITHUB を見る"
     },
     "Playground": {
         "sectionLabel": "// インタラクティブラボ",
@@ -58,7 +66,8 @@
         "feature2": "ニューラルネット",
         "feature3": "オーディオリアクト",
         "feature4": "レイマーチング",
-        "comingSoon": "近日公開"
+        "comingSoon": "近日公開",
+        "previewLoaded": "プレビューモジュール読込済"
     },
     "About": {
         "sectionLabel": "// アーキテクト",

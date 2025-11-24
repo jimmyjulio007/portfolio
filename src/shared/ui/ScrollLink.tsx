@@ -1,6 +1,7 @@
 "use client";
 
 import { soundManager } from "@/shared/lib/sound-manager";
+import Link from "next/link";
 
 interface ScrollLinkProps {
     href: string;
@@ -26,12 +27,12 @@ export function ScrollLink({ href, children, className }: ScrollLinkProps) {
     };
 
     return (
-        <a
+        <Link
             href={href}
             onClick={handleClick}
             className={className}
         >
             {children}
-        </a>
+        </Link>
     );
 }

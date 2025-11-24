@@ -5,7 +5,10 @@
         "process": "PROCESSUS",
         "playground": "LABO",
         "about": "À PROPOS",
-        "contact": "CONTACT"
+        "contact": "CONTACT",
+        "menuLabel": "MENU",
+        "navigationLabel": "// NAVIGATION",
+        "connectLabel": "// CONNEXION"
     },
     "Hero": {
         "title_line1": "ARCHITECTE",
@@ -39,6 +42,8 @@
         "sectionLabel": "// Projets Sélectionnés",
         "title": "PROJETS",
         "titleHighlight": "EN VEDETTE",
+        "introDescription": "Une collection curatée d'applications pilotées par l'IA et d'expériences web immersives.",
+        "scrollHint": "< DÉFILER POUR EXPLORER >",
         "project1Title": "AGENT LANGCHAIN",
         "project1Description": "Système d'agent IA autonome pour l'exécution de tâches complexes.",
         "project1Tags": "TypeScript • LangChain.js • OpenAI",
@@ -47,7 +52,10 @@
         "project2Tags": "Next.js 15 • D3.js • Node.js",
         "project3Title": "COMMERCE CYBER",
         "project3Description": "Plateforme e-commerce headless avec configuration produit 3D.",
-        "project3Tags": "R3F • Shopify Headless • WebGL"
+        "project3Tags": "R3F • Shopify Headless • WebGL",
+        "viewCaseStudy": "VOIR L'ÉTUDE DE CAS",
+        "seeMoreTitle": "Vous voulez en voir plus ?",
+        "viewGithub": "VOIR GITHUB"
     },
     "Playground": {
         "sectionLabel": "// Labo Interactif",
@@ -58,7 +66,8 @@
         "feature2": "Réseau Neuronal",
         "feature3": "Réaction Audio",
         "feature4": "Ray Marching",
-        "comingSoon": "BIENTÔT DISPONIBLE"
+        "comingSoon": "BIENTÔT DISPONIBLE",
+        "previewLoaded": "MODULE_APERÇU_CHARGÉ"
     },
     "About": {
         "sectionLabel": "// L'Architecte",

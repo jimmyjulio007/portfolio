@@ -11,6 +11,7 @@ import { ScrollLink } from "@/shared/ui/ScrollLink";
 import { AwardMenu } from "@/widgets/AwardMenu";
 import { LanguageSwitcher } from "@/features/LanguageSwitcher";
 import { useTranslations } from 'next-intl';
+import Link from "next/link";
 
 if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
@@ -80,14 +81,14 @@ export function Navigation() {
             >
                 <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
                     <Magnetic strength={0.5}>
-                        <a
+                        <Link
                             href="#home"
                             onClick={(e) => handleScrollTo(e, "#home")}
                             className="text-2xl font-bold text-white tracking-tighter inline-block"
                             style={{ fontFamily: "var(--font-family-grotesk)" }}
                         >
                             JIMMY<span className="text-[#00f0ff]">.JULIO</span>
-                        </a>
+                        </Link>
                     </Magnetic>
 
                     {/* Desktop Menu */}
@@ -95,7 +96,7 @@ export function Navigation() {
                         {NAV_ITEMS.map((item) => (
                             <li key={item.href}>
                                 <Magnetic strength={0.3}>
-                                    <a
+                                    <Link
                                         href={item.href}
                                         onClick={(e) => handleScrollTo(e, item.href)}
                                         className="text-gray-300 hover:text-[#ccff00] transition-colors duration-300 text-xs font-mono tracking-widest inline-block p-2 relative group"
@@ -105,7 +106,7 @@ export function Navigation() {
                                     >
                                         {item.label}
                                         <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#ccff00] transition-all duration-300 group-hover:w-full" />
-                                    </a>
+                                    </Link>
                                 </Magnetic>
                             </li>
                         ))}
@@ -165,7 +166,7 @@ export function Navigation() {
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                             onMouseEnter={() => soundManager.play("hover", { volume: 0.2 })}
                         >
-                            <span className="tracking-widest">MENU</span>
+                            <span className="tracking-widest">{t('menuLabel')}</span>
                             <div className="flex flex-col gap-[3px]">
                                 <span className="w-4 h-[2px] bg-current" />
                                 <span className="w-4 h-[2px] bg-current" />

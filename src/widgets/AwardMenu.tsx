@@ -7,6 +7,7 @@ import { Magnetic } from "@/shared/ui/Magnetic";
 import { soundManager } from "@/shared/lib/sound-manager";
 import { useTranslations } from 'next-intl';
 import { LanguageSwitcher } from "@/features/LanguageSwitcher";
+import Link from "next/link";
 
 
 
@@ -172,7 +173,7 @@ export function AwardMenu({ isOpen, onClose }: AwardMenuProps) {
                     {/* Header */}
                     <div className="mb-16">
                         <span className="text-[#00f0ff] font-mono text-xs tracking-widest">
-                            // NAVIGATION
+                            {t('navigationLabel')}
                         </span>
                         <div className="menu-decor w-20 h-[2px] bg-gradient-to-r from-[#00f0ff] to-transparent mt-2 origin-left" />
                     </div>
@@ -182,7 +183,7 @@ export function AwardMenu({ isOpen, onClose }: AwardMenuProps) {
                         <ul className="space-y-1">
                             {MENU_ITEMS.map((item) => (
                                 <li key={item.href} className="menu-item">
-                                    <a
+                                    <Link
                                         href={item.href}
                                         onClick={(e) => {
                                             e.preventDefault();
@@ -197,7 +198,7 @@ export function AwardMenu({ isOpen, onClose }: AwardMenuProps) {
                                         <span className="text-4xl md:text-5xl font-bold text-white group-hover:text-[#00f0ff] transition-all duration-300 group-hover:translate-x-2">
                                             {item.label}
                                         </span>
-                                    </a>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
@@ -206,7 +207,7 @@ export function AwardMenu({ isOpen, onClose }: AwardMenuProps) {
                     {/* Footer Section */}
                     <div className="mt-12 pt-8 border-t border-gray-800">
                         <p className="text-gray-500 text-sm mb-4 font-mono">
-                            // CONNECT
+                            {t('connectLabel')}
                         </p>
                         <div className="flex gap-6">
                             {SOCIAL_LINKS.map((link) => (
