@@ -297,23 +297,7 @@ export function ContactSection() {
                     ))}
                 </div>
 
-                {/* Footer / Copyright */}
-                <div className="mt-12 flex flex-col items-center gap-4 text-gray-700 font-mono text-xs">
-                    <p>© {new Date().getFullYear()} Jimmy Julio. All Rights Reserved.</p>
-                    <Link
-                        href="/privacy"
-                        className="hover:text-[#00f0ff] transition-colors underline underline-offset-4 decoration-gray-800 hover:decoration-[#00f0ff]"
-                    >
-                        {{
-                            en: "Privacy Policy",
-                            fr: "Politique de Confidentialité",
-                            ja: "プライバシーポリシー",
-                            zh: "隐私政策",
-                            de: "Datenschutzrichtlinie",
-                            ar: "سياسة الخصوصية"
-                        }[locale as string] || "Privacy Policy"}
-                    </Link>
-                </div>
+
             </div>
 
             {/* Toast Notification */}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, lazy, Suspense } from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Lenis from "lenis";
 import { Navigation } from "@/widgets/Navigation";
@@ -9,6 +9,7 @@ import { soundManager } from "@/shared/lib/sound-manager";
 import { SOUND_CONFIG } from "@/shared/config/constants";
 import { useTranslations } from 'next-intl';
 import { reportWebVitals } from '@/shared/lib/web-vitals';
+import { Link } from "@/i18n/routing";
 
 // Lazy load heavy components with dynamic imports
 const WorkSection = dynamic(() => import("@/widgets/WorkSection").then(mod => ({ default: mod.WorkSection })), {
@@ -50,18 +51,25 @@ const RTXToggle = dynamic(() => import("@/features/RTXToggle").then(mod => ({ de
 
 export default function HomePage() {
   const t = useTranslations('Footer');
-  // Start with false to match server rendering, then show loader on client
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
   const currentYear = new Date().getFullYear();
 
   useEffect(() => {
     setIsMounted(true);
-    setIsLoading(true);
+
+    // Check if we've already shown the loader
+    const hasLoaded = sessionStorage.getItem("hasLoaded");
+    if (hasLoaded) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+    }
 
     // Initialize web vitals monitoring
     reportWebVitals();
   }, []);
+
   useEffect(() => {
     // Initialize Lenis for ultra-smooth scrolling
     const lenis = new Lenis({
@@ -95,7 +103,14 @@ export default function HomePage() {
 
   return (
     <>
-      {isMounted && isLoading && <CinematicLoader onComplete={() => setIsLoading(false)} />}
+      {isMounted && isLoading && (
+        <CinematicLoader
+          onComplete={() => {
+            setIsLoading(false);
+            sessionStorage.setItem("hasLoaded", "true");
+          }}
+        />
+      )}
       <FloatingMusicToggle />
       <RTXToggle />
       <main className="min-h-screen bg-[#030303] text-white selection:bg-[#00f0ff] selection:text-black">
@@ -109,10 +124,18 @@ export default function HomePage() {
         <ContactSection />
 
         <footer className="relative py-12 bg-black border-t border-gray-900">
-          <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <p className="text-gray-600 text-xs font-mono">
-              © {currentYear} JIMMY. {t('systemOnline')}
-            </p>
+          <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
+              <p className="text-gray-600 text-xs font-mono">
+                © {currentYear} JIMMY. {t('systemOnline')}
+              </p>
+              <Link
+                href="/privacy"
+                className="text-gray-600 hover:text-[#00f0ff] text-xs font-mono transition-colors underline underline-offset-4"
+              >
+                Privacy Policy
+              </Link>
+            </div>
             <div className="flex gap-4">
               <span className="w-2 h-2 bg-[#00f0ff] rounded-full animate-pulse" />
               <span className="w-2 h-2 bg-[#ccff00] rounded-full animate-pulse delay-75" />
