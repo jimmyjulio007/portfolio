@@ -90,12 +90,12 @@ export function CustomCursor() {
         <>
             <div
                 ref={cursorRef}
-                className="fixed top-0 left-0 w-2 h-2 bg-[#00f0ff] rounded-full pointer-events-none z-[9999] mix-blend-difference"
+                className="fixed top-0 left-0 w-2 h-2 bg-[#00f0ff] rounded-full pointer-events-none z-[10005] mix-blend-difference"
                 style={{ transform: "translate(-50%, -50%)", willChange: "transform" }}
             />
             <div
                 ref={followerRef}
-                className="fixed top-0 left-0 w-10 h-10 border border-[#00f0ff] rounded-full pointer-events-none z-[9999] mix-blend-difference"
+                className="fixed top-0 left-0 w-10 h-10 border border-[#00f0ff] rounded-full pointer-events-none z-[10005] mix-blend-difference"
                 style={{ transform: "translate(-50%, -50%)", willChange: "transform" }}
             />
         </>

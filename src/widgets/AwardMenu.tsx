@@ -6,6 +6,7 @@ import { X } from "lucide-react";
 import { Magnetic } from "@/shared/ui/Magnetic";
 import { soundManager } from "@/shared/lib/sound-manager";
 import { useTranslations } from 'next-intl';
+import { LanguageSwitcher } from "@/features/LanguageSwitcher";
 
 
 
@@ -23,7 +24,7 @@ export function AwardMenu({ isOpen, onClose }: AwardMenuProps) {
     const currentYear = new Date().getFullYear();
 
     const MENU_ITEMS = [
-        { label: "HOME", href: "#home", index: "01" },
+        { label: t('home'), href: "#home", index: "01" },
         { label: t('process'), href: "#process", index: "02" },
         { label: t('work'), href: "#work", index: "03" },
         { label: t('playground'), href: "#playground", index: "04" },
@@ -218,6 +219,10 @@ export function AwardMenu({ isOpen, onClose }: AwardMenuProps) {
                                     {link.label}
                                 </a>
                             ))}
+                        </div>
+
+                        <div className="mt-8 md:hidden">
+                            <LanguageSwitcher dropUp={true} />
                         </div>
 
                         <p className="text-gray-700 text-xs font-mono mt-8">

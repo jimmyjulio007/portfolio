@@ -14,7 +14,11 @@ const LOCALES = [
     { code: 'ar', name: 'العربية', flag: '🇸🇦' },
 ] as const;
 
-export function LanguageSwitcher() {
+interface LanguageSwitcherProps {
+    dropUp?: boolean;
+}
+
+export function LanguageSwitcher({ dropUp = false }: LanguageSwitcherProps) {
     const locale = useLocale();
     const router = useRouter();
     const pathname = usePathname();
@@ -53,7 +57,7 @@ export function LanguageSwitcher() {
                     />
 
                     {/* Dropdown */}
-                    <div className="absolute top-full right-0 mt-2 w-48 bg-black/95 backdrop-blur-md border border-gray-800 rounded-lg overflow-hidden shadow-xl z-50">
+                    <div className={`absolute ${dropUp ? 'bottom-full mb-2' : 'top-full mt-2'} right-0 w-48 bg-black/95 backdrop-blur-md border border-gray-800 rounded-lg overflow-hidden shadow-xl z-50`}>
                         {LOCALES.map((loc) => (
                             <button
                                 key={loc.code}
