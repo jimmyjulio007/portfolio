@@ -1,0 +1,197 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Button } from "@/shared/ui/Button";
+import { cn } from "@/shared/lib/utils";
+import { soundManager } from "@/shared/lib/sound-manager";
+import { Magnetic } from "@/shared/ui/Magnetic";
+import { ScrollLink } from "@/shared/ui/ScrollLink";
+import { AwardMenu } from "@/widgets/AwardMenu";
+
+if (typeof window !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+}
+
+const NAV_ITEMS = [
+    { label: "HOME", href: "#home" },
+    { label: "WORK", href: "#work" },
+    { label: "ABOUT", href: "#about" },
+    { label: "CONTACT", href: "#contact" },
+];
+
+export function Navigation() {
+    const navRef = useRef<HTMLElement>(null);
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [soundEnabled, setSoundEnabled] = useState(true);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.from(navRef.current, {
+                y: -100,
+                opacity: 0,
+                duration: 1,
+                delay: 0.5,
+                ease: "power3.out",
+            });
+
+            ScrollTrigger.create({
+                trigger: document.body,
+                start: "100px top",
+                onEnter: () => setIsScrolled(true),
+                onLeaveBack: () => setIsScrolled(false),
+            });
+        }, navRef);
+
+        return () => ctx.revert();
+    }, []);
+
+    const toggleSound = () => {
+        soundManager.toggle();
+        setSoundEnabled(soundManager.isEnabled());
+    };
+
+    const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        e.preventDefault();
+        setIsMobileMenuOpen(false);
+
+        const target = document.querySelector(href);
+        if (target) {
+            target.scrollIntoView({ behavior: "smooth" });
+        }
+    };
+
+    return (
+        <>
+            <nav
+                ref={navRef}
+                className={cn(
+                    "fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b border-transparent",
+                    isScrolled
+                        ? "bg-black/80 backdrop-blur-md border-gray-800 py-4"
+                        : "bg-transparent py-6",
+                )}
+            >
+                <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+                    <Magnetic strength={0.5}>
+                        <a
+                            href="#home"
+                            onClick={(e) => handleScrollTo(e, "#home")}
+                            className="text-2xl font-bold text-white tracking-tighter inline-block"
+                            style={{ fontFamily: "var(--font-family-grotesk)" }}
+                        >
+                            JIMMY<span className="text-[#00f0ff]">.JULIO</span>
+                        </a>
+                    </Magnetic>
+
+                    {/* Desktop Menu */}
+                    <ul className="hidden md:flex items-center gap-8">
+                        {NAV_ITEMS.map((item) => (
+                            <li key={item.href}>
+                                <Magnetic strength={0.3}>
+                                    <a
+                                        href={item.href}
+                                        onClick={(e) => handleScrollTo(e, item.href)}
+                                        className="text-gray-300 hover:text-[#ccff00] transition-colors duration-300 text-xs font-mono tracking-widest inline-block p-2 relative group"
+                                        onMouseEnter={() =>
+                                            soundManager.play("hover", { volume: 0.25 })
+                                        }
+                                    >
+                                        {item.label}
+                                        <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#ccff00] transition-all duration-300 group-hover:w-full" />
+                                    </a>
+                                </Magnetic>
+                            </li>
+                        ))}
+                    </ul>
+
+                    <div className="flex items-center gap-6">
+                        <Magnetic strength={0.5}>
+                            <button
+                                type="button"
+                                onClick={toggleSound}
+                                className="text-gray-300 hover:text-[#00f0ff] transition-colors p-2"
+                                aria-label="Toggle sound"
+                            >
+                                {soundEnabled ? (
+                                    <div className="flex gap-[2px] items-end h-4">
+                                        <span className="w-[2px] h-2 bg-current animate-pulse" />
+                                        <span className="w-[2px] h-4 bg-current animate-pulse delay-75" />
+                                        <span className="w-[2px] h-3 bg-current animate-pulse delay-150" />
+                                    </div>
+                                ) : (
+                                    <div className="w-4 h-[2px] bg-current" />
+                                )}
+                            </button>
+                        </Magnetic>
+
+                        <Magnetic strength={1}>
+                            <ScrollLink href="#contact">
+                                <Button
+                                    variant="primary"
+                                    size="sm"
+                                    className="hidden md:inline-flex bg-white text-black hover:bg-[#00f0ff] font-bold tracking-widest text-xs"
+                                    withSound={false}
+                                >
+                                    LET'S TALK
+                                </Button>
+                            </ScrollLink>
+                        </Magnetic>
+
+                        {/* Mobile Menu Toggle */}
+                        <button
+                            className="md:hidden text-white p-2"
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        >
+                            <div className="space-y-1.5">
+                                <span className={`block w-6 h-0.5 bg-white transition-transform duration-300 ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
+                                <span className={`block w-6 h-0.5 bg-white transition-opacity duration-300 ${isMenuOpen ? "opacity-0" : ""}`} />
+                                <span className={`block w-6 h-0.5 bg-white transition-transform duration-300 ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+                            </div>
+                        </button>
+
+                        {/* Desktop Menu Button */}
+                        <button
+                            className="hidden md:flex items-center gap-2 text-xs font-mono text-gray-400 hover:text-[#00f0ff] transition-colors p-2"
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            onMouseEnter={() => soundManager.play("hover", { volume: 0.2 })}
+                        >
+                            <span className="tracking-widest">MENU</span>
+                            <div className="flex flex-col gap-[3px]">
+                                <span className="w-4 h-[2px] bg-current" />
+                                <span className="w-4 h-[2px] bg-current" />
+                                <span className="w-4 h-[2px] bg-current" />
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+
+            {/* Award-Winning Menu */}
+            <AwardMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+
+            {/* Mobile Menu Overlay */}
+            <div
+                className={`fixed inset-0 z-40 bg-black/95 backdrop-blur-xl transition-transform duration-500 md:hidden flex items-center justify-center ${isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
+                    }`}
+            >
+                <ul className="flex flex-col items-center gap-8">
+                    {NAV_ITEMS.map((item) => (
+                        <li key={item.href}>
+                            <a
+                                href={item.href}
+                                onClick={(e) => handleScrollTo(e, item.href)}
+                                className="text-3xl font-bold text-white hover:text-[#00f0ff] transition-colors tracking-tighter"
+                            >
+                                {item.label}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </>
+    );
+}

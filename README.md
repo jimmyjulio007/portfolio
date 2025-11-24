@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Cyber-Fluid Portfolio 2026
 
-## Getting Started
+A high-voltage, futuristic portfolio website featuring a reactive particle field, fluid smooth scrolling, and a "Neon Noir" aesthetic.
 
-First, run the development server:
+## ✨ Features
+
+### 🎨 **Cyber-Fluid Aesthetic**
+- **Theme**: Deep Void Black, Electric Cyan, Acid Lime
+- **Typography**: Space Grotesk (Headers) & Outfit (Body)
+- **Brutalism**: Asymmetrical layouts, mono fonts, raw borders
+- **Glassmorphism**: Dark, frosted glass panels
+
+### 🎭 **Advanced Interactions**
+- **"Wizard Mode"**: Zero-latency 3D particles & magnetic UI elements
+- **"Slice Column" Reveal**: Cinematic 5-column staggered loading sequence
+- **Liquid Physics**: 5000-particle 3D cloud with smooth mouse interpolation
+- **Smooth Scroll**: Integrated **Lenis** for buttery smooth momentum
+- **Horizontal Gallery**: Responsive horizontal scroll for desktop, vertical for mobile
+
+### 🏗️ **Architecture**
+- **FSD Architecture**: Feature-Sliced Design
+- **Tech Stack**: Next.js 16, React Three Fiber, GSAP, Tailwind v4
+- **Performance**: Optimized WebGL and animations
+
+## 🚀 Getting Started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Install dependencies
+pnpm install
+
+# Run development server
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📂 Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `src/widgets/HeroSection`: 3D Particle Field & Brutalist Typography
+- `src/widgets/WorkSection`: Responsive Horizontal Gallery
+- `src/widgets/PlaygroundSection`: Interactive R&D lab with magnetic list
+- `src/entities/HeroObject`: The reactive particle system logic
+- `src/features/PageLoader`: The "Slice Column" reveal effect
+- `src/shared/ui/Magnetic`: Magnetic interaction wrapper
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🎨 Customization
 
-## Learn More
+### Colors
+Edit `src/app/globals.css` in the `@theme` block:
+```css
+--color-cyan-electric: #00f0ff;
+--color-lime-acid: #ccff00;
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 3D Particles
+Edit `src/entities/HeroObject.tsx` to change particle count, colors, or behavior.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**2026 • SYSTEM ONLINE** 🚀

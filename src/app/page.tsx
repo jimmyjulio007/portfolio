@@ -1,65 +1,84 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useEffect, useState } from "react";
+import Lenis from "lenis";
+import { Navigation } from "@/widgets/Navigation";
+import { HeroSection } from "@/widgets/HeroSection";
+import { WorkSection } from "@/widgets/WorkSection";
+import { ProcessSection } from "@/widgets/ProcessSection";
+import { PlaygroundSection } from "@/widgets/PlaygroundSection";
+import { AboutSection } from "@/widgets/AboutSection";
+import { ContactSection } from "@/widgets/ContactSection";
+import { CinematicLoader } from "@/features/CinematicLoader";
+import { FloatingMusicToggle } from "@/features/FloatingMusicToggle";
+import { soundManager } from "@/shared/lib/sound-manager";
+import { SOUND_CONFIG } from "@/shared/config/constants";
+
+export default function HomePage() {
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    // Initialize Lenis for ultra-smooth scrolling
+    const lenis = new Lenis({
+      duration: 1.5, // Increased duration for smoother momentum
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: "vertical",
+      gestureOrientation: "vertical",
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 2,
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    // Preload sound effects
+    Object.entries(SOUND_CONFIG.sounds).forEach(([name, url]) => {
+      soundManager.preload(name, url);
+    });
+
+    soundManager.setMasterVolume(SOUND_CONFIG.volume.master);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <>
+      {isLoading && (
+        <CinematicLoader
+          onComplete={() => {
+            setIsLoading(false);
+          }}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+      )}
+      <FloatingMusicToggle />
+      <main className="min-h-screen bg-[#030303] text-white selection:bg-[#00f0ff] selection:text-black">
+        <Navigation />
+        <HeroSection />
+        <ProcessSection />
+        <WorkSection />
+        <PlaygroundSection />
+        <AboutSection />
+        <ContactSection />
+
+        <footer className="relative py-12 bg-black border-t border-gray-900">
+          <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <p className="text-gray-600 text-xs font-mono">
+              © 2026 [YOUR NAME]. SYSTEM ONLINE.
+            </p>
+            <div className="flex gap-4">
+              <span className="w-2 h-2 bg-[#00f0ff] rounded-full animate-pulse" />
+              <span className="w-2 h-2 bg-[#ccff00] rounded-full animate-pulse delay-75" />
+              <span className="w-2 h-2 bg-white rounded-full animate-pulse delay-150" />
+            </div>
+          </div>
+        </footer>
       </main>
-    </div>
+    </>
   );
 }
