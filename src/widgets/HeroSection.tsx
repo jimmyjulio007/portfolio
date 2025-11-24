@@ -138,7 +138,7 @@ export function HeroSection() {
                             <ScrollLink href="#work">
                                 <Button
                                     size="lg"
-                                    className="bg-[#00f0ff] text-black hover:bg-white hover:scale-105 transition-all duration-300 font-bold tracking-widest"
+                                    className="w-full sm:w-auto min-w-[200px] bg-[#00f0ff] text-black hover:bg-white hover:scale-105 transition-all duration-300 font-bold tracking-widest"
                                     withSound={false}
                                 >
                                     {t('viewWork')}
@@ -150,7 +150,7 @@ export function HeroSection() {
                                 <Button
                                     size="lg"
                                     variant="secondary"
-                                    className="border border-[#ccff00] text-[#ccff00] hover:bg-[#ccff00] hover:text-black font-bold tracking-widest"
+                                    className="w-full sm:w-auto min-w-[200px] border border-[#ccff00] text-[#ccff00] hover:bg-[#ccff00] hover:text-black font-bold tracking-widest"
                                     withSound={false}
                                 >
                                     {t('contactNetwork')}

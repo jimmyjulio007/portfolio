@@ -279,7 +279,7 @@ export function ContactSection() {
                 </form>
 
                 {/* Social Links */}
-                <div className="mt-20 flex justify-center gap-12 border-t border-gray-900 pt-12">
+                <div className="mt-20 flex flex-wrap justify-center gap-6 md:gap-12 border-t border-gray-900 pt-12">
                     {[
                         t("socialGithub"),
                         t("socialLinkedin"),
