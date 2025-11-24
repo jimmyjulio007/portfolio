@@ -104,7 +104,18 @@
         "socialGithub": "GITHUB",
         "socialLinkedin": "LINKEDIN",
         "socialTwitter": "TWITTER",
-        "socialInstagram": "INSTAGRAM"
+        "socialInstagram": "INSTAGRAM",
+        "validation": {
+            "nameMin": "يجب أن يحتوي الاسم على حرفين على الأقل",
+            "nameMax": "يجب ألا يتجاوز الاسم 100 حرف",
+            "emailInvalid": "يرجى إدخال عنوان بريد إلكتروني صالح",
+            "messageMin": "يجب أن تحتوي الرسالة على 10 أحرف على الأقل",
+            "messageMax": "يجب ألا تتجاوز الرسالة 1000 حرف"
+        },
+        "toast": {
+            "success": "✨ تم إرسال الرسالة بنجاح! سأعود إليك قريباً.",
+            "error": "فشل إرسال الرسالة. يرجى المحاولة مرة أخرى لاحقاً."
+        }
     },
     "Footer": {
         "systemOnline": "النظام متصل."

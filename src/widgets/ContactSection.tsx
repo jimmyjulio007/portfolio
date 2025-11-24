@@ -7,9 +7,10 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLocale, useTranslations } from "next-intl";
 import { Loader2, Send } from "lucide-react";
-import { contactFormSchema, type ContactFormData } from "@/shared/lib/validations/contact";
+import { getContactFormSchema, type ContactFormData } from "@/shared/lib/validations/contact";
 import { FuturisticToast } from "@/shared/ui/FuturisticToast";
 import { Magnetic } from "@/shared/ui/Magnetic";
+import Link from "next/link";
 
 if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
@@ -34,7 +35,7 @@ export function ContactSection() {
         formState: { errors },
         reset,
     } = useForm<ContactFormData>({
-        resolver: zodResolver(contactFormSchema),
+        resolver: zodResolver(getContactFormSchema(locale)),
     });
 
     useEffect(() => {
@@ -98,11 +99,11 @@ export function ContactSection() {
                 });
             }
 
-            // Show success toast
+            // Show success toast with translation
             setToast({
                 show: true,
                 type: "success",
-                message: "✨ Message sent successfully! I'll get back to you soon.",
+                message: t("toast.success"),
             });
 
             // Reset form
@@ -112,7 +113,7 @@ export function ContactSection() {
             setToast({
                 show: true,
                 type: "error",
-                message: "Failed to send message. Please try again later.",
+                message: t("toast.error"),
             });
         } finally {
             setIsSubmitting(false);
@@ -285,14 +286,14 @@ export function ContactSection() {
                         t("socialTwitter"),
                         t("socialInstagram"),
                     ].map((social) => (
-                        <a
+                        <Link
                             key={social}
                             href="#"
                             className="text-gray-600 hover:text-[#ccff00] transition-colors duration-300 font-mono text-sm tracking-widest group relative"
                         >
                             {social}
                             <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#ccff00] group-hover:w-full transition-all duration-300" />
-                        </a>
+                        </Link>
                     ))}
                 </div>
             </div>

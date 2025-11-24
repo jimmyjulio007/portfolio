@@ -104,7 +104,18 @@
         "socialGithub": "GITHUB",
         "socialLinkedin": "LINKEDIN",
         "socialTwitter": "TWITTER",
-        "socialInstagram": "INSTAGRAM"
+        "socialInstagram": "INSTAGRAM",
+        "validation": {
+            "nameMin": "姓名至少需要2个字符",
+            "nameMax": "姓名不得超过100个字符",
+            "emailInvalid": "请输入有效的电子邮件地址",
+            "messageMin": "消息至少需要10个字符",
+            "messageMax": "消息不得超过1000个字符"
+        },
+        "toast": {
+            "success": "✨ 消息发送成功！我会尽快回复您。",
+            "error": "消息发送失败。请稍后重试。"
+        }
     },
     "Footer": {
         "systemOnline": "系统在线。"

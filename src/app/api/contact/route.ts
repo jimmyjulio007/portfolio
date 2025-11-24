@@ -1,14 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-import { contactFormSchema } from "@/shared/lib/validations/contact";
+import { getContactFormSchema, type Locale } from "@/shared/lib/validations/contact";
 import { generateEmailHTML } from "@/shared/lib/email-templates";
 
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
+        const locale = (body.locale as Locale) || "en";
 
-        // Validate with Zod
-        const validationResult = contactFormSchema.safeParse(body);
+        // Validate with Zod using locale-specific messages
+        const validationResult = getContactFormSchema(locale).safeParse(body);
 
         if (!validationResult.success) {
             return NextResponse.json(
@@ -21,26 +22,25 @@ export async function POST(request: NextRequest) {
         }
 
         const { name, email, message } = validationResult.data;
-        const locale = (body.locale as any) || "en";
 
         // Generate email HTML
         const { subject, html } = generateEmailHTML(locale, name, email, message);
 
-        // Create transporter
+        // Create transporter with correct environment variable names
         const transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST,
-            port: parseInt(process.env.SMTP_PORT || "587"),
-            secure: process.env.SMTP_SECURE === "true",
+            host: process.env.MAIL_HOST,
+            port: parseInt(process.env.MAIL_PORT || "587"),
+            secure: process.env.MAIL_PORT === "465", // true for 465, false for other ports
             auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS,
+                user: process.env.MAIL_USER,
+                pass: process.env.MAIL_PASS,
             },
         });
 
         // Send email
         await transporter.sendMail({
-            from: `"Portfolio Contact" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
-            to: process.env.CONTACT_EMAIL || process.env.SMTP_USER,
+            from: `"Portfolio Contact" <${process.env.MAIL_USER}>`,
+            to: process.env.MAIL_USER, // Send to your own email
             replyTo: email,
             subject,
             html,

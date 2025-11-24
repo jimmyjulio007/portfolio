@@ -104,7 +104,18 @@
         "socialGithub": "GITHUB",
         "socialLinkedin": "LINKEDIN",
         "socialTwitter": "TWITTER",
-        "socialInstagram": "INSTAGRAM"
+        "socialInstagram": "INSTAGRAM",
+        "validation": {
+            "nameMin": "名前は2文字以上である必要があります",
+            "nameMax": "名前は100文字を超えてはいけません",
+            "emailInvalid": "有効なメールアドレスを入力してください",
+            "messageMin": "メッセージは10文字以上である必要があります",
+            "messageMax": "メッセージは1000文字を超えてはいけません"
+        },
+        "toast": {
+            "success": "✨ メッセージが正常に送信されました！すぐにご連絡いたします。",
+            "error": "メッセージの送信に失敗しました。後でもう一度お試しください。"
+        }
     },
     "Footer": {
         "systemOnline": "システムオンライン。"

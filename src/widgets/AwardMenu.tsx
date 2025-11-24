@@ -211,14 +211,14 @@ export function AwardMenu({ isOpen, onClose }: AwardMenuProps) {
                         </p>
                         <div className="flex gap-6">
                             {SOCIAL_LINKS.map((link) => (
-                                <a
+                                <Link
                                     key={link.label}
                                     href={link.href}
                                     className="social-link text-gray-400 hover:text-[#ccff00] transition-colors text-sm font-mono"
                                     onMouseEnter={() => soundManager.play("hover", { volume: 0.15 })}
                                 >
                                     {link.label}
-                                </a>
+                                </Link>
                             ))}
                         </div>
 

@@ -104,7 +104,18 @@
         "socialGithub": "GITHUB",
         "socialLinkedin": "LINKEDIN",
         "socialTwitter": "TWITTER",
-        "socialInstagram": "INSTAGRAM"
+        "socialInstagram": "INSTAGRAM",
+        "validation": {
+            "nameMin": "Name must be at least 2 characters",
+            "nameMax": "Name must not exceed 100 characters",
+            "emailInvalid": "Please enter a valid email address",
+            "messageMin": "Message must be at least 10 characters",
+            "messageMax": "Message must not exceed 1000 characters"
+        },
+        "toast": {
+            "success": "✨ Message sent successfully! I'll get back to you soon.",
+            "error": "Failed to send message. Please try again later."
+        }
     },
     "Footer": {
         "systemOnline": "SYSTEM ONLINE."
