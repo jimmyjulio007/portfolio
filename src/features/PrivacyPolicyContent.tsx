@@ -78,11 +78,138 @@ const PRIVACY_CONTENT = {
         ],
         back: "RETOUR À LA BASE"
     },
-    // Fallbacks for other languages to English for now
-    ja: null,
-    zh: null,
-    de: null,
-    ar: null
+    ja: {
+        title: "プライバシープロトコル",
+        subtitle: "安全なデータ送信と保存",
+        lastUpdated: "最終更新日: 2024.11.24",
+        sections: [
+            {
+                id: "01",
+                title: "データ収集",
+                content: "通信に必要な最小限のデータを収集します。お問い合わせフォームを使用する際、お名前、メールアドレス、メッセージ内容を処理します。このデータは暗号化されたチャネルを通じて安全に送信されます。"
+            },
+            {
+                id: "02",
+                title: "使用プロトコル",
+                content: "お客様のデータは通信目的でのみ使用されます。個人を特定できる情報を外部に販売、取引、または譲渡することはありません。デジタルフットプリントは尊重されます。"
+            },
+            {
+                id: "03",
+                title: "クッキーシステム",
+                content: "当システムは、インターフェースの応答性を高め、トラフィックパターンを分析するためにクッキーを使用します。クッキー同意プロトコルを通じて、これらの追跡モジュールを完全に制御できます。"
+            },
+            {
+                id: "04",
+                title: "サードパーティリンク",
+                content: "このインターフェースには、外部ネットワーク（GitHub、LinkedIn）へのリンクが含まれる場合があります。これらのサードパーティサイトには、独立したプライバシーポリシーがあります。リンク先サイトのコンテンツや活動について、当社は一切の責任を負いません。"
+            },
+            {
+                id: "05",
+                title: "データセキュリティ",
+                content: "個人情報の安全性を維持するために、さまざまなセキュリティ対策を実施しています。すべての機密データは、Secure Socket Layer（SSL）技術を介して送信されます。"
+            }
+        ],
+        back: "ベースに戻る"
+    },
+    zh: {
+        title: "隐私协议",
+        subtitle: "安全数据传输与存储",
+        lastUpdated: "最后更新：2024.11.24",
+        sections: [
+            {
+                id: "01",
+                title: "数据收集",
+                content: "我们仅收集通信所需的必要数据。当您使用我们的联系表单时，我们会处理您的姓名、电子邮件地址和消息内容。这些数据通过加密通道安全传输。"
+            },
+            {
+                id: "02",
+                title: "使用协议",
+                content: "您的数据仅用于通信目的。我们不会向外界出售、交易或转让您的个人身份信息。您的数字足迹将受到尊重。"
+            },
+            {
+                id: "03",
+                title: "COOKIE 系统",
+                content: "我们的系统使用 Cookie 来增强界面响应能力并分析流量模式。您可以通过我们的 Cookie 同意协议完全控制这些跟踪模块。"
+            },
+            {
+                id: "04",
+                title: "第三方链接",
+                content: "此界面可能包含指向外部网络（GitHub、LinkedIn）的链接。这些第三方网站拥有独立且不同的隐私政策。我们对这些链接网站的内容和活动不承担任何责任。"
+            },
+            {
+                id: "05",
+                title: "数据安全",
+                content: "我们实施各种安全措施以维护您个人信息的安全。所有敏感数据均通过安全套接字层 (SSL) 技术传输。"
+            }
+        ],
+        back: "返回基地"
+    },
+    de: {
+        title: "DATENSCHUTZ-PROTOKOLL",
+        subtitle: "SICHERE DATENÜBERTRAGUNG & SPEICHERUNG",
+        lastUpdated: "LETZTE AKTUALISIERUNG: 24.11.2024",
+        sections: [
+            {
+                id: "01",
+                title: "DATENERFASSUNG",
+                content: "Wir erfassen nur minimale Daten, die für die Kommunikation notwendig sind. Wenn Sie unser Kontaktformular nutzen, verarbeiten wir Ihren Namen, Ihre E-Mail-Adresse und den Nachrichteninhalt. Diese Daten werden sicher über verschlüsselte Kanäle übertragen."
+            },
+            {
+                id: "02",
+                title: "NUTZUNGSPROTOKOLLE",
+                content: "Ihre Daten werden ausschließlich zu Kommunikationszwecken verwendet. Wir verkaufen, handeln oder übertragen Ihre personenbezogenen Daten nicht an Dritte. Ihr digitaler Fußabdruck wird respektiert."
+            },
+            {
+                id: "03",
+                title: "COOKIE-SYSTEM",
+                content: "Unser System verwendet Cookies, um die Reaktionsfähigkeit der Schnittstelle zu verbessern und Verkehrsmuster zu analysieren. Sie haben die volle Kontrolle über diese Tracking-Module über unser Cookie-Zustimmungsprotokoll."
+            },
+            {
+                id: "04",
+                title: "DRITTANBIETER-LINKS",
+                content: "Diese Schnittstelle kann Links zu externen Netzwerken (GitHub, LinkedIn) enthalten. Diese Websites Dritter haben separate und unabhängige Datenschutzrichtlinien. Wir übernehmen keine Verantwortung oder Haftung für den Inhalt und die Aktivitäten dieser verlinkten Seiten."
+            },
+            {
+                id: "05",
+                title: "DATENSICHERHEIT",
+                content: "Wir setzen eine Vielzahl von Sicherheitsmaßnahmen ein, um die Sicherheit Ihrer persönlichen Daten zu gewährleisten. Alle sensiblen Daten werden über die Secure Socket Layer (SSL)-Technologie übertragen."
+            }
+        ],
+        back: "ZURÜCK ZUR BASIS"
+    },
+    ar: {
+        title: "بروتوكول الخصوصية",
+        subtitle: "نقل وتخزين البيانات الآمن",
+        lastUpdated: "آخر تحديث: 24.11.2024",
+        sections: [
+            {
+                id: "01",
+                title: "جمع البيانات",
+                content: "نجمع الحد الأدنى من البيانات اللازمة للتواصل. عند استخدام نموذج الاتصال الخاص بنا، نقوم بمعالجة اسمك وعنوان بريدك الإلكتروني ومحتوى الرسالة. يتم نقل هذه البيانات بشكل آمن عبر قنوات مشفرة."
+            },
+            {
+                id: "02",
+                title: "بروتوكولات الاستخدام",
+                content: "تستخدم بياناتك حصرياً لأغراض التواصل. لا نقوم ببيع أو المتاجرة أو نقل معلوماتك الشخصية إلى أطراف خارجية. يتم احترام بصمتك الرقمية."
+            },
+            {
+                id: "03",
+                title: "نظام ملفات تعريف الارتباط",
+                content: "يستخدم نظامنا ملفات تعريف الارتباط لتحسين استجابة الواجهة وتحليل أنماط الزيارات. لديك السيطرة الكاملة على وحدات التتبع هذه عبر بروتوكول الموافقة على ملفات تعريف الارتباط الخاص بنا."
+            },
+            {
+                id: "04",
+                title: "روابط الطرف الثالث",
+                content: "قد تحتوي هذه الواجهة على روابط لشبكات خارجية (GitHub، LinkedIn). هذه المواقع التابعة لجهات خارجية لها سياسات خصوصية منفصلة ومستقلة. لا نتحمل أي مسؤولية أو التزام عن محتوى وأنشطة هذه المواقع المرتبطة."
+            },
+            {
+                id: "05",
+                title: "أمن البيانات",
+                content: "نطبق مجموعة متنوعة من التدابير الأمنية للحفاظ على سلامة معلوماتك الشخصية. يتم نقل جميع البيانات الحساسة عبر تقنية طبقة المقابس الآمنة (SSL)."
+            }
+        ],
+        back: "العودة للقاعدة"
+    }
 };
 
 export function PrivacyPolicyContent() {
