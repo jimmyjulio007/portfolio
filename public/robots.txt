@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://portfolio-pi-one-i0stm0u02e.vercel.app/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 0.5
+
+# Disallow admin paths if any
+Disallow: /api/
+Disallow: /_next/webpack-hmr

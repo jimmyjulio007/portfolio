@@ -1,0 +1,31 @@
+{
+    "name": "Jimmy Julio - Full Stack AI Architect",
+    "short_name": "Jimmy Julio",
+    "description": "A technology-led creative portfolio crafting experiences for the digital age",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#030303",
+    "theme_color": "#00f0ff",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/icon",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/apple-icon",
+            "sizes": "180x180",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "categories": [
+        "portfolio",
+        "design",
+        "development"
+    ],
+    "lang": "en",
+    "dir": "ltr"
+}
