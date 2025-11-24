@@ -90,7 +90,7 @@ export async function generateMetadata({
             },
         },
         verification: {
-            google: 'your-google-verification-code',
+            google: 'googlee6095d45e85fee7c.html',
         },
         icons: {
             icon: '/icon',
