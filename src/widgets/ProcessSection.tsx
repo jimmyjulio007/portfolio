@@ -68,6 +68,7 @@ export function ProcessSection() {
 
     return (
         <section
+            id="process"
             ref={sectionRef}
             className="py-32 bg-[#050505] relative border-t border-gray-900"
         >

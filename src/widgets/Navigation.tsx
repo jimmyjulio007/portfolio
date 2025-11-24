@@ -28,7 +28,6 @@ export function Navigation() {
     const navRef = useRef<HTMLElement>(null);
     const [isScrolled, setIsScrolled] = useState(false);
     const [soundEnabled, setSoundEnabled] = useState(true);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const NAV_ITEMS = [
@@ -61,7 +60,6 @@ export function Navigation() {
 
     const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
         e.preventDefault();
-        setIsMobileMenuOpen(false);
 
         const target = document.querySelector(href);
         if (target) {
@@ -180,26 +178,6 @@ export function Navigation() {
 
             {/* Award-Winning Menu */}
             <AwardMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
-
-            {/* Mobile Menu Overlay */}
-            <div
-                className={`fixed inset-0 z-40 bg-black/95 backdrop-blur-xl transition-transform duration-500 md:hidden flex items-center justify-center ${isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
-                    }`}
-            >
-                <ul className="flex flex-col items-center gap-8">
-                    {NAV_ITEMS.map((item) => (
-                        <li key={item.href}>
-                            <a
-                                href={item.href}
-                                onClick={(e) => handleScrollTo(e, item.href)}
-                                className="text-3xl font-bold text-white hover:text-[#00f0ff] transition-colors tracking-tighter"
-                            >
-                                {item.label}
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            </div>
         </>
     );
 }

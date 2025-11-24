@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google"; // Optimized font loading
 import "../globals.css";
 import "../hero-animations.css";
 import { SITE_CONFIG } from "@/shared/config/constants";
@@ -9,6 +10,13 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 
 import { getTranslations } from 'next-intl/server';
+
+// Initialize Inter font
+const inter = Inter({
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--font-inter',
+});
 
 export async function generateMetadata({
     params
@@ -96,6 +104,7 @@ export async function generateViewport({
         width: 'device-width',
         initialScale: 1,
         maximumScale: 5,
+        userScalable: true, // Accessibility fix
         themeColor: '#00f0ff',
     };
 }
@@ -119,34 +128,15 @@ export default async function LocaleLayout({
     const messages = await getMessages();
 
     return (
-        <html lang={locale} className="scroll-smooth" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+        <html lang={locale} className={`scroll-smooth ${inter.variable}`} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
             <head>
                 {/* PWA Manifest */}
                 <link rel="manifest" href="/manifest.json" />
                 <meta name="theme-color" content="#00f0ff" />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
                 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
-                {/* Preconnect for performance */}
-                <link rel="preconnect" href="https://fonts.googleapis.com" />
-                <link
-                    rel="preconnect"
-                    href="https://fonts.gstatic.com"
-                    crossOrigin="anonymous"
-                />
-
-                {/* Preload critical fonts */}
-                <link
-                    rel="preload"
-                    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-                    as="style"
-                />
-                <link
-                    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-                    rel="stylesheet"
-                />
             </head>
-            <body className="antialiased">
+            <body className="antialiased font-sans">
                 <NextIntlClientProvider messages={messages}>
                     <CustomCursor />
                     {children}

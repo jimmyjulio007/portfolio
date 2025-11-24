@@ -85,6 +85,7 @@ export function PlaygroundSection() {
 
     return (
         <section
+            id="playground"
             ref={sectionRef}
             className="py-32 bg-[#030303] relative overflow-hidden cursor-none"
         >

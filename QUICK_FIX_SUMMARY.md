@@ -28,6 +28,24 @@
 - **Solution:** Added metadataBase to ROOT layout, fixed URL logic
 - **Details:** See `METADATA_BASE_FIX.md`
 
+### 4. ✅ SEO, Accessibility & Performance
+- **Severity:** ⚠️ Warning - Lighthouse Audit Issues
+- **Impact:** Lower search ranking, render blocking, accessibility violations
+- **Files:** `src/app/[locale]/layout.tsx`, `messages/en.json`
+- **Solution:** 
+  - Optimized fonts with `next/font/google` (removed render-blocking CSS)
+  - Fixed viewport accessibility (`userScalable: true`)
+  - Enhanced meta description for better SEO
+- **Details:** See `PERFORMANCE_AND_SEO_FIXES.md`
+
+### 5. ✅ Navigation Links Fix
+- **Severity:** ⚠️ Functional Issue
+- **Impact:** "Home", "Process", "Playground" links not scrolling
+- **Files:** `src/widgets/HeroSection.tsx`, `src/widgets/ProcessSection.tsx`, `src/widgets/PlaygroundSection.tsx`, `src/widgets/Navigation.tsx`
+- **Solution:** 
+  - Added missing `id` attributes to sections (`home`, `process`, `playground`)
+  - Cleaned up `Navigation.tsx` (removed duplicate logic/dead code)
+
 ---
 
 ## 📊 Build Status

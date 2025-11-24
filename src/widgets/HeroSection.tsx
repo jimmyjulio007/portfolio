@@ -87,6 +87,7 @@ export function HeroSection() {
 
     return (
         <section
+            id="home"
             ref={containerRef}
             className="relative min-h-screen w-full overflow-hidden flex items-center bg-black"
         >
