@@ -92,6 +92,11 @@ export async function generateMetadata({
         verification: {
             google: 'your-google-verification-code',
         },
+        icons: {
+            icon: '/icon',
+            shortcut: '/icon',
+            apple: '/icon',
+        },
     };
 }
 
