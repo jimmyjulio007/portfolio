@@ -148,7 +148,7 @@ export function AboutSection() {
 
                                 {/* Tech Overlay */}
                                 <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent">
-                                    <h3 className="text-2xl font-bold text-white font-migumono">{t('name')}</h3>
+                                    <h2 className="text-2xl font-bold text-white font-migumono">{t('name')}</h2>
                                     <p className="text-[#00f0ff] font-mono text-xs tracking-widest">{t('role')}</p>
                                 </div>
                             </div>

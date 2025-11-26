@@ -111,6 +111,14 @@ export function HeroSection() {
                 {/* RIGHT: Content */}
                 <div className="order-1 lg:order-2 pointer-events-auto">
                     <div className="mb-6">
+                        <div className="mb-4">
+                            <span className="text-[#00f0ff] font-mono text-sm tracking-widest uppercase block mb-2">
+                                Hello, I am
+                            </span>
+                            <h2 className="text-3xl md:text-4xl font-bold text-white font-migumono">
+                                JIMMY JULIO
+                            </h2>
+                        </div>
                         <h1
                             ref={titleRef}
                             className="text-4xl md:text-5xl lg:text-6xl leading-tight font-bold text-white font-migumono"

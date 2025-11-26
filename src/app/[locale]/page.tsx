@@ -127,7 +127,7 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
               <p className="text-gray-600 text-xs font-mono">
-                © {currentYear} JIMMY. {t('systemOnline')}
+                © {currentYear} JIMMY JULIO. {t('systemOnline')}
               </p>
               <Link
                 href="/privacy"
