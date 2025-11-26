@@ -115,7 +115,7 @@ export async function generateMetadata({
             },
         },
         verification: {
-            google: 'googlee6095d45e85fee7c.html',
+            google: 'g9_n_FlfLdUMCr5hyzvtA02yhgPuFSS3VqWoM-IdWLU',
         },
         icons: {
             icon: '/icon',
