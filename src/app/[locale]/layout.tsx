@@ -103,12 +103,14 @@ export async function generateMetadata({
             locale: locale,
             url: SITE_CONFIG.url,
             siteName: t('title'),
+            images: ['/opengraph-image'],
         },
         twitter: {
             card: 'summary_large_image',
             title: t('title'),
             description: t('description'),
             creator: '@jimmyjulio',
+            images: ['/twitter-image'],
         },
         robots: {
             index: true,
