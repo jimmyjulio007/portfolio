@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next'
+import { SITE_CONFIG } from '@/shared/config/constants'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://portfolio-pi-one-i0stm0u02e.vercel.app'
+    const baseUrl = SITE_CONFIG.url
     const locales = ['en', 'fr', 'ja', 'zh', 'de', 'ar']
 
     const routes = [
@@ -15,8 +16,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
             sitemap.push({
                 url: `${baseUrl}/${locale}${route}`,
                 lastModified: new Date(),
-                changeFrequency: 'monthly',
-                priority: route === '' ? 1 : 0.8,
+                changeFrequency: 'weekly',
+                priority: route === '' ? 1.0 : 0.8,
                 alternates: {
                     languages: Object.fromEntries(
                         locales.map(l => [l, `${baseUrl}/${l}${route}`])
