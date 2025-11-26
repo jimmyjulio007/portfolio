@@ -63,7 +63,4 @@ export function BaobabTree() {
     );
 }
 
-// Preload the smaller model for better performance
-if (typeof window !== 'undefined') {
-    useGLTF.preload("/models/baobab-1.glb");
-}
+

@@ -23,9 +23,11 @@ export function Scene3D({
         <div className={`w-full h-full ${className}`}>
             <Canvas
                 camera={{ position: [0, 0, 130], fov: 40 }}
+                dpr={[1, 1.5]} // Cap pixel ratio for performance
                 gl={{
                     antialias: true,
-                    powerPreference: "high-performance"
+                    powerPreference: "high-performance",
+                    preserveDrawingBuffer: false,
                 }}
             >
                 {children}

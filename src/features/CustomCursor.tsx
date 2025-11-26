@@ -19,20 +19,29 @@ export function CustomCursor() {
         const follower = followerRef.current;
         if (!cursor || !follower) return;
 
-        // Ultra-smooth cursor tracking at 200 FPS
-        const moveCursor = (e: MouseEvent) => {
-            gsap.to(cursor, {
-                x: e.clientX,
-                y: e.clientY,
-                duration: 0.05, // 200 FPS smoothness
-                ease: "power3.out",
-            });
+        // Use quickSetter for performance
+        const setCursorX = gsap.quickSetter(cursor, "x", "px");
+        const setCursorY = gsap.quickSetter(cursor, "y", "px");
+        const setFollowerX = gsap.quickSetter(follower, "x", "px");
+        const setFollowerY = gsap.quickSetter(follower, "y", "px");
 
+        const moveCursor = (e: MouseEvent) => {
+            setCursorX(e.clientX);
+            setCursorY(e.clientY);
+
+            // Add slight delay/smoothing for follower manually or use GSAP ticker if needed, 
+            // but for now direct quickSetter is fastest. 
+            // To keep the smooth follow effect, we might still need a tween for the follower,
+            // but let's optimize the main cursor first.
+
+            // Actually, for the follower to be smooth, we need a tween. 
+            // But we can optimize the tween to not create new objects every frame.
             gsap.to(follower, {
                 x: e.clientX,
                 y: e.clientY,
                 duration: 0.15,
                 ease: "power3.out",
+                overwrite: "auto", // Prevent stacking
             });
         };
 
@@ -41,11 +50,13 @@ export function CustomCursor() {
                 scale: 0.5,
                 backgroundColor: "#ccff00",
                 duration: 0.2,
+                overwrite: true,
             });
             gsap.to(follower, {
                 scale: 2,
                 borderColor: "#ccff00",
                 duration: 0.2,
+                overwrite: true,
             });
         };
 
@@ -54,30 +65,40 @@ export function CustomCursor() {
                 scale: 1,
                 backgroundColor: "#00f0ff",
                 duration: 0.2,
+                overwrite: true,
             });
             gsap.to(follower, {
                 scale: 1,
                 borderColor: "#00f0ff",
                 duration: 0.2,
+                overwrite: true,
             });
         };
 
         window.addEventListener("mousemove", moveCursor);
 
-        const interactiveElements = document.querySelectorAll(
-            "a, button, input, textarea, .cursor-pointer"
-        );
-        interactiveElements.forEach((el) => {
-            el.addEventListener("mouseenter", expandCursor);
-            el.addEventListener("mouseleave", shrinkCursor);
-        });
+        // Use event delegation instead of attaching to every element
+        const handleMouseOver = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            if (target.closest('a, button, input, textarea, .cursor-pointer')) {
+                expandCursor();
+            }
+        };
+
+        const handleMouseOut = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            if (target.closest('a, button, input, textarea, .cursor-pointer')) {
+                shrinkCursor();
+            }
+        };
+
+        document.addEventListener("mouseover", handleMouseOver);
+        document.addEventListener("mouseout", handleMouseOut);
 
         return () => {
             window.removeEventListener("mousemove", moveCursor);
-            interactiveElements.forEach((el) => {
-                el.removeEventListener("mouseenter", expandCursor);
-                el.removeEventListener("mouseleave", shrinkCursor);
-            });
+            document.removeEventListener("mouseover", handleMouseOver);
+            document.removeEventListener("mouseout", handleMouseOut);
         };
     }, [isClient]);
 

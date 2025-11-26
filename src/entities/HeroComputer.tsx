@@ -35,8 +35,8 @@ export function HeroComputer({ enableRTX = false }: { enableRTX?: boolean }) {
                 position={[10, 10, 10]}
                 intensity={enableRTX ? 4 : 3}
                 castShadow={enableRTX}
-                shadow-mapSize-width={enableRTX ? 4096 : 2048}
-                shadow-mapSize-height={enableRTX ? 4096 : 2048}
+                shadow-mapSize-width={enableRTX ? 1024 : 512}
+                shadow-mapSize-height={enableRTX ? 1024 : 512}
             />
             <pointLight position={[5, 5, 3]} intensity={enableRTX ? 3 : 2} color="#00f0ff" />
 
@@ -72,4 +72,4 @@ export function HeroComputer({ enableRTX = false }: { enableRTX?: boolean }) {
     );
 }
 
-useGLTF.preload("/models/computer_and_laptop.glb");
+

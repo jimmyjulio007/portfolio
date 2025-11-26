@@ -11,7 +11,9 @@ const Scene3D = dynamic(() => import("@/shared/ui/Scene3D").then((mod) => mod.Sc
     loading: () => <div className="absolute inset-0 bg-black/10" />,
 });
 
-import { HeroComputer } from "@/entities/HeroComputer";
+const HeroComputer = dynamic(() => import("@/entities/HeroComputer").then(mod => mod.HeroComputer), {
+    ssr: false,
+});
 import { Button } from "@/shared/ui/Button";
 import { Magnetic } from "@/shared/ui/Magnetic";
 import { ScrollLink } from "@/shared/ui/ScrollLink";

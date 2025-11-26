@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import { BaobabTree } from "@/entities/BaobabTree";
+const BaobabTree = dynamic(() => import("@/entities/BaobabTree").then(mod => mod.BaobabTree), {
+    ssr: false,
+});
 import { useTranslations } from 'next-intl';
 
 const Scene3D = dynamic(() => import("@/shared/ui/Scene3D").then(mod => ({ default: mod.Scene3D })), {
@@ -41,8 +43,18 @@ export function AboutSection() {
         t('softSkill5')
     ];
 
+    const [load3D, setLoad3D] = useState(false);
+
     useEffect(() => {
         const ctx = gsap.context(() => {
+            // Lazy load 3D scene when approaching viewport
+            ScrollTrigger.create({
+                trigger: sectionRef.current,
+                start: "top 150%", // Load when section is 50% viewport height away
+                onEnter: () => setLoad3D(true),
+                once: true
+            });
+
             gsap.from(titleRef.current, {
                 scrollTrigger: {
                     trigger: titleRef.current,
@@ -53,6 +65,8 @@ export function AboutSection() {
                 duration: 1,
                 ease: "power3.out",
             });
+            // ... rest of animations
+
 
             gsap.from(imageRef.current, {
                 scrollTrigger: {
@@ -108,9 +122,11 @@ export function AboutSection() {
         >
             {/* 3D Background */}
             <div className="absolute inset-0 opacity-20">
-                <Scene3D>
-                    <BaobabTree />
-                </Scene3D>
+                {load3D && (
+                    <Scene3D>
+                        <BaobabTree />
+                    </Scene3D>
+                )}
             </div>
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
