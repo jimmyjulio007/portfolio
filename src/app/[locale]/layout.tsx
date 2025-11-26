@@ -125,9 +125,14 @@ export async function generateMetadata({
             google: 'g9_n_FlfLdUMCr5hyzvtA02yhgPuFSS3VqWoM-IdWLU',
         },
         icons: {
-            icon: '/icon',
-            shortcut: '/icon',
-            apple: '/icon',
+            icon: [
+                { url: '/favicon.ico', sizes: 'any' },
+                { url: '/icon', type: 'image/png', sizes: '192x192' },
+            ],
+            shortcut: '/favicon.ico',
+            apple: [
+                { url: '/apple-icon', type: 'image/png', sizes: '180x180' },
+            ],
         },
     };
 }
