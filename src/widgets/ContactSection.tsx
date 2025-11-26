@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLocale, useTranslations } from "next-intl";
 import { Loader2, Send } from "lucide-react";
 import { getContactFormSchema, type ContactFormData } from "@/shared/lib/validations/contact";
+import { SITE_CONFIG } from "@/shared/config/constants";
 import { FuturisticToast } from "@/shared/ui/FuturisticToast";
 import { Magnetic } from "@/shared/ui/Magnetic";
 import Link from "next/link";
@@ -281,17 +282,18 @@ export function ContactSection() {
                 {/* Social Links */}
                 <div className="mt-20 flex flex-wrap justify-center gap-6 md:gap-12 border-t border-gray-900 pt-12">
                     {[
-                        t("socialGithub"),
-                        t("socialLinkedin"),
-                        t("socialTwitter"),
-                        t("socialInstagram"),
+                        { label: t("socialGithub"), href: SITE_CONFIG.social.github },
+                        { label: t("socialLinkedin"), href: SITE_CONFIG.social.linkedin },
+                        { label: t("socialTwitter"), href: SITE_CONFIG.social.twitter },
                     ].map((social) => (
                         <Link
-                            key={social}
-                            href="#"
+                            key={social.label}
+                            href={social.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="text-gray-600 hover:text-[#ccff00] transition-colors duration-300 font-mono text-sm tracking-widest group relative"
                         >
-                            {social}
+                            {social.label}
                             <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#ccff00] group-hover:w-full transition-all duration-300" />
                         </Link>
                     ))}

@@ -12,6 +12,7 @@ import { routing } from '@/i18n/routing';
 
 import { getTranslations } from 'next-intl/server';
 import localFont from 'next/font/local';
+import Script from "next/script";
 
 // Initialize fonts
 const outfit = Outfit({
@@ -69,6 +70,12 @@ export async function generateMetadata({
             'WebGL',
             'Portfolio',
             'Jimmy Julio',
+            'Jimmy Julio Portfolio',
+            'Jimmy Julio Developer',
+            'Full Stack AI Architect',
+            'Creative Developer',
+            'Antananarivo',
+            'Madagascar',
         ],
         authors: [
             {
@@ -166,6 +173,45 @@ export default async function LocaleLayout({
                 <meta name="theme-color" content="#00f0ff" />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
                 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+                <Script
+                    async
+                    src="https://www.googletagmanager.com/gtag/js?id=G-SJHL50CMYS"
+                />
+                <Script
+                    id="google-analytics"
+                    strategy="afterInteractive"
+                    dangerouslySetInnerHTML={{
+                        __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-SJHL50CMYS');
+            `,
+                    }}
+                />
+                <Script
+                    id="json-ld"
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            '@context': 'https://schema.org',
+                            '@type': 'Person',
+                            name: 'Jimmy Julio',
+                            url: SITE_CONFIG.url,
+                            jobTitle: 'Full Stack AI Architect',
+                            sameAs: [
+                                'https://github.com/jimmyjulio007',
+                                'https://www.linkedin.com/in/andriamandresy-mitondrasoa-jimmy-julio-890a19210/',
+                                'https://x.com/julio21619850'
+                            ],
+                            worksFor: {
+                                '@type': 'Organization',
+                                name: 'Freelance'
+                            },
+                            description: SITE_CONFIG.description
+                        })
+                    }}
+                />
             </head>
             <body className="antialiased font-sans">
                 <NextIntlClientProvider messages={messages}>

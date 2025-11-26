@@ -15,6 +15,12 @@ export const SITE_CONFIG = {
             : "https://portfolio-pi-one-i0stm0u02e.vercel.app"),
     verification: {
         google: "g9_n_FlfLdUMCr5hyzvtA02yhgPuFSS3VqWoM-IdWLU"
+    },
+    social: {
+        github: "https://github.com/jimmyjulio007",
+        linkedin: "https://www.linkedin.com/in/andriamandresy-mitondrasoa-jimmy-julio-890a19210/",
+        twitter: "https://x.com/julio21619850",
+        email: "mailto:jimmyjulio100@gmail.com" // Placeholder, should be updated if known
     }
 } as const;
 
