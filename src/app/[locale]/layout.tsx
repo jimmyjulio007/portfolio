@@ -173,6 +173,10 @@ export default async function LocaleLayout({
                 <meta name="theme-color" content="#00f0ff" />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
                 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+                <meta
+                    name="google-site-verification"
+                    content="g9_n_FlfLdUMCr5hyzvtA02yhgPuFSS3VqWoM-IdWLU"
+                />
                 <Script
                     async
                     src="https://www.googletagmanager.com/gtag/js?id=G-SJHL50CMYS"
