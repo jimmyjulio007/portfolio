@@ -3,36 +3,38 @@
 import { soundManager } from "@/shared/lib/sound-manager";
 import Link from "next/link";
 
-interface ScrollLinkProps {
-    href: string;
-    children: React.ReactNode;
-    className?: string;
+interface ScrollLinkProps
+  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  href: string;
+  children: React.ReactNode;
+  className?: string;
 }
 
-export function ScrollLink({ href, children, className }: ScrollLinkProps) {
-    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        e.preventDefault();
+export function ScrollLink({
+  href,
+  children,
+  className,
+  ...props
+}: ScrollLinkProps) {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
 
-        // Play transition sound
-        soundManager.play("transition", { volume: 0.3 });
+    // Play transition sound
+    soundManager.play("transition", { volume: 0.3 });
 
-        // Smooth scroll to target
-        const target = document.querySelector(href);
-        if (target) {
-            target.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
-        }
-    };
+    // Smooth scroll to target
+    const target = document.querySelector(href);
+    if (target) {
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
 
-    return (
-        <Link
-            href={href}
-            onClick={handleClick}
-            className={className}
-        >
-            {children}
-        </Link>
-    );
+  return (
+    <Link href={href} onClick={handleClick} className={className} {...props}>
+      {children}
+    </Link>
+  );
 }

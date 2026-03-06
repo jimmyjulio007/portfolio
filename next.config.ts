@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
-import createNextIntlPlugin from 'next-intl/plugin';
+import createNextIntlPlugin from "next-intl/plugin";
 
-const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   // Performance optimizations
@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
 
   // Image optimization
   images: {
-    formats: ['image/avif', 'image/webp'],
+    formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
@@ -23,25 +23,25 @@ const nextConfig: NextConfig = {
     // Optimize bundle size
     config.optimization = {
       ...config.optimization,
-      moduleIds: 'deterministic',
-      runtimeChunk: 'single',
+      moduleIds: "deterministic",
+      runtimeChunk: "single",
       splitChunks: {
-        chunks: 'all',
+        chunks: "all",
         cacheGroups: {
           default: false,
           vendors: false,
           // Vendor chunk for node_modules
           vendor: {
-            name: 'vendor',
-            chunks: 'all',
+            name: "vendor",
+            chunks: "all",
             test: /node_modules/,
             priority: 20,
           },
           // Common chunks
           common: {
-            name: 'common',
+            name: "common",
             minChunks: 2,
-            chunks: 'all',
+            chunks: "all",
             priority: 10,
             reuseExistingChunk: true,
             enforce: true,
@@ -49,15 +49,15 @@ const nextConfig: NextConfig = {
           // Three.js and 3D libraries
           three: {
             test: /[\\/]node_modules[\\/](three|@react-three)[\\/]/,
-            name: 'three',
-            chunks: 'all',
+            name: "three",
+            chunks: "all",
             priority: 30,
           },
           // Animation libraries
           animations: {
             test: /[\\/]node_modules[\\/](gsap|framer-motion|lenis)[\\/]/,
-            name: 'animations',
-            chunks: 'all',
+            name: "animations",
+            chunks: "all",
             priority: 25,
           },
         },
@@ -67,7 +67,7 @@ const nextConfig: NextConfig = {
     // GLB/GLTF file handling
     config.module.rules.push({
       test: /\.(glb|gltf)$/,
-      type: 'asset/resource',
+      type: "asset/resource",
     });
 
     return config;
@@ -77,57 +77,58 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: '/:path*',
+        source: "/:path*",
         headers: [
           {
-            key: 'X-DNS-Prefetch-Control',
-            value: 'on'
+            key: "X-DNS-Prefetch-Control",
+            value: "on",
           },
           {
-            key: 'Strict-Transport-Security',
-            value: 'max-age=63072000; includeSubDomains; preload'
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
           },
           {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN'
+            key: "X-Frame-Options",
+            value: "SAMEORIGIN",
           },
           {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff'
+            key: "X-Content-Type-Options",
+            value: "nosniff",
           },
           {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block'
+            key: "X-XSS-Protection",
+            value: "1; mode=block",
           },
           {
-            key: 'Referrer-Policy',
-            value: 'origin-when-cross-origin'
+            key: "Referrer-Policy",
+            value: "origin-when-cross-origin",
           },
           {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=()'
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
           },
           {
-            key: 'Content-Security-Policy',
-            value: "default-src 'self' blob:; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: data:; connect-src 'self' blob: data: https://vercel.live https://va.vercel-scripts.com wss://ws-us3.pusher.com; frame-src 'self' https://vercel.live; worker-src 'self' blob:; object-src 'self' blob:; child-src 'self' blob:;"
-          }
-        ],
-      },
-      {
-        source: '/models/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            key: "Content-Security-Policy",
+            value:
+              "default-src 'self' blob:; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: data:; connect-src 'self' blob: data: https://vercel.live https://va.vercel-scripts.com wss://ws-us3.pusher.com; frame-src 'self' https://vercel.live; worker-src 'self' blob:; object-src 'self' blob:; child-src 'self' blob:;",
           },
         ],
       },
       {
-        source: '/sounds/:path*',
+        source: "/models/:path*",
         headers: [
           {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        source: "/sounds/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
           },
         ],
       },

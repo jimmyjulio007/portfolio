@@ -19,14 +19,16 @@ const templates: Record<Locale, EmailTemplate> = {
   fr: {
     subject: "Nouvelle soumission du formulaire de contact",
     greeting: "Bonjour Jimmy,",
-    intro: "Vous avez reçu un nouveau message depuis le formulaire de contact de votre portfolio :",
+    intro:
+      "Vous avez reçu un nouveau message depuis le formulaire de contact de votre portfolio :",
     closing: "Cordialement,",
     signature: "Votre Système de Contact Portfolio",
   },
   ja: {
     subject: "お問い合わせフォームからの新着メッセージ",
     greeting: "Jimmy様、",
-    intro: "ポートフォリオのお問い合わせフォームから新しいメッセージが届きました：",
+    intro:
+      "ポートフォリオのお問い合わせフォームから新しいメッセージが届きました：",
     closing: "よろしくお願いいたします、",
     signature: "ポートフォリオお問い合わせシステム",
   },
@@ -40,7 +42,8 @@ const templates: Record<Locale, EmailTemplate> = {
   de: {
     subject: "Neue Kontaktformular-Einreichung",
     greeting: "Hallo Jimmy,",
-    intro: "Sie haben eine neue Nachricht über das Kontaktformular Ihres Portfolios erhalten:",
+    intro:
+      "Sie haben eine neue Nachricht über das Kontaktformular Ihres Portfolios erhalten:",
     closing: "Mit freundlichen Grüßen,",
     signature: "Ihr Portfolio-Kontaktsystem",
   },
@@ -53,13 +56,25 @@ const templates: Record<Locale, EmailTemplate> = {
   },
 };
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 export function generateEmailHTML(
   locale: Locale,
   name: string,
   email: string,
-  message: string
+  message: string,
 ): { subject: string; html: string } {
   const t = templates[locale] || templates.en;
+  const safeName = escapeHtml(name);
+  const safeEmail = escapeHtml(email);
+  const safeMessage = escapeHtml(message);
 
   const html = `
     <!DOCTYPE html>
@@ -250,15 +265,15 @@ export function generateEmailHTML(
           
           <div class="message-box">
             <div class="label">👤 NAME / NOM</div>
-            <div class="value">${name}</div>
-            
+            <div class="value">${safeName}</div>
+
             <div class="label">📧 EMAIL</div>
-            <div class="value"><a href="mailto:${email}" style="color: #00f0ff; text-decoration: none;">${email}</a></div>
-            
+            <div class="value"><a href="mailto:${safeEmail}" style="color: #00f0ff; text-decoration: none;">${safeEmail}</a></div>
+
             <div class="divider"></div>
-            
+
             <div class="label">💬 MESSAGE</div>
-            <div class="message-text">${message}</div>
+            <div class="message-text">${safeMessage}</div>
           </div>
           
           <p class="closing">${t.closing}</p>
@@ -274,7 +289,7 @@ export function generateEmailHTML(
   `;
 
   return {
-    subject: `⚡ ${t.subject} - ${name}`,
+    subject: `⚡ ${t.subject} - ${safeName}`,
     html,
   };
 }

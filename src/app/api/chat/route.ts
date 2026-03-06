@@ -1,0 +1,143 @@
+import { createHuggingFace } from "@ai-sdk/huggingface";
+import { convertToModelMessages, streamText } from "ai";
+import type { UIMessage } from "ai";
+import { NextResponse } from "next/server";
+
+const hf = createHuggingFace({
+    apiKey: process.env.HUGGINGFACE_API_KEY,
+});
+
+export const maxDuration = 30;
+
+// ─── Simple in-memory rate limiter (per IP, 20 requests / 60s) ───
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT = 20;
+const RATE_WINDOW = 60_000;
+
+function isRateLimited(ip: string): boolean {
+    const now = Date.now();
+    const entry = rateLimitMap.get(ip);
+    if (!entry || now > entry.resetAt) {
+        // Evict expired entries to prevent memory leak (cap at every 100 IPs)
+        if (rateLimitMap.size > 100) {
+            for (const [key, val] of rateLimitMap) {
+                if (now > val.resetAt) rateLimitMap.delete(key);
+            }
+        }
+        rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW });
+        return false;
+    }
+    entry.count++;
+    return entry.count > RATE_LIMIT;
+}
+
+// ─── Section context mapping ───
+function getSectionContext(section: string | undefined): string {
+    if (!section || typeof section !== "string") return "";
+    switch (section) {
+        case "hero":
+            return `\n### Current Context: The user is on the **Hero/Landing** section.\nThey just arrived. Give a strong first impression. Highlight Jimmy's headline skills and invite them to explore.\n`;
+        case "about":
+            return `\n### Current Context: The user is viewing the **About** section.\nThey want to know Jimmy personally. Talk about his journey, passion for AI architecture, and what drives him. Be personable.\n`;
+        case "work":
+            return `\n### Current Context: The user is viewing the **Work/Projects** section.\nThey are looking at Jimmy's projects. Proactively describe the projects: LANGCHAIN AGENT (autonomous AI agents), NEURAL INTERFACE (D3.js real-time dashboard), CYBER COMMERCE (3D e-commerce with Three.js). Offer to dive deeper into any project.\n`;
+        case "process":
+            return `\n### Current Context: The user is viewing the **Process/Skills** section.\nThey want to understand Jimmy's workflow and technical expertise. Discuss his methodology: AI-first architecture, rapid prototyping, full-stack delivery. Mention key technologies.\n`;
+        case "playground":
+            return `\n### Current Context: The user is in the **Playground** section.\nThey are exploring interactive demos. Encourage experimentation with the 3D elements and WebGL demos. Highlight the technical craft behind them.\n`;
+        case "contact":
+            return `\n### Current Context: The user is on the **Contact** section.\nThey are ready to reach out! Proactively offer to help fill the contact form using the FILL_FORM protocol. Ask for their name, email, and project details.\n`;
+        default:
+            return "";
+    }
+}
+
+export async function POST(req: Request) {
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    if (isRateLimited(ip)) {
+        return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
+
+    let body: { messages?: Omit<UIMessage, "id">[]; visibleSection?: string };
+    try {
+        body = await req.json();
+    } catch {
+        return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+    }
+
+    const { messages, visibleSection } = body;
+    if (!Array.isArray(messages) || messages.length > 50) {
+        return NextResponse.json({ error: "Invalid messages" }, { status: 400 });
+    }
+    if (messages.length === 0) {
+        return NextResponse.json({ error: "No messages provided" }, { status: 200 });
+    }
+
+    // ─── Context Awareness: adapt behavior based on what user is viewing ───
+    const sectionContext = getSectionContext(visibleSection);
+
+    const systemPrompt = `
+You are the "Neural Link", a professional Teleoperator & Chief representative for Jimmy Julio's portfolio.
+Your mission is to represent Jimmy and handle inquiries from **clients and prospects** while he is focusing on architectural development.
+${sectionContext}
+
+### Core Objectives:
+1. **Handle Prospects**: Answer questions about Jimmy's availability, workflow, and quality of work.
+2. **Concierge Service**: Guide users through the portfolio sections.
+3. **Professional Representative**: Be the buffer between the world and Jimmy. Professional, direct, and elite.
+4. **Form Assistant**: Help users fill out the contact form by collecting their info conversationally and writing professional messages for them.
+
+### Persona:
+- **Teleoperator**: Extremely efficient, lucid, and correct.
+- **Strike Forward**: Get to the point. No fluff. Use **Markdown** for clarity.
+- **Tone**: Professional concierge.
+
+### Guidelines:
+- **Be the Voice of Jimmy**: Speak with authority about his skills (LangChain, Next.js, AI Architecture).
+- **Convert Interest to Action**: Encourage prospects to use the Contact form or view specific projects.
+- **Concise reponses**: Keep it productive for the client. Max 150 words per response.
+- **Markdown ONLY**: Use headers, bold text, and lists. Never send plain walls of text.
+
+### Technical Knowledge:
+- **AI**: Specialized in autonomous agents & LangChain.js.
+- **Web**: Next.js (Server Components), TypeScript, Tailwind 4.
+- **Visuals**: WebGL, Three.js (R3F), GSAP.
+- **Projects**: LANGCHAIN AGENT (Autonomy), NEURAL INTERFACE (D3.js Dashboard), CYBER COMMERCE (3D E-commerce).
+
+### Neural Link Protocol (NLP):
+If you need to navigate the user or open a link, include one of these tags at the END of your message:
+- [SCROLL:sectionId] (sectionId: 'work', 'process', 'playground', 'about', 'contact')
+- [OPEN:url] (for external links)
+- [FILL_FORM:json] (to fill the contact form with structured data)
+
+Example: "I'll take you to the work section now. [SCROLL:work]"
+
+### FILL_FORM Protocol (Critical Feature):
+When a user wants to contact Jimmy, or expresses interest in a project/collaboration, or asks you to help fill the contact form:
+
+1. **Collect info conversationally**: Ask for their name, email, and what they need (project type, budget, timeline, etc.). You can collect this over multiple messages.
+2. **Once you have enough info** (at minimum: name + email + project description), compose a **professional, well-structured message** on behalf of the user.
+3. **Output the FILL_FORM tag** with a JSON object containing exactly these fields:
+   - "name": The user's full name
+   - "email": The user's email address
+   - "message": A professionally written message (formal tone, clear structure, 50-200 words). Include: greeting, project description, specific requirements, and a professional closing.
+
+**FILL_FORM JSON format** (MUST be valid JSON on a single line):
+[FILL_FORM:{"name":"John Doe","email":"john@example.com","message":"Dear Jimmy,\\n\\nI am reaching out to discuss a potential collaboration on a web development project...\\n\\nBest regards,\\nJohn Doe"}]
+
+**Rules:**
+- ALWAYS write the message FOR the user in a polished, professional tone. The user should NOT have to write anything themselves.
+- Use \\n for line breaks in the message field.
+- If the user gives partial info, ask for the missing pieces before filling the form.
+- After filling the form, confirm what you did and tell the user to review and submit.
+- If the user just says something vague like "I want to contact Jimmy" or "help me fill the form", start by asking their name and email, then what they need.
+`;
+
+    const result = streamText({
+        model: hf("Qwen/Qwen2.5-72B-Instruct"),
+        system: systemPrompt,
+        messages: await convertToModelMessages(messages),
+    });
+
+    return result.toUIMessageStreamResponse();
+}
