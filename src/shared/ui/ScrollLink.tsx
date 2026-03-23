@@ -1,6 +1,5 @@
 "use client";
 
-import { soundManager } from "@/shared/lib/sound-manager";
 import Link from "next/link";
 
 interface ScrollLinkProps
@@ -19,10 +18,11 @@ export function ScrollLink({
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
 
-    // Play transition sound
-    soundManager.play("transition", { volume: 0.3 });
+    // Lazy play sound — avoids importing soundManager at module level
+    import("@/shared/lib/sound-manager").then(({ soundManager }) => {
+      soundManager.play("transition", { volume: 0.3 });
+    });
 
-    // Smooth scroll to target
     const target = document.querySelector(href);
     if (target) {
       target.scrollIntoView({

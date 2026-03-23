@@ -42,16 +42,16 @@ export function FloatingMusicToggle() {
   useGSAP(() => {
     if (isMusicPlaying && wavesRef.current) {
       const bars = wavesRef.current.querySelectorAll(".sound-bar");
-      gsap.to(bars, {
-        scaleY: "random(0.3, 1)",
-        duration: 0.2,
-        repeat: -1,
-        yoyo: true,
-        stagger: 0.05,
-        ease: "none",
-      });
-    } else {
-      gsap.killTweensOf(".sound-bar");
+      // Use CSS animation instead of infinite GSAP tweens to reduce JS overhead
+      for (const bar of bars) {
+        (bar as HTMLElement).style.animation =
+          `pulse 0.4s ease-in-out infinite alternate`;
+      }
+    } else if (wavesRef.current) {
+      const bars = wavesRef.current.querySelectorAll(".sound-bar");
+      for (const bar of bars) {
+        (bar as HTMLElement).style.animation = "none";
+      }
     }
   }, [isMusicPlaying]);
 

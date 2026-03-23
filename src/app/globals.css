@@ -62,8 +62,6 @@
     color: var(--color-silver-holo);
     font-family: var(--font-family-grotesk);
     overflow-x: hidden;
-    cursor: none;
-    /* We have a custom cursor */
   }
 
   ::selection {
@@ -243,18 +241,6 @@
   }
 }
 
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
 @keyframes glow {
   from {
     box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
@@ -262,5 +248,101 @@
 
   to {
     box-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+  }
+}
+
+/* ─── Custom Cursor (pure CSS, no GSAP) ─── */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999999;
+  mix-blend-mode: difference;
+  will-change: left, top, transform, background-color;
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease,
+    opacity 0.2s ease;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid #00f0ff;
+  pointer-events: none;
+  z-index: 999998;
+  mix-blend-mode: difference;
+  will-change: left, top, transform, border-color, width, height;
+  transition:
+    left 0.12s cubic-bezier(0.25, 0.1, 0.25, 1),
+    top 0.12s cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 0.25s cubic-bezier(0.25, 0.1, 0.25, 1),
+    border-color 0.2s ease,
+    width 0.25s ease,
+    height 0.25s ease,
+    opacity 0.2s ease;
+}
+
+/* Crosshair lines inside the ring */
+.cursor-crosshair-h,
+.cursor-crosshair-v {
+  position: absolute;
+  border-radius: 1px;
+  transition: opacity 0.2s ease;
+}
+
+.cursor-crosshair-h {
+  width: 100%;
+  height: 1px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.cursor-crosshair-v {
+  width: 1px;
+  height: 100%;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+/* Hide default cursor only on desktop with fine pointer */
+@media (pointer: fine) and (min-width: 768px) {
+  body,
+  a,
+  button,
+  input,
+  textarea,
+  [role="button"],
+  .cursor-pointer {
+    cursor: none !important;
+  }
+}
+
+/* Show default cursor on touch/mobile */
+@media not all and (pointer: fine) {
+  body {
+    cursor: auto;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

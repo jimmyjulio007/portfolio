@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useState, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { Stars, Sparkles } from "@react-three/drei";
@@ -89,8 +89,12 @@ export function HeroObject() {
   const { mouse } = useThree();
   const smoothMouse = useRef(new THREE.Vector2(0, 0));
 
-  // Particle count balance for mobile (8000 on desktop, 3000 on mobile recommended)
-  const particleCount = 4500;
+  // Adaptive particle count: fewer on mobile for better FPS
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+  const particleCount = isMobile ? 2000 : 4500;
 
   const geometry = useMemo(() => {
     const positions = new Float32Array(particleCount * 3);
@@ -139,7 +143,7 @@ export function HeroObject() {
     geo.setAttribute("aSpeed", new THREE.BufferAttribute(speeds, 1));
 
     return geo;
-  }, []);
+  }, [particleCount]);
 
   const uniforms = useMemo(
     () => ({
@@ -167,21 +171,23 @@ export function HeroObject() {
       <Stars
         radius={100}
         depth={50}
-        count={2000}
+        count={isMobile ? 800 : 2000}
         factor={2}
         saturation={0}
         fade
         speed={0.2}
       />
 
-      <Sparkles
-        count={30}
-        scale={15}
-        size={1.5}
-        speed={0.1}
-        opacity={0.3}
-        color="#00f0ff"
-      />
+      {!isMobile && (
+        <Sparkles
+          count={30}
+          scale={15}
+          size={1.5}
+          speed={0.1}
+          opacity={0.3}
+          color="#00f0ff"
+        />
+      )}
 
       <points ref={pointsRef} geometry={geometry}>
         <shaderMaterial

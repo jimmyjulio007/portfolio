@@ -1,8 +1,7 @@
 "use client";
 
 import { useRef, useMemo } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "@/shared/lib/gsap-setup";
 import { useGSAP } from "@gsap/react";
 import { useTranslations } from "next-intl";
 
@@ -12,9 +11,6 @@ import { Magnetic } from "@/shared/ui/Magnetic";
 import { SITE_CONFIG } from "@/shared/config/constants";
 import type { Project } from "@/shared/types";
 
-if (typeof window !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger);
-}
 
 interface ProjectCardProps {
     project: Project;

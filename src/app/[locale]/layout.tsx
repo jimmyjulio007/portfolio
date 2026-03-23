@@ -1,10 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Outfit, Space_Grotesk } from "next/font/google"; // Optimized font loading
+import { Outfit, Space_Grotesk } from "next/font/google";
 import "../globals.css";
 import "../hero-animations.css";
 import { SITE_CONFIG } from "@/shared/config/constants";
-import { CustomCursor } from "@/features/CustomCursor";
-import { CookieConsent } from "@/features/CookieConsent";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -14,7 +12,7 @@ import { getTranslations } from "next-intl/server";
 import localFont from "next/font/local";
 import Script from "next/script";
 import { StructuredData } from "@/shared/ui/StructuredData";
-import { ChatbotWrapper } from "@/shared/ui/ChatbotWrapper";
+import { DeferredComponents } from "@/shared/ui/DeferredComponents";
 
 // Initialize fonts
 const outfit = Outfit({
@@ -61,50 +59,21 @@ export async function generateMetadata({
     },
     description: t("description"),
     keywords: [
-      // Brand/Name Keywords (Primary SEO Target)
       "Jimmy Julio",
-      "Jimmy Julio Developer",
       "Jimmy Julio Portfolio",
-      "Jimmy Julio Full Stack",
-      "Jimmy Julio AI",
-      "Jimmy Julio JavaScript",
-      "Andriamandresy Mitondrasoa Jimmy Julio",
-      "jimmyjulio007",
-
-      // Role-based Keywords
-      "Full Stack Developer",
       "Full Stack AI Architect",
-      "AI Developer",
-      "JavaScript Developer",
-      "TypeScript Developer",
-      "React Developer",
+      "AI Developer Madagascar",
       "Next.js Developer",
-
-      // Technology Keywords
-      "LangChain",
       "LangChain Developer",
-      "Next.js",
-      "React",
-      "TypeScript",
-      "Three.js",
-      "WebGL",
-      "Node.js",
-      "AI Integration",
-      "Machine Learning",
-      "Artificial Intelligence",
-
-      // Location Keywords
+      "React TypeScript Developer",
+      "Three.js WebGL",
       "Antananarivo Developer",
-      "Madagascar Developer",
-      "Antananarivo AI Developer",
-      "Madagascar Full Stack Developer",
-
-      // Project Type Keywords
-      "Portfolio",
       "Web Developer Portfolio",
+      "Full Stack Developer",
+      "JavaScript Developer",
       "Creative Developer",
-      "3D Web Development",
-      "Interactive Portfolio",
+      "jimmyjulio007",
+      "Andriamandresy Mitondrasoa Jimmy Julio",
     ],
     authors: [
       {
@@ -182,7 +151,6 @@ export async function generateMetadata({
   };
 }
 
-// Viewport configuration (separate from metadata in Next.js 14+)
 export async function generateViewport({
   params,
 }: {
@@ -192,7 +160,7 @@ export async function generateViewport({
     width: "device-width",
     initialScale: 1,
     maximumScale: 5,
-    userScalable: true, // Accessibility fix
+    userScalable: true,
     themeColor: "#00f0ff",
   };
 }
@@ -206,13 +174,10 @@ export default async function LocaleLayout({
 }>) {
   const { locale } = await params;
 
-  // Ensure that the incoming `locale` is valid
   if (!routing.locales.includes(locale as any)) {
     notFound();
   }
 
-  // Providing all messages to the client
-  // side is the easiest way to get started
   const messages = await getMessages();
 
   return (
@@ -222,16 +187,30 @@ export default async function LocaleLayout({
       dir={locale === "ar" ? "rtl" : "ltr"}
     >
       <head>
-        {/* PWA Manifest */}
         <link rel="manifest" href="/manifest.json" />
-        {/* theme-color and google-site-verification are set via generateMetadata/generateViewport */}
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
+        {/* GTM — afterInteractive instead of beforeInteractive to unblock rendering */}
+        <Script
+          id="gtm-head"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-M7X94SM9');
+    `,
+          }}
+        />
         <Script
           async
+          strategy="afterInteractive"
           src="https://www.googletagmanager.com/gtag/js?id=G-SJHL50CMYS"
         />
         <Script
@@ -244,20 +223,6 @@ export default async function LocaleLayout({
               gtag('js', new Date());
               gtag('config', 'G-SJHL50CMYS');
             `,
-          }}
-        />
-        <Script
-          id="gtm-head"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id=GTM-M7X94SM9'+dl;
-      f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-M7X94SM9');
-    `,
           }}
         />
 
@@ -273,10 +238,9 @@ export default async function LocaleLayout({
           ></iframe>
         </noscript>
         <NextIntlClientProvider messages={messages}>
-          <CustomCursor />
-          <CookieConsent />
           {children}
-          <ChatbotWrapper />
+          {/* CustomCursor, CookieConsent, Chatbot — deferred until after first paint */}
+          <DeferredComponents />
         </NextIntlClientProvider>
       </body>
     </html>

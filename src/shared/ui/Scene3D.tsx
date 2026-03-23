@@ -99,7 +99,6 @@ export function Scene3D({
   const [dpr, setDpr] = useState(1.5);
   const [canRender, setCanRender] = useState(false);
 
-  // Check WebGL support on mount (client-side only)
   useEffect(() => {
     setCanRender(isWebGLAvailable());
   }, []);
@@ -120,7 +119,7 @@ export function Scene3D({
           dpr={dpr}
           performance={{ min: 0.5 }}
           gl={{
-            antialias: true,
+            antialias: false,
             powerPreference: "high-performance",
             preserveDrawingBuffer: false,
             alpha: true,
@@ -128,7 +127,6 @@ export function Scene3D({
             depth: true,
           }}
           onCreated={({ gl }) => {
-            // Listen for context loss to prevent cascading errors
             const canvas = gl.domElement;
             canvas.addEventListener(
               "webglcontextlost",
@@ -141,8 +139,10 @@ export function Scene3D({
           }}
         >
           <PerformanceMonitor
-            onIncline={() => setDpr(2)}
-            onDecline={() => setDpr(1)}
+            onIncline={() => setDpr((prev) => (prev === 2 ? prev : 2))}
+            onDecline={() => setDpr((prev) => (prev === 1 ? prev : 1))}
+            flipflops={3}
+            onFallback={() => setDpr(1)}
           />
 
           <AdaptiveDpr pixelated />

@@ -29,7 +29,7 @@ const chatTransport = new DefaultChatTransport({
 
 const getInitialMessages = () => {
     if (typeof window === "undefined") return [];
-    try { return JSON.parse(localStorage.getItem("chatbot-messages") || "[]"); }
+    try { return JSON.parse(sessionStorage.getItem("chatbot-messages") || "[]"); }
     catch { return []; }
 };
 
@@ -48,6 +48,25 @@ function cleanNLPTags(text: string): string {
         .replace(/\[(SCROLL|OPEN):.*?\]/g, "")
         .replace(/\[FILL_FORM:[\s\S]*?\]/g, "")
         .replace(/\[FILL_FORM:[\s\S]*$/g, "")
+        .trim();
+}
+
+/** Strip markdown formatting for TTS so it reads naturally */
+function stripMarkdownForTTS(text: string): string {
+    return text
+        .replace(/#{1,6}\s*/g, "")          // headings
+        .replace(/\*{1,3}([^*]+)\*{1,3}/g, "$1") // bold/italic
+        .replace(/_{1,3}([^_]+)_{1,3}/g, "$1")   // bold/italic underscore
+        .replace(/~~([^~]+)~~/g, "$1")       // strikethrough
+        .replace(/`{1,3}[^`]*`{1,3}/g, "")  // inline/block code
+        .replace(/^\s*[-*+]\s+/gm, "")       // list markers
+        .replace(/^\s*\d+\.\s+/gm, "")       // ordered list markers
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1") // links
+        .replace(/!\[([^\]]*)\]\([^)]+\)/g, "$1") // images
+        .replace(/>\s*/g, "")                // blockquotes
+        .replace(/\n{2,}/g, ". ")            // multiple newlines to pause
+        .replace(/\n/g, " ")                 // single newlines to space
+        .replace(/\s{2,}/g, " ")             // collapse whitespace
         .trim();
 }
 
@@ -177,12 +196,7 @@ export function AIChatbot() {
     const [isOpen, setIsOpen] = useState(false);
     const [isMinimized, setIsMinimized] = useState(false);
     const [input, setInput] = useState("");
-    const [isAppReady, setIsAppReady] = useState(() => {
-        if (typeof window !== "undefined") {
-            return sessionStorage.getItem("hasLoaded") === "true";
-        }
-        return false;
-    });
+    const [isAppReady, setIsAppReady] = useState(false);
     const [isVoiceEnabled, setIsVoiceEnabled] = useState(() => {
         if (typeof window !== "undefined") {
             try {
@@ -203,7 +217,7 @@ export function AIChatbot() {
     const [isMobile, setIsMobile] = useState(false);
     const [reactions, setReactions] = useState<Record<string, "up" | "down">>(() => {
         if (typeof window === "undefined") return {};
-        try { return JSON.parse(localStorage.getItem("chatbot-reactions") || "{}"); }
+        try { return JSON.parse(sessionStorage.getItem("chatbot-reactions") || "{}"); }
         catch { return {}; }
     });
     const [copied, setCopied] = useState(false);
@@ -258,22 +272,10 @@ export function AIChatbot() {
         return () => clearInterval(loadingIntervalRef.current);
     }, [isLoading]);
 
-    // ─── App readiness (hide during CinematicLoader) ───
+    // ─── App readiness ───
     useEffect(() => {
-        if (isAppReady) return;
-        const handler = () => setIsAppReady(true);
-        window.addEventListener("app-loaded", handler);
-        const interval = setInterval(() => {
-            if (sessionStorage.getItem("hasLoaded") === "true") {
-                setIsAppReady(true);
-                clearInterval(interval);
-            }
-        }, 500);
-        return () => {
-            window.removeEventListener("app-loaded", handler);
-            clearInterval(interval);
-        };
-    }, [isAppReady]);
+        setIsAppReady(true);
+    }, []);
 
     // ─── Notification Pulse (first visit only, 10s delay) ───
     useEffect(() => {
@@ -302,7 +304,7 @@ export function AIChatbot() {
         if (messages.length === 0) return;
         clearTimeout(persistTimeoutRef.current);
         persistTimeoutRef.current = setTimeout(() => {
-            localStorage.setItem("chatbot-messages", JSON.stringify(messages.slice(-30)));
+            sessionStorage.setItem("chatbot-messages", JSON.stringify(messages.slice(-30)));
         }, 500);
         return () => clearTimeout(persistTimeoutRef.current);
     }, [messages]);
@@ -313,7 +315,7 @@ export function AIChatbot() {
 
     // ─── Persist reactions ───
     useEffect(() => {
-        localStorage.setItem("chatbot-reactions", JSON.stringify(reactions));
+        sessionStorage.setItem("chatbot-reactions", JSON.stringify(reactions));
     }, [reactions]);
 
     // ─── Auto-resize textarea ───
@@ -383,7 +385,7 @@ export function AIChatbot() {
             .map((p) => p.text)
             .join(" ");
 
-        const cleanText = cleanNLPTags(fullText);
+        const cleanText = stripMarkdownForTTS(cleanNLPTags(fullText));
         if (cleanText) speak(cleanText, document.documentElement.lang || "en-US");
     }, [messages, status, isVoiceEnabled, speak]);
 
@@ -521,8 +523,8 @@ export function AIChatbot() {
     const handleClearHistory = useCallback(() => {
         cancel();
         setMessages([]);
-        localStorage.removeItem("chatbot-messages");
-        localStorage.removeItem("chatbot-reactions");
+        sessionStorage.removeItem("chatbot-messages");
+        sessionStorage.removeItem("chatbot-reactions");
         lastProcessedIdRef.current = null;
         lastSpokenIdRef.current = null;
         prevMsgCountRef.current = 0;

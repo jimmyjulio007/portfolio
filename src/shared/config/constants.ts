@@ -52,7 +52,7 @@ export const SOUND_CONFIG = {
     hover: "/sounds/hover.wav",
     click: "/sounds/hover.wav", // Using hover.wav as click for compatibility
     transition: "/sounds/transition.wav",
-    ambient: "/sounds/ambient.wav",
+    ambient: "/sounds/ambient.mp3",
   },
 } as const;
 

@@ -1,14 +1,11 @@
 "use client";
 
 import { useMemo, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "@/shared/lib/gsap-setup";
 import { useGSAP } from "@gsap/react";
 import { useTranslations } from "next-intl";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+
 
 interface ProcessStep {
   id: string;

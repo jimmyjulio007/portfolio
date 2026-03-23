@@ -1,24 +1,26 @@
 "use client";
 
-import { Suspense, useRef } from "react";
+import { Suspense, useRef, useMemo } from "react";
 import { useGLTF, OrbitControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
+import type * as THREE from "three";
 
 function ComputerModel({ enableRTX }: { enableRTX: boolean }) {
   const groupRef = useRef<THREE.Group>(null);
   const gltf = useGLTF("/models/computer_and_laptop.glb");
 
+  // Clone scene once, not every frame
+  const scene = useMemo(() => gltf.scene.clone(), [gltf.scene]);
+
   useFrame(() => {
     if (groupRef.current) {
-      // Very subtle auto-rotation
       groupRef.current.rotation.y += 0.0005;
     }
   });
 
   return (
     <group ref={groupRef} position={[0, -1, 0]} rotation={[0, -0.3, 0]}>
-      <primitive object={gltf.scene.clone()} scale={0.8} />
+      <primitive object={scene} scale={0.8} />
     </group>
   );
 }

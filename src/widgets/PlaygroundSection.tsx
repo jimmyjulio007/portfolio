@@ -1,15 +1,12 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "@/shared/lib/gsap-setup";
 import { useGSAP } from "@gsap/react";
 import { Magnetic } from "@/shared/ui/Magnetic";
 import { useTranslations } from "next-intl";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+
 
 interface Experiment {
   id: number;
@@ -33,6 +30,7 @@ function ExperimentItem({ experiment, onHover, onLeave }: ExperimentItemProps) {
         onMouseLeave={onLeave}
         role="button"
         tabIndex={0}
+        aria-label={experiment.name}
       >
         <span className="text-2xl md:text-4xl font-bold text-gray-500 group-hover:text-white transition-colors duration-300">
           {experiment.name}

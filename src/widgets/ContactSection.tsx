@@ -3,8 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useForm, type UseFormRegisterReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "@/shared/lib/gsap-setup";
 import { useGSAP } from "@gsap/react";
 import { useLocale, useTranslations } from "next-intl";
 import { Loader2, Send } from "lucide-react";
@@ -17,9 +16,6 @@ import { FuturisticToast } from "@/shared/ui/FuturisticToast";
 import { Magnetic } from "@/shared/ui/Magnetic";
 import Link from "next/link";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 interface FormFieldProps {
   register: UseFormRegisterReturn;

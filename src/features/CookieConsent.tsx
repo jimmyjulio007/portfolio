@@ -173,6 +173,7 @@ export function CookieConsent() {
                   <div
                     className="absolute inset-0 rounded-full border-2 border-transparent border-t-[#00f0ff] animate-spin"
                     style={{ animationDuration: "3s" }}
+                    aria-hidden="true"
                   />
                 </div>
               </div>

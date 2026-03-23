@@ -1,15 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "@/shared/lib/gsap-setup";
 import { Link } from "@/i18n/routing";
 import { useLocale } from "next-intl";
 import { Button } from "@/shared/ui/Button";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 const PRIVACY_CONTENT = {
   en: {

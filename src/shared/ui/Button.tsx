@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/shared/lib/utils";
-import { soundManager } from "@/shared/lib/sound-manager";
 import type React from "react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -22,14 +21,18 @@ export function Button({
 }: ButtonProps) {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (withSound) {
-      soundManager.play("click", { volume: 0.5 });
+      import("@/shared/lib/sound-manager").then(({ soundManager }) => {
+        soundManager.play("click", { volume: 0.5 });
+      });
     }
     onClick?.(e);
   };
 
   const handleMouseEnter = () => {
     if (withSound) {
-      soundManager.play("hover", { volume: 0.3 });
+      import("@/shared/lib/sound-manager").then(({ soundManager }) => {
+        soundManager.play("hover", { volume: 0.3 });
+      });
     }
   };
 

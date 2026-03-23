@@ -2,10 +2,7 @@
 
 import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/routing";
-import { useState, useTransition, useRef } from "react";
-import { Globe } from "lucide-react";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
+import { useState, useTransition, useRef, useEffect } from "react";
 
 const LOCALES = [
   { code: "en", name: "English", flag: "🇬🇧" },
@@ -20,11 +17,28 @@ interface LanguageSwitcherProps {
   dropUp?: boolean;
 }
 
-/**
- * LanguageSwitcher Component
- * - Smooth GSAP transitions for dropdown
- * - Polished UI with glassmorphism and HSL highlights
- */
+/** Inline Globe SVG — avoids loading entire lucide-react bundle */
+function GlobeIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+      <path d="M2 12h20" />
+    </svg>
+  );
+}
+
 export function LanguageSwitcher({ dropUp = false }: LanguageSwitcherProps) {
   const locale = useLocale();
   const router = useRouter();
@@ -33,35 +47,23 @@ export function LanguageSwitcher({ dropUp = false }: LanguageSwitcherProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    if (isOpen && dropdownRef.current) {
-      gsap.fromTo(
-        dropdownRef.current,
-        { opacity: 0, y: dropUp ? 10 : -10, scale: 0.95 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "power4.out" },
-      );
-
-      gsap.fromTo(
-        ".lang-btn",
-        { x: -10, opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 0.3,
-          stagger: 0.05,
-          ease: "power2.out",
-          delay: 0.1,
-        },
-      );
-    }
-  }, [isOpen, dropUp]);
+  // Close on outside click
+  useEffect(() => {
+    if (!isOpen) return;
+    const close = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", close);
+    return () => document.removeEventListener("mousedown", close);
+  }, [isOpen]);
 
   const handleLocaleChange = (newLocale: string) => {
     if (newLocale === locale) {
       setIsOpen(false);
       return;
     }
-
     startTransition(() => {
       router.replace(pathname, { locale: newLocale });
       setIsOpen(false);
@@ -71,7 +73,7 @@ export function LanguageSwitcher({ dropUp = false }: LanguageSwitcherProps) {
   const currentLocale = LOCALES.find((l) => l.code === locale) || LOCALES[0];
 
   return (
-    <div className="relative">
+    <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         disabled={isPending}
@@ -80,7 +82,7 @@ export function LanguageSwitcher({ dropUp = false }: LanguageSwitcherProps) {
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >
-        <Globe
+        <GlobeIcon
           className={`w-4 h-4 text-gray-400 group-hover:text-[#00f0ff] transition-all duration-500 ${isOpen ? "rotate-180 text-[#00f0ff]" : ""}`}
         />
         <span className="text-sm font-mono text-gray-300 group-hover:text-white transition-colors">
@@ -96,8 +98,7 @@ export function LanguageSwitcher({ dropUp = false }: LanguageSwitcherProps) {
           />
 
           <div
-            ref={dropdownRef}
-            className={`absolute ${dropUp ? "bottom-full mb-3" : "top-full mt-3"} right-0 w-48 bg-black/95 backdrop-blur-xl border border-gray-800 rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-50 p-1`}
+            className={`absolute ${dropUp ? "bottom-full mb-3" : "top-full mt-3"} right-0 w-48 bg-black/95 backdrop-blur-xl border border-gray-800 rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-50 p-1 animate-[fadeInUp_0.2s_ease-out_both]`}
             role="listbox"
           >
             <div className="px-3 py-2 text-[10px] font-mono text-gray-500 uppercase tracking-tighter border-b border-gray-900 mb-1">
@@ -109,14 +110,14 @@ export function LanguageSwitcher({ dropUp = false }: LanguageSwitcherProps) {
                 onClick={() => handleLocaleChange(loc.code)}
                 disabled={isPending}
                 className={`
-                                    lang-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-all duration-300 mb-0.5
-                                    ${
-                                      locale === loc.code
-                                        ? "bg-[#00f0ff]/10 text-[#00f0ff]"
-                                        : "text-gray-400 hover:bg-gray-900 hover:text-white"
-                                    }
-                                    ${isPending ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
-                                `}
+                  w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-all duration-300 mb-0.5
+                  ${
+                    locale === loc.code
+                      ? "bg-[#00f0ff]/10 text-[#00f0ff]"
+                      : "text-gray-400 hover:bg-gray-900 hover:text-white"
+                  }
+                  ${isPending ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
+                `}
                 role="option"
                 aria-selected={locale === loc.code}
               >

@@ -4,6 +4,11 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
+  // Fix workspace root detection (stray lockfile in home directory)
+  turbopack: {
+    root: __dirname,
+  },
+
   // Performance optimizations
   compress: true,
   poweredByHeader: false,
@@ -19,7 +24,7 @@ const nextConfig: NextConfig = {
   },
 
   // Webpack optimizations
-  webpack: (config, { isServer }) => {
+  webpack: (config) => {
     // Optimize bundle size
     config.optimization = {
       ...config.optimization,
@@ -109,8 +114,25 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Content-Security-Policy",
-            value:
-              "default-src 'self' blob:; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: data:; connect-src 'self' blob: data: https://vercel.live https://va.vercel-scripts.com wss://ws-us3.pusher.com; frame-src 'self' https://vercel.live; worker-src 'self' blob:; object-src 'self' blob:; child-src 'self' blob:;",
+            value: [
+              "default-src 'self' blob:",
+              "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://vercel.live https://va.vercel-scripts.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "font-src 'self' https://fonts.gstatic.com",
+              "img-src 'self' data: blob: https:",
+              "media-src 'self' blob: data:",
+              "connect-src 'self' blob: data: https://vercel.live https://va.vercel-scripts.com https://www.google-analytics.com https://www.googletagmanager.com wss://ws-us3.pusher.com",
+              "frame-src 'self' https://vercel.live",
+              "worker-src 'self' blob:",
+              "object-src 'none'",
+              "child-src 'self' blob:",
+              "base-uri 'self'",
+              "form-action 'self'",
+            ].join("; "),
+          },
+          {
+            key: "Cross-Origin-Opener-Policy",
+            value: "same-origin-allow-popups",
           },
         ],
       },

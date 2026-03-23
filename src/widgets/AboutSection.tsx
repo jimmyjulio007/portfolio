@@ -1,8 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "@/shared/lib/gsap-setup";
 import { useGSAP } from "@gsap/react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
@@ -23,9 +22,6 @@ const Scene3D = dynamic(
   },
 );
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 interface SkillBarProps {
   name: string;
@@ -54,7 +50,7 @@ function SkillBar({ name, level }: SkillBarProps) {
   return (
     <div className="group">
       <div className="flex justify-between mb-2 font-mono text-xs uppercase tracking-widest">
-        <span className="text-gray-500 group-hover:text-white transition-colors">
+        <span className="text-gray-400 group-hover:text-white transition-colors">
           {name}
         </span>
         <span className="text-[#00f0ff]">{level}%</span>
@@ -62,6 +58,7 @@ function SkillBar({ name, level }: SkillBarProps) {
       <div
         className="h-1 bg-gray-800 w-full overflow-hidden"
         role="progressbar"
+        aria-label={name}
         aria-valuenow={level}
         aria-valuemin={0}
         aria-valuemax={100}

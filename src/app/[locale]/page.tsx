@@ -1,40 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import dynamic from "next/dynamic";
-import Lenis from "lenis";
 import { Navigation } from "@/widgets/Navigation";
 import { HeroSection } from "@/widgets/HeroSection";
 import { Footer } from "@/widgets/Footer";
-import { soundManager } from "@/shared/lib/sound-manager";
-import { SOUND_CONFIG } from "@/shared/config/constants";
 import { reportWebVitals } from "@/shared/lib/web-vitals";
 
-// Lazy load heavy components with dynamic imports
-const WorkSection = dynamic(
-  () =>
-    import("@/widgets/WorkSection").then((mod) => ({
-      default: mod.WorkSection,
-    })),
-  {
-    loading: () => (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-gray-500">Loading...</div>
-      </div>
-    ),
-    ssr: true,
-  },
-);
-
+// ─── Below-fold sections: only load when user scrolls near them ───
 const ProcessSection = dynamic(
   () =>
     import("@/widgets/ProcessSection").then((mod) => ({
       default: mod.ProcessSection,
     })),
-  {
-    loading: () => <div className="min-h-screen" />,
-    ssr: true,
-  },
+  { ssr: false },
+);
+
+const WorkSection = dynamic(
+  () =>
+    import("@/widgets/WorkSection").then((mod) => ({
+      default: mod.WorkSection,
+    })),
+  { ssr: false },
 );
 
 const PlaygroundSection = dynamic(
@@ -42,10 +29,7 @@ const PlaygroundSection = dynamic(
     import("@/widgets/PlaygroundSection").then((mod) => ({
       default: mod.PlaygroundSection,
     })),
-  {
-    loading: () => <div className="min-h-screen" />,
-    ssr: true,
-  },
+  { ssr: false },
 );
 
 const AboutSection = dynamic(
@@ -53,10 +37,7 @@ const AboutSection = dynamic(
     import("@/widgets/AboutSection").then((mod) => ({
       default: mod.AboutSection,
     })),
-  {
-    loading: () => <div className="min-h-screen" />,
-    ssr: true,
-  },
+  { ssr: false },
 );
 
 const ContactSection = dynamic(
@@ -64,20 +45,7 @@ const ContactSection = dynamic(
     import("@/widgets/ContactSection").then((mod) => ({
       default: mod.ContactSection,
     })),
-  {
-    loading: () => <div className="min-h-screen" />,
-    ssr: true,
-  },
-);
-
-const CinematicLoader = dynamic(
-  () =>
-    import("@/features/CinematicLoader").then((mod) => ({
-      default: mod.CinematicLoader,
-    })),
-  {
-    ssr: false,
-  },
+  { ssr: false },
 );
 
 const FloatingMusicToggle = dynamic(
@@ -85,93 +53,152 @@ const FloatingMusicToggle = dynamic(
     import("@/features/FloatingMusicToggle").then((mod) => ({
       default: mod.FloatingMusicToggle,
     })),
-  {
-    ssr: false,
-  },
+  { ssr: false },
 );
 
 const RTXToggle = dynamic(
   () =>
     import("@/features/RTXToggle").then((mod) => ({ default: mod.RTXToggle })),
-  {
-    ssr: false,
-  },
+  { ssr: false },
 );
 
+/**
+ * Renders children only when the sentinel div enters the viewport.
+ * Saves ~1,500 KiB of unused JS on initial load.
+ */
+function LazySection({
+  children,
+  id,
+  className = "",
+  rootMargin = "400px",
+}: {
+  children: React.ReactNode;
+  id?: string;
+  className?: string;
+  rootMargin?: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [rootMargin]);
+
+  return (
+    <div ref={ref} id={id} className={className}>
+      {visible ? children : <div className="min-h-[50vh]" />}
+    </div>
+  );
+}
+
 export default function HomePage() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isMounted, setIsMounted] = useState(false);
+  const [showExtras, setShowExtras] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
-
-    // Check if we've already shown the loader
-    const hasLoaded = sessionStorage.getItem("hasLoaded");
-    if (hasLoaded) {
-      setIsLoading(false);
-    } else {
-      setIsLoading(true);
+    // Prevent browser from restoring previous scroll position
+    // which can land on "Building the future" section instead of hero
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
     }
 
-    // Initialize web vitals monitoring
     reportWebVitals();
-  }, []);
 
-  useEffect(() => {
-    // Initialize Lenis for ultra-smooth scrolling
-    const lenis = new Lenis({
-      duration: 1.5, // Increased duration for smoother momentum
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
-    });
+    // Defer non-critical features until after first paint
+    const id = requestIdleCallback(
+      () => {
+        setShowExtras(true);
+        // Lazy init smooth scroll
+        import("lenis").then(({ default: Lenis }) => {
+          const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            orientation: "vertical",
+            gestureOrientation: "vertical",
+            smoothWheel: true,
+            wheelMultiplier: 1,
+            touchMultiplier: 2,
+          });
+          let rafId: number;
+          function raf(time: number) {
+            lenis.raf(time);
+            rafId = requestAnimationFrame(raf);
+          }
+          rafId = requestAnimationFrame(raf);
 
-    let rafId: number;
-    function raf(time: number) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    }
+          // Store cleanup ref on window for unmount
+          (window as any).__lenisCleanup = () => {
+            cancelAnimationFrame(rafId);
+            lenis.destroy();
+          };
+        });
 
-    rafId = requestAnimationFrame(raf);
-
-    // Preload sound effects
-    Object.entries(SOUND_CONFIG.sounds).forEach(([name, url]) => {
-      soundManager.preload(name, url);
-    });
-
-    soundManager.setMasterVolume(SOUND_CONFIG.volume.master);
+        // Lazy init sounds only after user interaction
+        const initSounds = () => {
+          import("@/shared/lib/sound-manager").then(({ soundManager }) => {
+            import("@/shared/config/constants").then(({ SOUND_CONFIG }) => {
+              const { ambient: _ambient, ...uiSounds } = SOUND_CONFIG.sounds;
+              for (const [name, url] of Object.entries(uiSounds)) {
+                soundManager.preload(name, url);
+              }
+              soundManager.setMasterVolume(SOUND_CONFIG.volume.master);
+            });
+          });
+          window.removeEventListener("pointerdown", initSounds);
+          window.removeEventListener("keydown", initSounds);
+        };
+        window.addEventListener("pointerdown", initSounds, { once: true });
+        window.addEventListener("keydown", initSounds, { once: true });
+      },
+      { timeout: 2000 },
+    );
 
     return () => {
-      cancelAnimationFrame(rafId);
-      lenis.destroy();
+      cancelIdleCallback(id);
+      (window as any).__lenisCleanup?.();
     };
   }, []);
 
   return (
     <>
-      {isMounted && isLoading && (
-        <CinematicLoader
-          onComplete={() => {
-            setIsLoading(false);
-            sessionStorage.setItem("hasLoaded", "true");
-            window.dispatchEvent(new Event("app-loaded"));
-          }}
-        />
+      {showExtras && (
+        <>
+          <FloatingMusicToggle />
+          <RTXToggle />
+        </>
       )}
-      <FloatingMusicToggle />
-      <RTXToggle />
       <main className="min-h-screen bg-[#030303] text-white selection:bg-[#00f0ff] selection:text-black">
-        {/* Only show Navigation after loader completes */}
-        {!isLoading && <Navigation />}
+        <Navigation />
         <HeroSection />
-        <ProcessSection />
-        <WorkSection />
-        <PlaygroundSection />
-        <AboutSection />
-        <ContactSection />
+        <LazySection rootMargin="100px">
+          <ProcessSection />
+        </LazySection>
+        <LazySection>
+          <WorkSection />
+        </LazySection>
+        <LazySection>
+          <PlaygroundSection />
+        </LazySection>
+        <LazySection>
+          <AboutSection />
+        </LazySection>
+        <LazySection>
+          <ContactSection />
+        </LazySection>
         <Footer />
       </main>
     </>
