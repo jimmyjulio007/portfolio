@@ -285,7 +285,7 @@ export function AIChatbot() {
 
         pulseTimerRef.current = setTimeout(() => {
             setShowPulse(true);
-            soundManager.play("chat-receive", { volume: 0.15 });
+            // Sound removed: browsers block play() before user interaction
         }, 10000);
 
         return () => clearTimeout(pulseTimerRef.current);

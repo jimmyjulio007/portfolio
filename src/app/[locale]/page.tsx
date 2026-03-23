@@ -4,77 +4,47 @@ import { useEffect, useState, useRef } from "react";
 import dynamic from "next/dynamic";
 import { Navigation } from "@/widgets/Navigation";
 import { HeroSection } from "@/widgets/HeroSection";
-import { Footer } from "@/widgets/Footer";
-import { reportWebVitals } from "@/shared/lib/web-vitals";
 
-// ─── Below-fold sections: only load when user scrolls near them ───
+// Everything below the fold — lazy loaded
 const ProcessSection = dynamic(
-  () =>
-    import("@/widgets/ProcessSection").then((mod) => ({
-      default: mod.ProcessSection,
-    })),
+  () => import("@/widgets/ProcessSection").then((mod) => ({ default: mod.ProcessSection })),
   { ssr: false },
 );
-
 const WorkSection = dynamic(
-  () =>
-    import("@/widgets/WorkSection").then((mod) => ({
-      default: mod.WorkSection,
-    })),
+  () => import("@/widgets/WorkSection").then((mod) => ({ default: mod.WorkSection })),
   { ssr: false },
 );
-
 const PlaygroundSection = dynamic(
-  () =>
-    import("@/widgets/PlaygroundSection").then((mod) => ({
-      default: mod.PlaygroundSection,
-    })),
+  () => import("@/widgets/PlaygroundSection").then((mod) => ({ default: mod.PlaygroundSection })),
   { ssr: false },
 );
-
 const AboutSection = dynamic(
-  () =>
-    import("@/widgets/AboutSection").then((mod) => ({
-      default: mod.AboutSection,
-    })),
+  () => import("@/widgets/AboutSection").then((mod) => ({ default: mod.AboutSection })),
   { ssr: false },
 );
-
 const ContactSection = dynamic(
-  () =>
-    import("@/widgets/ContactSection").then((mod) => ({
-      default: mod.ContactSection,
-    })),
+  () => import("@/widgets/ContactSection").then((mod) => ({ default: mod.ContactSection })),
   { ssr: false },
 );
-
+const Footer = dynamic(
+  () => import("@/widgets/Footer").then((mod) => ({ default: mod.Footer })),
+  { ssr: false },
+);
 const FloatingMusicToggle = dynamic(
-  () =>
-    import("@/features/FloatingMusicToggle").then((mod) => ({
-      default: mod.FloatingMusicToggle,
-    })),
+  () => import("@/features/FloatingMusicToggle").then((mod) => ({ default: mod.FloatingMusicToggle })),
   { ssr: false },
 );
-
 const RTXToggle = dynamic(
-  () =>
-    import("@/features/RTXToggle").then((mod) => ({ default: mod.RTXToggle })),
+  () => import("@/features/RTXToggle").then((mod) => ({ default: mod.RTXToggle })),
   { ssr: false },
 );
 
-/**
- * Renders children only when the sentinel div enters the viewport.
- * Saves ~1,500 KiB of unused JS on initial load.
- */
+/** Renders children only when sentinel enters viewport */
 function LazySection({
   children,
-  id,
-  className = "",
-  rootMargin = "400px",
+  rootMargin = "300px",
 }: {
   children: React.ReactNode;
-  id?: string;
-  className?: string;
   rootMargin?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -97,7 +67,7 @@ function LazySection({
   }, [rootMargin]);
 
   return (
-    <div ref={ref} id={id} className={className}>
+    <div ref={ref}>
       {visible ? children : <div className="min-h-[50vh]" />}
     </div>
   );
@@ -107,8 +77,7 @@ export default function HomePage() {
   const [showExtras, setShowExtras] = useState(false);
 
   useEffect(() => {
-    // Prevent browser from restoring previous scroll position
-    // which can land on "Building the future" section instead of hero
+    // Prevent browser scroll restoration
     if ("scrollRestoration" in history) {
       history.scrollRestoration = "manual";
     }
@@ -116,19 +85,19 @@ export default function HomePage() {
       window.scrollTo(0, 0);
     }
 
-    reportWebVitals();
-
-    // Defer non-critical features until after first paint
+    // Defer everything non-critical until idle
     const id = requestIdleCallback(
       () => {
         setShowExtras(true);
-        // Lazy init smooth scroll
+
+        // Lazy web vitals
+        import("@/shared/lib/web-vitals").then(({ reportWebVitals }) => reportWebVitals());
+
+        // Lazy smooth scroll
         import("lenis").then(({ default: Lenis }) => {
           const lenis = new Lenis({
             duration: 1.2,
             easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            orientation: "vertical",
-            gestureOrientation: "vertical",
             smoothWheel: true,
             wheelMultiplier: 1,
             touchMultiplier: 2,
@@ -139,15 +108,13 @@ export default function HomePage() {
             rafId = requestAnimationFrame(raf);
           }
           rafId = requestAnimationFrame(raf);
-
-          // Store cleanup ref on window for unmount
           (window as any).__lenisCleanup = () => {
             cancelAnimationFrame(rafId);
             lenis.destroy();
           };
         });
 
-        // Lazy init sounds only after user interaction
+        // Sounds: only on first interaction
         const initSounds = () => {
           import("@/shared/lib/sound-manager").then(({ soundManager }) => {
             import("@/shared/config/constants").then(({ SOUND_CONFIG }) => {
@@ -164,7 +131,7 @@ export default function HomePage() {
         window.addEventListener("pointerdown", initSounds, { once: true });
         window.addEventListener("keydown", initSounds, { once: true });
       },
-      { timeout: 2000 },
+      { timeout: 1500 },
     );
 
     return () => {
@@ -199,7 +166,9 @@ export default function HomePage() {
         <LazySection>
           <ContactSection />
         </LazySection>
-        <Footer />
+        <LazySection rootMargin="200px">
+          <Footer />
+        </LazySection>
       </main>
     </>
   );

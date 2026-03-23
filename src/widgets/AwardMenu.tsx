@@ -75,46 +75,61 @@ export function AwardMenu({ isOpen, onClose }: AwardMenuProps) {
   );
 
   const { contextSafe } = useGSAP(() => {
+    // Only animate when the component is actually rendered in the DOM
+    if (!menuRef.current || !overlayRef.current) return;
+
     if (isOpen) {
       setShouldRender(true);
-      const tl = gsap.timeline();
 
-      tl.to(overlayRef.current, { opacity: 1, duration: 0.4 })
-        .to(
-          menuRef.current,
-          { x: "0%", duration: 0.8, ease: "power4.out" },
-          "-=0.2",
-        )
-        .fromTo(
-          ".menu-item",
-          { x: 100, opacity: 0 },
-          {
-            x: 0,
-            opacity: 1,
-            duration: 0.6,
-            stagger: 0.05,
-            ease: "power3.out",
-          },
-          "-=0.4",
-        )
-        .fromTo(
-          ".menu-decor",
-          { scaleX: 0 },
-          { scaleX: 1, duration: 0.8 },
-          "-=0.3",
-        )
-        .fromTo(
-          ".social-link",
-          { y: 10, opacity: 0 },
-          { y: 0, opacity: 1, stagger: 0.05 },
-          "-=0.4",
-        );
+      // Wait one frame for DOM to be ready before querying elements
+      requestAnimationFrame(() => {
+        if (!menuRef.current || !overlayRef.current) return;
+        const items = menuRef.current.querySelectorAll(".menu-item");
+        const decor = menuRef.current.querySelectorAll(".menu-decor");
+        const social = menuRef.current.querySelectorAll(".social-link");
+        if (!items.length) return;
+
+        const tl = gsap.timeline();
+
+        tl.to(overlayRef.current, { opacity: 1, duration: 0.4 })
+          .to(
+            menuRef.current,
+            { x: "0%", duration: 0.8, ease: "power4.out" },
+            "-=0.2",
+          )
+          .fromTo(
+            items,
+            { x: 100, opacity: 0 },
+            {
+              x: 0,
+              opacity: 1,
+              duration: 0.6,
+              stagger: 0.05,
+              ease: "power3.out",
+            },
+            "-=0.4",
+          )
+          .fromTo(
+            decor,
+            { scaleX: 0 },
+            { scaleX: 1, duration: 0.8 },
+            "-=0.3",
+          )
+          .fromTo(
+            social,
+            { y: 10, opacity: 0 },
+            { y: 0, opacity: 1, stagger: 0.05 },
+            "-=0.4",
+          );
+      });
     } else {
+      const items = menuRef.current.querySelectorAll(".menu-item");
+
       const tl = gsap.timeline({
         onComplete: () => setShouldRender(false),
       });
 
-      tl.to(".menu-item", { x: 50, opacity: 0, duration: 0.3, stagger: 0.02 })
+      tl.to(items, { x: 50, opacity: 0, duration: 0.3, stagger: 0.02 })
         .to(
           menuRef.current,
           { x: "100%", duration: 0.6, ease: "power3.in" },

@@ -84,7 +84,7 @@ export async function generateMetadata({
     creator: SITE_CONFIG.name,
     metadataBase: new URL(SITE_CONFIG.url),
     alternates: {
-      canonical: "/",
+      canonical: `/${locale}`,
       languages: {
         en: "/en",
         fr: "/fr",
@@ -151,11 +151,7 @@ export async function generateMetadata({
   };
 }
 
-export async function generateViewport({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}): Promise<Viewport> {
+export async function generateViewport(): Promise<Viewport> {
   return {
     width: "device-width",
     initialScale: 1,
@@ -188,7 +184,7 @@ export default async function LocaleLayout({
     >
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
         <meta
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"

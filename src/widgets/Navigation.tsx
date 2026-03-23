@@ -1,12 +1,18 @@
 "use client";
 
-import { useMemo, useRef, useState, useEffect, useCallback } from "react";
+import { useMemo, useState, useEffect, useCallback } from "react";
+import dynamic from "next/dynamic";
 import { Button } from "@/shared/ui/Button";
 import { cn } from "@/shared/lib/utils";
 import { ScrollLink } from "@/shared/ui/ScrollLink";
-import { AwardMenu } from "@/widgets/AwardMenu";
 import { LanguageSwitcher } from "@/features/LanguageSwitcher";
 import { useTranslations } from "next-intl";
+
+// AwardMenu imports GSAP + lucide-react + Magnetic — defer until user opens it
+const AwardMenu = dynamic(
+  () => import("@/widgets/AwardMenu").then((mod) => mod.AwardMenu),
+  { ssr: false },
+);
 
 export function Navigation() {
   const t = useTranslations("Navigation");
@@ -14,7 +20,7 @@ export function Navigation() {
   const [isVisible, setIsVisible] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
-  const lastScrollY = useRef(0);
+  const lastScrollY = { current: 0 };
 
   const navItems = useMemo(
     () => [
@@ -159,7 +165,9 @@ export function Navigation() {
         </div>
       </nav>
 
-      <AwardMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+      {isMenuOpen && (
+        <AwardMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+      )}
     </>
   );
 }
