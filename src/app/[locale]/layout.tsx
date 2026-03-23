@@ -9,6 +9,11 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 
 import { getTranslations } from "next-intl/server";
+
+/** Returns the URL path for a given locale, respecting `localePrefix: "as-needed"` */
+function localePath(locale: string): string {
+  return locale === routing.defaultLocale ? "/" : `/${locale}`;
+}
 import localFont from "next/font/local";
 import Script from "next/script";
 import { StructuredData } from "@/shared/ui/StructuredData";
@@ -80,15 +85,10 @@ export async function generateMetadata({
     creator: SITE_CONFIG.name,
     metadataBase: new URL(SITE_CONFIG.url),
     alternates: {
-      canonical: `/${locale}`,
-      languages: {
-        en: "/en",
-        fr: "/fr",
-        ja: "/ja",
-        zh: "/zh",
-        de: "/de",
-        ar: "/ar",
-      },
+      canonical: localePath(locale),
+      languages: Object.fromEntries(
+        routing.locales.map((l) => [l, localePath(l)]),
+      ),
     },
     openGraph: {
       title: t("title"),

@@ -16,6 +16,21 @@ const nextConfig: NextConfig = {
   // React optimizations
   reactStrictMode: true,
 
+  // Tree-shake barrel exports from heavy packages
+  experimental: {
+    optimizePackageImports: [
+      "three",
+      "@react-three/drei",
+      "@react-three/fiber",
+      "@react-three/postprocessing",
+      "gsap",
+      "framer-motion",
+      "lucide-react",
+      "@ai-sdk/react",
+      "ai",
+      "react-hook-form",
+    ],
+  },
 
   // Image optimization
   images: {

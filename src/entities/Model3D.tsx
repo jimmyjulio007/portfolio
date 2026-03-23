@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useGLTF, Float } from "@react-three/drei";
-import * as THREE from "three";
+import type * as THREE from "three";
 
 interface Model3DProps {
   modelPath: string;

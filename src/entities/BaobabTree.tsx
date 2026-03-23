@@ -3,7 +3,7 @@
 import { Suspense, useRef, useMemo } from "react";
 import { useGLTF, Float, ContactShadows, Environment } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
+import type * as THREE from "three";
 
 /**
  * Procedural Bark Fallback

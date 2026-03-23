@@ -2,7 +2,14 @@
 
 import { useRef, useMemo, useState, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import * as THREE from "three";
+import {
+  Vector2,
+  Color,
+  BufferGeometry,
+  BufferAttribute,
+  AdditiveBlending,
+} from "three";
+import type { Points, ShaderMaterial } from "three";
 import { Stars, Sparkles } from "@react-three/drei";
 
 /**
@@ -85,9 +92,9 @@ const fragmentShader = `
 `;
 
 export function HeroObject() {
-  const pointsRef = useRef<THREE.Points>(null);
+  const pointsRef = useRef<Points>(null);
   const { mouse } = useThree();
-  const smoothMouse = useRef(new THREE.Vector2(0, 0));
+  const smoothMouse = useRef(new Vector2(0, 0));
 
   // Adaptive particle count: fewer on mobile for better FPS
   const [isMobile, setIsMobile] = useState(false);
@@ -102,9 +109,9 @@ export function HeroObject() {
     const sizes = new Float32Array(particleCount);
     const speeds = new Float32Array(particleCount);
 
-    const color1 = new THREE.Color("#00f0ff");
-    const color2 = new THREE.Color("#0088ff");
-    const color3 = new THREE.Color("#ccff00");
+    const color1 = new Color("#00f0ff");
+    const color2 = new Color("#0088ff");
+    const color3 = new Color("#ccff00");
 
     for (let i = 0; i < particleCount; i++) {
       const radius = Math.random() * 8;
@@ -136,11 +143,11 @@ export function HeroObject() {
       speeds[i] = 0.4 + Math.random() * 0.6;
     }
 
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    geo.setAttribute("aColor", new THREE.BufferAttribute(colors, 3));
-    geo.setAttribute("aSize", new THREE.BufferAttribute(sizes, 1));
-    geo.setAttribute("aSpeed", new THREE.BufferAttribute(speeds, 1));
+    const geo = new BufferGeometry();
+    geo.setAttribute("position", new BufferAttribute(positions, 3));
+    geo.setAttribute("aColor", new BufferAttribute(colors, 3));
+    geo.setAttribute("aSize", new BufferAttribute(sizes, 1));
+    geo.setAttribute("aSpeed", new BufferAttribute(speeds, 1));
 
     return geo;
   }, [particleCount]);
@@ -148,7 +155,7 @@ export function HeroObject() {
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
-      uMouse: { value: new THREE.Vector2(0, 0) },
+      uMouse: { value: new Vector2(0, 0) },
     }),
     [],
   );
@@ -159,7 +166,7 @@ export function HeroObject() {
     const time = state.clock.getElapsedTime();
     smoothMouse.current.lerp(mouse, 0.05);
 
-    const material = pointsRef.current.material as THREE.ShaderMaterial;
+    const material = pointsRef.current.material as ShaderMaterial;
     material.uniforms.uTime.value = time;
     material.uniforms.uMouse.value = smoothMouse.current;
 
@@ -196,7 +203,7 @@ export function HeroObject() {
           uniforms={uniforms}
           transparent
           depthWrite={false}
-          blending={THREE.AdditiveBlending}
+          blending={AdditiveBlending}
         />
       </points>
     </group>
