@@ -34,14 +34,10 @@ const migumono = localFont({
       weight: "400",
       style: "normal",
     },
-    {
-      path: "../../../public/fonts/Migumono.ttf",
-      weight: "400",
-      style: "normal",
-    },
   ],
   variable: "--font-migumono",
   display: "swap",
+  preload: true,
 });
 
 export async function generateMetadata({
@@ -189,10 +185,16 @@ export default async function LocaleLayout({
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
-        {/* GTM — afterInteractive instead of beforeInteractive to unblock rendering */}
+        {/* Preconnect to third-party origins to reduce latency */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        {/* Prefetch hero 3D model so it's ready when viewport triggers load */}
+        <link rel="prefetch" href="/models/computer_and_laptop.glb" as="fetch" crossOrigin="anonymous" />
+        {/* GTM & GA — lazyOnload to fully unblock rendering and main thread */}
         <Script
           id="gtm-head"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
       (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -206,12 +208,12 @@ export default async function LocaleLayout({
         />
         <Script
           async
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           src="https://www.googletagmanager.com/gtag/js?id=G-SJHL50CMYS"
         />
         <Script
           id="google-analytics"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];

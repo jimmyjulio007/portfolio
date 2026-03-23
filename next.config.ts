@@ -24,52 +24,11 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
 
-  // Webpack optimizations
-  webpack: (config) => {
-    // Optimize bundle size
-    config.optimization = {
-      ...config.optimization,
-      moduleIds: "deterministic",
-      runtimeChunk: "single",
-      splitChunks: {
-        chunks: "all",
-        cacheGroups: {
-          default: false,
-          vendors: false,
-          // Vendor chunk for node_modules
-          vendor: {
-            name: "vendor",
-            chunks: "all",
-            test: /node_modules/,
-            priority: 20,
-          },
-          // Common chunks
-          common: {
-            name: "common",
-            minChunks: 2,
-            chunks: "all",
-            priority: 10,
-            reuseExistingChunk: true,
-            enforce: true,
-          },
-          // Three.js and 3D libraries
-          three: {
-            test: /[\\/]node_modules[\\/](three|@react-three)[\\/]/,
-            name: "three",
-            chunks: "all",
-            priority: 30,
-          },
-          // Animation libraries
-          animations: {
-            test: /[\\/]node_modules[\\/](gsap|framer-motion|lenis)[\\/]/,
-            name: "animations",
-            chunks: "all",
-            priority: 25,
-          },
-        },
-      },
-    };
+  // Disable source maps in production (saves bandwidth, fixes Lighthouse warning)
+  productionBrowserSourceMaps: false,
 
+  // Webpack: only add custom rules — let Next.js handle chunk splitting
+  webpack: (config) => {
     // GLB/GLTF file handling
     config.module.rules.push({
       test: /\.(glb|gltf)$/,

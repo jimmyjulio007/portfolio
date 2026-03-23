@@ -5,7 +5,10 @@ import dynamic from "next/dynamic";
 import { Button } from "@/shared/ui/Button";
 import { cn } from "@/shared/lib/utils";
 import { ScrollLink } from "@/shared/ui/ScrollLink";
-import { LanguageSwitcher } from "@/features/LanguageSwitcher";
+const LanguageSwitcher = dynamic(
+  () => import("@/features/LanguageSwitcher").then((mod) => mod.LanguageSwitcher),
+  { ssr: false },
+);
 import { useTranslations } from "next-intl";
 
 // AwardMenu imports GSAP + lucide-react + Magnetic — defer until user opens it
