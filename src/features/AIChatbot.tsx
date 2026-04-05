@@ -4,20 +4,14 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { useState, useRef, useEffect, useCallback, memo, useMemo } from "react";
 import type { ComponentPropsWithoutRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import {
-    MessageSquare, X, Send, Bot, User, Minimize2, Mic, MicOff,
-    Volume2, VolumeX, Briefcase, Cpu, Mail, HelpCircle, Zap, Trash2,
+    MessageSquare, X, Send, Bot, User, Minimize2,
+    Briefcase, Cpu, Mail, HelpCircle, Zap, Trash2,
     ThumbsUp, ThumbsDown, Copy
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { useLocale, useTranslations } from "next-intl";
-import { Magnetic } from "@/shared/ui/Magnetic";
 import { cn, smoothScroll } from "@/shared/lib/utils";
-import { soundManager } from "@/shared/lib/sound-manager";
-import { SOUND_CONFIG } from "@/shared/config/constants";
-import { useSpeechRecognition } from "./hooks/useSpeechRecognition";
-import { useSpeechSynthesis } from "./hooks/useSpeechSynthesis";
 
 // ─── Stable singletons (prevents re-creation on every render) ───
 let currentVisibleSection: string | null = null;
@@ -48,25 +42,6 @@ function cleanNLPTags(text: string): string {
         .replace(/\[(SCROLL|OPEN):.*?\]/g, "")
         .replace(/\[FILL_FORM:[\s\S]*?\]/g, "")
         .replace(/\[FILL_FORM:[\s\S]*$/g, "")
-        .trim();
-}
-
-/** Strip markdown formatting for TTS so it reads naturally */
-function stripMarkdownForTTS(text: string): string {
-    return text
-        .replace(/#{1,6}\s*/g, "")          // headings
-        .replace(/\*{1,3}([^*]+)\*{1,3}/g, "$1") // bold/italic
-        .replace(/_{1,3}([^_]+)_{1,3}/g, "$1")   // bold/italic underscore
-        .replace(/~~([^~]+)~~/g, "$1")       // strikethrough
-        .replace(/`{1,3}[^`]*`{1,3}/g, "")  // inline/block code
-        .replace(/^\s*[-*+]\s+/gm, "")       // list markers
-        .replace(/^\s*\d+\.\s+/gm, "")       // ordered list markers
-        .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1") // links
-        .replace(/!\[([^\]]*)\]\([^)]+\)/g, "$1") // images
-        .replace(/>\s*/g, "")                // blockquotes
-        .replace(/\n{2,}/g, ". ")            // multiple newlines to pause
-        .replace(/\n/g, " ")                 // single newlines to space
-        .replace(/\s{2,}/g, " ")             // collapse whitespace
         .trim();
 }
 
@@ -177,9 +152,6 @@ let soundsPreloaded = false;
 function preloadChatSounds() {
     if (soundsPreloaded) return;
     soundsPreloaded = true;
-    soundManager.preload("chat-open", SOUND_CONFIG.sounds.click);
-    soundManager.preload("chat-send", SOUND_CONFIG.sounds.hover);
-    soundManager.preload("chat-receive", SOUND_CONFIG.sounds.transition);
 }
 
 // ─── Notification Pulse Messages ───
@@ -197,15 +169,6 @@ export function AIChatbot() {
     const [isMinimized, setIsMinimized] = useState(false);
     const [input, setInput] = useState("");
     const [isAppReady, setIsAppReady] = useState(false);
-    const [isVoiceEnabled, setIsVoiceEnabled] = useState(() => {
-        if (typeof window !== "undefined") {
-            try {
-                const saved = localStorage.getItem("chatbot-voice-enabled");
-                return saved !== null ? JSON.parse(saved) : true;
-            } catch { return true; }
-        }
-        return true;
-    });
     const [loadingMsg, setLoadingMsg] = useState(LOADING_MESSAGES[0]);
     const [showPulse, setShowPulse] = useState(false);
     const [pulseMessage] = useState(() =>
@@ -226,9 +189,6 @@ export function AIChatbot() {
     const locale = useLocale();
     const visibleSection = useVisibleSection();
     currentVisibleSection = visibleSection; // Sync to module-level for transport body
-    const { speak, cancel } = useSpeechSynthesis();
-    const { isListening, startListening, stopListening } = useSpeechRecognition(locale);
-
     const [initialMessages] = useState(getInitialMessages);
     const { messages, sendMessage, setMessages, status, error, regenerate } = useChat({
         transport: chatTransport,
@@ -241,9 +201,7 @@ export function AIChatbot() {
     const chatPanelRef = useRef<HTMLDivElement>(null);
     const persistTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
     const lastProcessedIdRef = useRef<string | null>(null);
-    const lastSpokenIdRef = useRef<string | null>(null);
     const loadingIntervalRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
-    const isSecure = typeof window !== "undefined" ? window.isSecureContext : false;
 
     // Context hint (memoized to avoid recalculating)
     const contextHint = useMemo(() => getContextHint(visibleSection), [visibleSection]);
@@ -309,10 +267,6 @@ export function AIChatbot() {
         return () => clearTimeout(persistTimeoutRef.current);
     }, [messages]);
 
-    useEffect(() => {
-        localStorage.setItem("chatbot-voice-enabled", JSON.stringify(isVoiceEnabled));
-    }, [isVoiceEnabled]);
-
     // ─── Persist reactions ───
     useEffect(() => {
         sessionStorage.setItem("chatbot-reactions", JSON.stringify(reactions));
@@ -339,7 +293,7 @@ export function AIChatbot() {
             .join(" ");
 
         // Sound FX on receive
-        soundManager.play("chat-receive", { volume: 0.3 });
+
 
         // Handle Scroll
         const scrollMatch = text.match(/\[SCROLL:(.*?)\]/);
@@ -371,23 +325,6 @@ export function AIChatbot() {
             }
         }
     }, [messages, status]);
-
-    // ─── TTS: Speak only once per completed assistant message ───
-    useEffect(() => {
-        if (!isVoiceEnabled || status !== "ready" || messages.length === 0) return;
-        const lastMessage = messages[messages.length - 1];
-        if (!lastMessage || lastMessage.role !== "assistant") return;
-        if (lastSpokenIdRef.current === lastMessage.id) return;
-        lastSpokenIdRef.current = lastMessage.id;
-
-        const fullText = lastMessage.parts
-            .filter((p): p is Extract<typeof p, { type: "text" }> => p.type === "text")
-            .map((p) => p.text)
-            .join(" ");
-
-        const cleanText = stripMarkdownForTTS(cleanNLPTags(fullText));
-        if (cleanText) speak(cleanText, document.documentElement.lang || "en-US");
-    }, [messages, status, isVoiceEnabled, speak]);
 
     // ─── Unread badge: track new assistant messages while chat is closed ───
     useEffect(() => {
@@ -431,7 +368,7 @@ export function AIChatbot() {
             // /help → send as normal message to AI
         }
 
-        soundManager.play("chat-send", { volume: 0.2 });
+
         sendMessage({ text: trimmed });
     }, [sendMessage]);
 
@@ -442,9 +379,8 @@ export function AIChatbot() {
             doSend(input);
             setInput("");
             if (textareaRef.current) textareaRef.current.style.height = "auto";
-            if (isListening) stopListening();
         }
-    }, [input, doSend, isListening, stopListening]);
+    }, [input, doSend]);
 
     const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === "Enter" && e.ctrlKey) {
@@ -462,55 +398,25 @@ export function AIChatbot() {
                 doSend(input);
                 setInput("");
                 if (textareaRef.current) textareaRef.current.style.height = "auto";
-                if (isListening) stopListening();
             }
         }
-    }, [input, isLoading, doSend, isListening, stopListening]);
-
-    const handleToggleListen = useCallback(() => {
-        if (isListening) {
-            stopListening();
-        } else {
-            startListening(
-                (text) => setInput(prev => prev + (prev ? " " : "") + text),
-                (err) => {
-                    if (err === "not-allowed") {
-                        alert("Microphone access blocked. \n\n1. Check if you are on HTTPS (required).\n2. Click the 'Lock' icon in the URL bar to reset permissions.\n3. Ensure no other app is using the microphone.");
-                    } else if (err === "network") {
-                        alert("Speech recognition network error. Please try again.");
-                    } else {
-                        console.warn("Speech Error:", err);
-                    }
-                }
-            );
-        }
-    }, [isListening, startListening, stopListening]);
-
-    const handleToggleVoice = useCallback(() => {
-        if (isVoiceEnabled) cancel();
-        setIsVoiceEnabled((v: boolean) => !v);
-    }, [isVoiceEnabled, cancel]);
+    }, [input, isLoading, doSend]);
 
     const handleClose = useCallback(() => {
-        cancel();
         setIsOpen(false);
-    }, [cancel]);
+    }, []);
 
     const handleQuickAction = useCallback((message: string) => {
         doSend(message);
     }, [doSend]);
 
     const handleToggle = useCallback(() => {
-        setIsOpen(o => {
-            if (!o) soundManager.play("chat-open", { volume: 0.2 });
-            return !o;
-        });
+        setIsOpen(o => !o);
     }, []);
 
     const handlePulseClick = useCallback(() => {
         setShowPulse(false);
         sessionStorage.setItem("chatbot-pulse-dismissed", "true");
-        soundManager.play("chat-open", { volume: 0.2 });
         setIsOpen(true);
     }, []);
 
@@ -521,16 +427,14 @@ export function AIChatbot() {
     }, []);
 
     const handleClearHistory = useCallback(() => {
-        cancel();
         setMessages([]);
         sessionStorage.removeItem("chatbot-messages");
         sessionStorage.removeItem("chatbot-reactions");
         lastProcessedIdRef.current = null;
-        lastSpokenIdRef.current = null;
         prevMsgCountRef.current = 0;
         setUnreadCount(0);
         setReactions({});
-    }, [cancel, setMessages]);
+    }, [setMessages]);
 
     const handleReact = useCallback((messageId: string, reaction: "up" | "down") => {
         setReactions(prev => {
@@ -646,20 +550,12 @@ export function AIChatbot() {
             "fixed z-[99999] flex flex-col items-end pointer-events-none",
             isOpen && isMobile ? "inset-0" : "bottom-0 right-0 sm:bottom-6 sm:right-6"
         )}>
-            <AnimatePresence>
                 {isOpen && (
-                    <motion.div
+                    <div
                         ref={chatPanelRef}
-                        initial={{ opacity: 0, scale: isMobile ? 1 : 0.8, y: isMobile ? 20 : 30, filter: "blur(10px)" }}
-                        animate={{
-                            opacity: 1,
-                            scale: 1,
-                            y: 0,
-                            filter: "blur(0px)",
-                            height: isMinimized ? "80px" : isMobile ? "100dvh" : "550px"
-                        }}
-                        exit={{ opacity: 0, scale: isMobile ? 1 : 0.8, y: isMobile ? 20 : 30, filter: "blur(10px)" }}
+                        style={{ height: isMinimized ? "80px" : isMobile ? "100dvh" : "550px" }}
                         className={cn(
+                            "animate-[fadeInUp_0.3s_ease-out]",
                             "glass-panel border border-[#00f0ff]/20 flex flex-col overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5),0_0_20px_rgba(0,240,255,0.1)] pointer-events-auto rounded-none",
                             "before:absolute before:inset-0 before:bg-noise before:opacity-[0.03] before:pointer-events-none",
                             isMobile ? "w-full" : "w-[calc(100vw-32px)] sm:w-[350px] md:w-[400px] mb-4",
@@ -694,17 +590,6 @@ export function AIChatbot() {
                                 </div>
                             </div>
                             <div className="flex items-center gap-1">
-                                <button
-                                    onClick={handleToggleVoice}
-                                    className={cn(
-                                        "p-2 hover:bg-white/5 rounded-lg transition-all duration-300",
-                                        isVoiceEnabled ? "text-[#00f0ff]" : "text-gray-500"
-                                    )}
-                                    title={isVoiceEnabled ? "Mute Bot" : "Unmute Bot"}
-                                    type="button"
-                                >
-                                    {isVoiceEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
-                                </button>
                                 {messages.length > 0 && (
                                     <>
                                         <button
@@ -869,23 +754,6 @@ export function AIChatbot() {
                                     />
                                     <div className="flex items-center gap-2">
                                         <button
-                                            type="button"
-                                            onClick={handleToggleListen}
-                                            className={cn(
-                                                "w-12 h-12 sm:w-10 sm:h-10 flex items-center justify-center transition-all duration-500 rounded-none border border-white/10 relative overflow-hidden group",
-                                                isListening
-                                                    ? "bg-red-500/20 text-red-500 border-red-500/40"
-                                                    : "bg-white/5 text-gray-400 hover:text-[#00f0ff] hover:bg-[#00f0ff]/5"
-                                            )}
-                                            title={isListening ? t("voiceStop") : (isSecure ? t("voiceStart") : "Voice requires HTTPS/Localhost")}
-                                        >
-                                            {isListening && (
-                                                <span className="absolute inset-0 bg-red-500/20 animate-ping" />
-                                            )}
-                                            {isListening ? <MicOff className="w-5 h-5 sm:w-4 sm:h-4" /> : <Mic className={cn("w-5 h-5 sm:w-4 sm:h-4", !isSecure && "opacity-20")} />}
-                                        </button>
-
-                                        <button
                                             type="submit"
                                             disabled={isLoading || !input.trim()}
                                             aria-label="Send message"
@@ -900,20 +768,14 @@ export function AIChatbot() {
                                 </form>
                             </>
                         )}
-                    </motion.div>
+                    </div>
                 )}
-            </AnimatePresence>
 
             {/* Notification Pulse Toast */}
-            <AnimatePresence>
                 {showPulse && !isOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 10, scale: 0.9 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.9 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    <div
                         onClick={handlePulseClick}
-                        className="mb-3 pointer-events-auto cursor-pointer max-w-[280px] relative group"
+                        className="animate-[fadeInUp_0.3s_ease-out] mb-3 pointer-events-auto cursor-pointer max-w-[280px] relative group"
                     >
                         <div className="bg-black/90 border border-[#00f0ff]/30 p-3 pr-8 backdrop-blur-md shadow-[0_0_20px_rgba(0,240,255,0.15)]">
                             {/* Scanline top */}
@@ -951,12 +813,10 @@ export function AIChatbot() {
                         <div className="flex justify-end mr-7">
                             <div className="w-[1px] h-2 bg-[#00f0ff]/30" />
                         </div>
-                    </motion.div>
+                    </div>
                 )}
-            </AnimatePresence>
 
             {/* Futuristic Toggle Trigger */}
-            <Magnetic strength={0.3}>
                 <div className="relative group pointer-events-auto">
                     {/* Glow Effects */}
                     {!isOpen && (
@@ -988,23 +848,9 @@ export function AIChatbot() {
                         {isOpen ? (
                             <X className="w-8 h-8 text-white" />
                         ) : (
-                            <motion.div
-                                animate={{
-                                    scale: [1, 1.1, 1],
-                                    opacity: [0.8, 1, 0.8]
-                                }}
-                                transition={{
-                                    repeat: Infinity,
-                                    duration: 4,
-                                    ease: "easeInOut"
-                                }}
-                                className="relative z-10"
-                            >
-                                <MessageSquare className={cn(
-                                    "w-7 h-7 transition-all duration-700",
-                                    isOpen ? "text-white" : "text-[#00f0ff] group-hover:text-[#ccff00]"
-                                )} />
-                            </motion.div>
+                            <div className="relative z-10 animate-pulse">
+                                <MessageSquare className="w-7 h-7 text-[#00f0ff] group-hover:text-[#ccff00] transition-all duration-700" />
+                            </div>
                         )}
 
                         {/* Status Indicator / Unread Badge / Typing */}
@@ -1032,7 +878,6 @@ export function AIChatbot() {
                         )}
                     </button>
                 </div>
-            </Magnetic>
         </div>
     );
 }

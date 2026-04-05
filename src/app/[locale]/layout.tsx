@@ -18,6 +18,7 @@ import localFont from "next/font/local";
 import Script from "next/script";
 import { StructuredData } from "@/shared/ui/StructuredData";
 import { DeferredComponents } from "@/shared/ui/DeferredComponents";
+import { Analytics } from "@vercel/analytics/next";
 
 // Initialize fonts
 const outfit = Outfit({
@@ -61,18 +62,15 @@ export async function generateMetadata({
     description: t("description"),
     keywords: [
       "Jimmy Julio",
-      "Jimmy Julio Portfolio",
-      "Full Stack AI Architect",
-      "AI Developer Madagascar",
+      "Full-Stack Engineer",
+      "Real-Time Systems",
+      "Socket.io Developer",
       "Next.js Developer",
-      "LangChain Developer",
       "React TypeScript Developer",
-      "Three.js WebGL",
+      "Node.js NestJS",
       "Antananarivo Developer",
       "Web Developer Portfolio",
       "Full Stack Developer",
-      "JavaScript Developer",
-      "Creative Developer",
       "jimmyjulio007",
       "Andriamandresy Mitondrasoa Jimmy Julio",
     ],
@@ -102,7 +100,7 @@ export async function generateMetadata({
           url: "/opengraph-image",
           width: 1200,
           height: 630,
-          alt: "Jimmy Julio - Full Stack AI Architect",
+          alt: "Jimmy Julio - Full-Stack Engineer",
         },
       ],
       emails: ["jimmyjulio100@gmail.com"],
@@ -118,7 +116,7 @@ export async function generateMetadata({
       images: [
         {
           url: "/twitter-image",
-          alt: "Jimmy Julio - Full Stack AI Architect",
+          alt: "Jimmy Julio - Full-Stack Engineer",
         },
       ],
     },
@@ -185,12 +183,7 @@ export default async function LocaleLayout({
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
-        {/* Preconnect to third-party origins to reduce latency */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-        {/* Prefetch hero 3D model so it's ready when viewport triggers load */}
-        <link rel="prefetch" href="/models/computer_and_laptop.glb" as="fetch" crossOrigin="anonymous" />
         {/* GTM & GA — lazyOnload to fully unblock rendering and main thread */}
         <Script
           id="gtm-head"
@@ -240,6 +233,7 @@ export default async function LocaleLayout({
           {/* CustomCursor, CookieConsent, Chatbot — deferred until after first paint */}
           <DeferredComponents />
         </NextIntlClientProvider>
+        {process.env.VERCEL === "1" && <Analytics />}
       </body>
     </html>
   );

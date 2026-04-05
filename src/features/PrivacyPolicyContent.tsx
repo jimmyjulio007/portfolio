@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { gsap, ScrollTrigger } from "@/shared/lib/gsap-setup";
+import { useRef } from "react";
 import { Link } from "@/i18n/routing";
 import { useLocale } from "next-intl";
 import { Button } from "@/shared/ui/Button";
@@ -243,45 +242,6 @@ export function PrivacyPolicyContent() {
   const content = PRIVACY_CONTENT[locale] || PRIVACY_CONTENT.en;
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Header Animation
-      gsap.from(".privacy-header", {
-        y: -50,
-        opacity: 0,
-        duration: 1,
-        ease: "power4.out",
-      });
-
-      // Sections Animation
-      gsap.utils
-        .toArray<HTMLElement>(".privacy-section")
-        .forEach((section, i) => {
-          gsap.from(section, {
-            scrollTrigger: {
-              trigger: section,
-              start: "top 80%",
-              toggleActions: "play none none reverse",
-            },
-            x: i % 2 === 0 ? -50 : 50,
-            opacity: 0,
-            duration: 0.8,
-            ease: "power2.out",
-          });
-        });
-
-      // Decorative lines animation
-      gsap.to(".scan-line", {
-        y: "100%",
-        duration: 3,
-        repeat: -1,
-        ease: "linear",
-      });
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
     <main
       ref={containerRef}
@@ -362,8 +322,6 @@ export function PrivacyPolicyContent() {
           </Link>
         </div>
 
-        {/* Decorative Scan Line */}
-        <div className="scan-line fixed top-0 left-0 w-full h-[2px] bg-[#00f0ff]/20 pointer-events-none z-50" />
       </div>
     </main>
   );

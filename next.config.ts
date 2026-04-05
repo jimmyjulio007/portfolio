@@ -4,27 +4,23 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
-  // Fix workspace root detection (stray lockfile in home directory)
   turbopack: {
     root: __dirname,
   },
 
-  // Performance optimizations
   compress: true,
   poweredByHeader: false,
-
-  // React optimizations
   reactStrictMode: true,
 
-  // Tree-shake barrel exports from heavy packages
+  // Disable source maps in production
+  productionBrowserSourceMaps: false,
+
+  // Disable source maps in dev to suppress Lighthouse warnings
+  devIndicators: false,
+
+  // Tree-shake barrel exports
   experimental: {
     optimizePackageImports: [
-      "three",
-      "@react-three/drei",
-      "@react-three/fiber",
-      "@react-three/postprocessing",
-      "gsap",
-      "framer-motion",
       "lucide-react",
       "@ai-sdk/react",
       "ai",
@@ -32,57 +28,26 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  // Image optimization
   images: {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
 
-  // Disable source maps in production (saves bandwidth, fixes Lighthouse warning)
-  productionBrowserSourceMaps: false,
-
-  // Webpack: only add custom rules — let Next.js handle chunk splitting
-  webpack: (config) => {
-    // GLB/GLTF file handling
-    config.module.rules.push({
-      test: /\.(glb|gltf)$/,
-      type: "asset/resource",
-    });
-
-    return config;
-  },
-
-  // Security headers
   async headers() {
     return [
       {
         source: "/:path*",
         headers: [
-          {
-            key: "X-DNS-Prefetch-Control",
-            value: "on",
-          },
+          { key: "X-DNS-Prefetch-Control", value: "on" },
           {
             key: "Strict-Transport-Security",
             value: "max-age=63072000; includeSubDomains; preload",
           },
-          {
-            key: "X-Frame-Options",
-            value: "SAMEORIGIN",
-          },
-          {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
-          },
-          {
-            key: "X-XSS-Protection",
-            value: "1; mode=block",
-          },
-          {
-            key: "Referrer-Policy",
-            value: "origin-when-cross-origin",
-          },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-XSS-Protection", value: "1; mode=block" },
+          { key: "Referrer-Policy", value: "origin-when-cross-origin" },
           {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=()",
@@ -108,24 +73,6 @@ const nextConfig: NextConfig = {
           {
             key: "Cross-Origin-Opener-Policy",
             value: "same-origin-allow-popups",
-          },
-        ],
-      },
-      {
-        source: "/models/:path*",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
-          },
-        ],
-      },
-      {
-        source: "/sounds/:path*",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
           },
         ],
       },

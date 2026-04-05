@@ -1,94 +1,78 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
-import { gsap, ScrollTrigger } from "@/shared/lib/gsap-setup";
-import { useGSAP } from "@gsap/react";
+import { useMemo } from "react";
 import Image from "next/image";
-import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 
-const BaobabTree = dynamic(
-  () => import("@/entities/BaobabTree").then((mod) => mod.BaobabTree),
+const TECH_STACK = [
   {
-    ssr: false,
+    category: "BACKEND & REAL-TIME",
+    techs: [
+      { name: "NestJS", highlight: false },
+      { name: "Node.js", highlight: false },
+      { name: "Socket.io", highlight: true },
+      { name: "Express.js", highlight: false },
+      { name: "Rust", highlight: true },
+      { name: "Tauri", highlight: false },
+      { name: "FastAPI", highlight: false },
+    ],
   },
-);
-
-const Scene3D = dynamic(
-  () => import("@/shared/ui/Scene3D").then((mod) => ({ default: mod.Scene3D })),
   {
-    ssr: false,
-    loading: () => <div className="absolute inset-0 bg-transparent" />,
+    category: "FRONTEND ENGINEERING",
+    techs: [
+      { name: "React 19", highlight: true },
+      { name: "Next.js", highlight: false },
+      { name: "TypeScript", highlight: false },
+      { name: "Angular", highlight: false },
+      { name: "Three.js", highlight: false },
+      { name: "Tailwind CSS", highlight: false },
+    ],
   },
-);
-
-
-interface SkillBarProps {
-  name: string;
-  level: number;
-}
-
-function SkillBar({ name, level }: SkillBarProps) {
-  const barRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(() => {
-    gsap.fromTo(
-      barRef.current,
-      { width: "0%" },
-      {
-        scrollTrigger: {
-          trigger: barRef.current,
-          start: "top 90%",
-        },
-        width: `${level}%`,
-        duration: 1.5,
-        ease: "power2.out",
-      },
-    );
-  });
-
-  return (
-    <div className="group">
-      <div className="flex justify-between mb-2 font-mono text-xs uppercase tracking-widest">
-        <span className="text-gray-400 group-hover:text-white transition-colors">
-          {name}
-        </span>
-        <span className="text-[#00f0ff]">{level}%</span>
-      </div>
-      <div
-        className="h-1 bg-gray-800 w-full overflow-hidden"
-        role="progressbar"
-        aria-label={name}
-        aria-valuenow={level}
-        aria-valuemin={0}
-        aria-valuemax={100}
-      >
-        <div ref={barRef} className="h-full bg-[#00f0ff] relative">
-          <div className="absolute right-0 top-0 bottom-0 w-2 bg-[#ccff00] shadow-[0_0_10px_#ccff00]" />
-        </div>
-      </div>
-    </div>
-  );
-}
+  {
+    category: "CLOUD & DATA",
+    techs: [
+      { name: "Supabase", highlight: false },
+      { name: "Neon", highlight: false },
+      { name: "PostgreSQL", highlight: true },
+      { name: "MongoDB", highlight: false },
+      { name: "Firebase", highlight: false },
+    ],
+  },
+  {
+    category: "STATE & LOGIC",
+    techs: [
+      { name: "TanStack Query", highlight: true },
+      { name: "TanStack Router", highlight: false },
+      { name: "Zustand", highlight: false },
+      { name: "Redux", highlight: false },
+      { name: "RxJS", highlight: false },
+    ],
+  },
+  {
+    category: "AI & AUTOMATION",
+    techs: [
+      { name: "Pandas", highlight: true },
+      { name: "PyTorch", highlight: false },
+      { name: "Streamlit", highlight: false },
+      { name: "Zod", highlight: false },
+      { name: "Excel Automation", highlight: false },
+    ],
+  },
+  {
+    category: "TOOLS & QA",
+    techs: [
+      { name: "Git", highlight: false },
+      { name: "Vite", highlight: true },
+      { name: "Postman", highlight: false },
+      { name: "Figma", highlight: false },
+      { name: "Supertest", highlight: false },
+      { name: "Pytest", highlight: false },
+    ],
+  },
+];
 
 export function AboutSection() {
   const t = useTranslations("About");
-  const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const descRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-  const [load3D, setLoad3D] = useState(false);
-
-  const techSkills = useMemo(
-    () => [
-      { name: t("techSkill1"), level: 98 },
-      { name: t("techSkill2"), level: 96 },
-      { name: t("techSkill3"), level: 95 },
-      { name: t("techSkill4"), level: 92 },
-      { name: t("techSkill5"), level: 88 },
-    ],
-    [t],
-  );
 
   const softSkills = useMemo(
     () => [
@@ -101,69 +85,14 @@ export function AboutSection() {
     [t],
   );
 
-  useGSAP(
-    () => {
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "top 150%",
-        onEnter: () => setLoad3D(true),
-        once: true,
-      });
-
-      gsap.from(titleRef.current, {
-        scrollTrigger: {
-          trigger: titleRef.current,
-          start: "top 80%",
-        },
-        x: -100,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
-      });
-
-      gsap.from(imageRef.current, {
-        scrollTrigger: {
-          trigger: imageRef.current,
-          start: "top 75%",
-        },
-        scale: 0.8,
-        opacity: 0,
-        duration: 1,
-        ease: "back.out(1.7)",
-      });
-
-      gsap.from(descRef.current, {
-        scrollTrigger: {
-          trigger: descRef.current,
-          start: "top 75%",
-        },
-        y: 60,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
-      });
-    },
-    { scope: sectionRef },
-  );
-
   return (
-    <section
-      id="about"
-      ref={sectionRef}
-      className="relative py-32 bg-[#0a0a0a] overflow-hidden"
-    >
-      <div className="absolute inset-0 opacity-20">
-        {load3D && (
-          <Scene3D>
-            <BaobabTree />
-          </Scene3D>
-        )}
-      </div>
-
+    <section id="about" className="relative py-32 bg-[#0a0a0a] overflow-hidden">
+      <div className="absolute right-[-100px] top-1/4 w-[500px] h-[500px] bg-[#00f0ff]/5 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute left-[-150px] bottom-1/3 w-[400px] h-[400px] bg-[#ccff00]/4 blur-[130px] rounded-full pointer-events-none" />
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-12 gap-16 items-start">
           <div className="lg:col-span-5">
-            <div ref={imageRef} className="relative group">
+            <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-[#00f0ff] to-[#ccff00] rounded-lg opacity-75 blur group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
 
               <div className="relative bg-black rounded-lg overflow-hidden border border-gray-800 aspect-[3/4]">
@@ -171,6 +100,7 @@ export function AboutSection() {
                   src="/profile.png"
                   alt="Jimmy Julio"
                   fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
                   className="object-cover object-center opacity-90 group-hover:opacity-100 transition-opacity duration-500 grayscale group-hover:grayscale-0"
                 />
 
@@ -190,18 +120,12 @@ export function AboutSection() {
             <span className="text-[#ccff00] font-mono text-sm tracking-widest uppercase">
               {t("sectionLabel")}
             </span>
-            <h2
-              ref={titleRef}
-              className="text-5xl md:text-7xl font-bold mb-8 text-white font-migumono"
-            >
+            <h2 className="text-5xl md:text-7xl font-bold mb-8 text-white font-migumono">
               {t("title")}{" "}
               <span className="text-[#00f0ff]">{t("titleHighlight")}</span>
             </h2>
 
-            <div
-              ref={descRef}
-              className="space-y-6 text-gray-300 text-lg font-light leading-relaxed mb-12"
-            >
+            <div className="space-y-6 text-gray-300 text-lg font-light leading-relaxed mb-12">
               <p dangerouslySetInnerHTML={{ __html: t.raw("paragraph1") }} />
               <p dangerouslySetInnerHTML={{ __html: t.raw("paragraph2") }} />
 
@@ -221,19 +145,46 @@ export function AboutSection() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
 
-            <div className="space-y-8 bg-[#050505] p-8 border border-gray-800">
-              <h3 className="text-2xl font-bold text-white mb-6 border-b border-gray-800 pb-4 font-migumono">
+        {/* Technical Ecosystem */}
+        <div className="mt-32">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+            <div>
+              <div className="font-mono text-[#00f0ff] text-xs tracking-[0.4em] mb-4 uppercase">
+                // TECH_STACK
+              </div>
+              <h2 className="text-5xl md:text-7xl font-bold text-white tracking-tight uppercase font-migumono">
                 {t("technicalArsenal")}
-              </h3>
-              {techSkills.map((skill) => (
-                <SkillBar
-                  key={skill.name}
-                  name={skill.name}
-                  level={skill.level}
-                />
-              ))}
+              </h2>
             </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {TECH_STACK.map((group) => (
+              <div
+                key={group.category}
+                className="border border-gray-800/20 p-8 hover:bg-[#131313] transition-colors"
+              >
+                <h4 className="font-bold text-lg mb-6 tracking-widest flex items-center gap-4 font-migumono">
+                  <span className="w-2 h-2 bg-[#ccff00]" />
+                  {group.category}
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {group.techs.map((tech) => (
+                    <span
+                      key={tech.name}
+                      className={`px-3 py-1 bg-white/5 text-[10px] font-mono tracking-widest uppercase ${
+                        tech.highlight ? "text-[#00f0ff]" : "text-gray-400"
+                      }`}
+                    >
+                      {tech.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

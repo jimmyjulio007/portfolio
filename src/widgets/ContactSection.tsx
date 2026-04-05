@@ -3,8 +3,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useForm, type UseFormRegisterReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { gsap, ScrollTrigger } from "@/shared/lib/gsap-setup";
-import { useGSAP } from "@gsap/react";
 import { useLocale, useTranslations } from "next-intl";
 import { Loader2, Send } from "lucide-react";
 import {
@@ -13,9 +11,7 @@ import {
 } from "@/shared/lib/validations/contact";
 import { SITE_CONFIG } from "@/shared/config/constants";
 import { FuturisticToast } from "@/shared/ui/FuturisticToast";
-import { Magnetic } from "@/shared/ui/Magnetic";
 import Link from "next/link";
-
 
 interface FormFieldProps {
   register: UseFormRegisterReturn;
@@ -44,18 +40,16 @@ function FormField({
         disabled={disabled}
         rows={isTextArea ? 6 : undefined}
         className={`
-                    w-full bg-transparent border-b-2 py-4 text-white 
-                    placeholder-gray-600 focus:outline-none transition-all duration-300 
-                    font-mono disabled:opacity-50 resize-none
-                    ${error ? "border-red-500" : "border-gray-800 focus:border-[#00f0ff]"}
-                `}
+          w-full bg-transparent border-b-2 py-4 text-white
+          placeholder-gray-600 focus:outline-none transition-all duration-300
+          font-mono disabled:opacity-50 resize-none
+          ${error ? "border-red-500" : "border-gray-800 focus:border-[#00f0ff]"}
+        `}
         placeholder={placeholder}
         aria-invalid={error ? "true" : "false"}
       />
       {error && (
-        <p className="text-red-500 text-xs font-mono mt-2 animate-pulse">
-          {error}
-        </p>
+        <p className="text-red-500 text-xs font-mono mt-2">{error}</p>
       )}
       <div className="absolute -bottom-[2px] left-0 h-[2px] bg-[#00f0ff] w-0 group-focus-within:w-full transition-all duration-500" />
     </div>
@@ -65,8 +59,6 @@ function FormField({
 export function ContactSection() {
   const t = useTranslations("Contact");
   const locale = useLocale();
-  const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [toast, setToast] = useState<{
@@ -85,7 +77,6 @@ export function ContactSection() {
     resolver: zodResolver(getContactFormSchema(locale)),
   });
 
-  // Listen for AI chatbot form-fill events
   const handleFormFill = useCallback(
     (e: Event) => {
       const { name, email, message } = (e as CustomEvent).detail;
@@ -100,34 +91,6 @@ export function ContactSection() {
     window.addEventListener("fill-contact-form", handleFormFill);
     return () => window.removeEventListener("fill-contact-form", handleFormFill);
   }, [handleFormFill]);
-
-  useGSAP(
-    () => {
-      gsap.from(titleRef.current, {
-        scrollTrigger: {
-          trigger: titleRef.current,
-          start: "top 80%",
-        },
-        y: 60,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
-      });
-
-      gsap.from(formRef.current, {
-        scrollTrigger: {
-          trigger: formRef.current,
-          start: "top 75%",
-        },
-        y: 80,
-        opacity: 0,
-        duration: 1,
-        delay: 0.2,
-        ease: "power3.out",
-      });
-    },
-    { scope: sectionRef },
-  );
 
   const socialLinks = useMemo(
     () => [
@@ -149,19 +112,9 @@ export function ContactSection() {
 
       if (!response.ok) throw new Error("Failed");
 
-      if (formRef.current) {
-        gsap.to(formRef.current, {
-          scale: 0.95,
-          duration: 0.2,
-          yoyo: true,
-          repeat: 1,
-          ease: "power2.inOut",
-        });
-      }
-
       setToast({ show: true, type: "success", message: t("toast.success") });
       reset();
-    } catch (error) {
+    } catch {
       setToast({ show: true, type: "error", message: t("toast.error") });
     } finally {
       setIsSubmitting(false);
@@ -169,33 +122,15 @@ export function ContactSection() {
   };
 
   return (
-    <section
-      id="contact"
-      ref={sectionRef}
-      className="relative py-32 bg-[#050505] overflow-hidden"
-    >
-      <div className="absolute inset-0 opacity-5">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-                            linear-gradient(#00f0ff 1px, transparent 1px),
-                            linear-gradient(90deg, #00f0ff 1px, transparent 1px)
-                        `,
-            backgroundSize: "50px 50px",
-          }}
-        />
-      </div>
-
+    <section id="contact" className="relative py-32 bg-[#050505] overflow-hidden">
+      <div className="absolute left-1/2 -translate-x-1/2 top-0 w-[600px] h-[400px] bg-[#00f0ff]/5 blur-[160px] rounded-full pointer-events-none" />
+      <div className="absolute right-[-100px] bottom-0 w-[350px] h-[350px] bg-[#ccff00]/4 blur-[120px] rounded-full pointer-events-none" />
       <div className="relative z-10 max-w-4xl mx-auto px-6">
         <div className="text-center mb-16">
           <span className="text-[#ccff00] font-mono text-sm tracking-widest uppercase">
             {t("sectionLabel")}
           </span>
-          <h2
-            ref={titleRef}
-            className="text-6xl md:text-8xl font-bold text-white mt-4 font-migumono"
-          >
+          <h2 className="text-6xl md:text-8xl font-bold text-white mt-4 font-migumono">
             {t("title")}{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#ccff00]">
               {t("titleHighlight")}
@@ -233,44 +168,31 @@ export function ContactSection() {
           />
 
           <div className="flex justify-center pt-8">
-            <Magnetic>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`
-                                    relative group px-12 py-4 bg-white text-black font-bold 
-                                    tracking-widest rounded-none overflow-hidden
-                                    transition-all duration-300 font-mono
-                                    hover:bg-[#00f0ff] hover:scale-105 hover:shadow-[0_0_30px_rgba(0,240,255,0.5)]
-                                    disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100
-                                    ${isSubmitting ? "animate-pulse" : ""}
-                                `}
-              >
-                <div className="absolute inset-0 opacity-20 pointer-events-none">
-                  <div
-                    className="h-full w-full animate-scan"
-                    style={{
-                      backgroundImage:
-                        "repeating-linear-gradient(0deg, transparent, transparent 2px, white 2px, white 4px)",
-                    }}
-                  />
-                </div>
-
-                <span className="relative flex items-center gap-3">
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                      {t("submitSending")}
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-5 h-5" />
-                      {t("submitIdle")}
-                    </>
-                  )}
-                </span>
-              </button>
-            </Magnetic>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={`
+                relative group px-12 py-4 bg-white text-black font-bold
+                tracking-widest overflow-hidden
+                transition-all duration-300 font-mono
+                hover:bg-[#00f0ff] hover:scale-105
+                disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100
+              `}
+            >
+              <span className="relative flex items-center gap-3">
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    {t("submitSending")}
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5" />
+                    {t("submitIdle")}
+                  </>
+                )}
+              </span>
+            </button>
           </div>
         </form>
 

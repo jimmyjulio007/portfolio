@@ -17,12 +17,6 @@ export function ScrollLink({
 }: ScrollLinkProps) {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-
-    // Lazy play sound — avoids importing soundManager at module level
-    import("@/shared/lib/sound-manager").then(({ soundManager }) => {
-      soundManager.play("transition", { volume: 0.3 });
-    });
-
     const target = document.querySelector(href);
     if (target) {
       target.scrollIntoView({

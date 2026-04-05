@@ -3,14 +3,6 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
-const CustomCursor = dynamic(
-  () =>
-    import("@/features/CustomCursor").then((mod) => ({
-      default: mod.CustomCursor,
-    })),
-  { ssr: false },
-);
-
 const CookieConsent = dynamic(
   () =>
     import("@/features/CookieConsent").then((mod) => ({
@@ -29,7 +21,6 @@ const ChatbotWrapper = dynamic(
 
 /**
  * Defers loading of non-critical UI components until after first paint.
- * Saves ~200-400 KiB of initial JS (GSAP for cookies, AI chatbot, cursor).
  */
 export function DeferredComponents() {
   const [ready, setReady] = useState(false);
@@ -43,7 +34,6 @@ export function DeferredComponents() {
 
   return (
     <>
-      <CustomCursor />
       <CookieConsent />
       <ChatbotWrapper />
     </>

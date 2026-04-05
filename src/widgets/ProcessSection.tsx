@@ -1,11 +1,7 @@
 "use client";
 
-import { useMemo, useRef } from "react";
-import { gsap, ScrollTrigger } from "@/shared/lib/gsap-setup";
-import { useGSAP } from "@gsap/react";
+import { useMemo } from "react";
 import { useTranslations } from "next-intl";
-
-
 
 interface ProcessStep {
   id: string;
@@ -16,7 +12,7 @@ interface ProcessStep {
 
 function ProcessCard({ step }: { step: ProcessStep }) {
   return (
-    <div className="process-card group relative p-8 bg-[#0a0a0a] border border-gray-800 hover:border-[#00f0ff] transition-colors duration-500 h-96 flex flex-col justify-between overflow-hidden">
+    <div className="group relative p-8 bg-[#0a0a0a] border border-gray-800 hover:border-[#00f0ff] transition-colors duration-500 h-96 flex flex-col justify-between overflow-hidden">
       <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity duration-500">
         <span className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-transparent opacity-10">
           {step.id}
@@ -47,63 +43,22 @@ function ProcessCard({ step }: { step: ProcessStep }) {
 
 export function ProcessSection() {
   const t = useTranslations("Process");
-  const sectionRef = useRef<HTMLElement>(null);
 
   const steps = useMemo(
     () => [
-      {
-        id: "01",
-        title: t("step1Title"),
-        desc: t("step1Description"),
-        color: "#00f0ff",
-      },
-      {
-        id: "02",
-        title: t("step2Title"),
-        desc: t("step2Description"),
-        color: "#ccff00",
-      },
-      {
-        id: "03",
-        title: t("step3Title"),
-        desc: t("step3Description"),
-        color: "#ffffff",
-      },
-      {
-        id: "04",
-        title: t("step4Title"),
-        desc: t("step4Description"),
-        color: "#00f0ff",
-      },
+      { id: "01", title: t("step1Title"), desc: t("step1Description"), color: "#00f0ff" },
+      { id: "02", title: t("step2Title"), desc: t("step2Description"), color: "#ccff00" },
+      { id: "03", title: t("step3Title"), desc: t("step3Description"), color: "#ffffff" },
+      { id: "04", title: t("step4Title"), desc: t("step4Description"), color: "#00f0ff" },
     ],
     [t],
   );
 
-  useGSAP(
-    () => {
-      gsap.from(".process-card", {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 70%",
-          end: "bottom 80%",
-          scrub: 1,
-        },
-        y: 100,
-        opacity: 0,
-        stagger: 0.2,
-        duration: 1,
-      });
-    },
-    { scope: sectionRef },
-  );
-
   return (
-    <section
-      id="process"
-      ref={sectionRef}
-      className="py-32 bg-[#050505] relative border-t border-gray-900"
-    >
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="process" className="py-32 bg-[#050505] relative border-t border-gray-900 overflow-hidden">
+      <div className="absolute right-[-100px] top-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#00f0ff]/5 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute left-[-100px] bottom-0 w-[400px] h-[400px] bg-[#ccff00]/4 blur-[130px] rounded-full pointer-events-none" />
+      <div className="relative z-10 max-w-7xl mx-auto px-6">
         <div className="mb-20">
           <span className="text-[#ccff00] font-mono text-sm tracking-widest uppercase">
             {t("sectionLabel")}

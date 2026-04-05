@@ -6,7 +6,6 @@
   --color-black-deep: #0a0a0a;
   --color-grey-dark: #121212;
   --color-grey-medium: #334155;
-  /* Lighter medium gray for borders */
 
   /* High Voltage Accents */
   --color-cyan-electric: #00f0ff;
@@ -27,41 +26,33 @@
   --font-migumono: var(--font-migumono), sans-serif;
   --font-outfit: var(--font-outfit), sans-serif;
   --font-grotesk: var(--font-grotesk), sans-serif;
-
-  /* Animations */
-  --animate-float: float 8s ease-in-out infinite;
-  --animate-pulse-fast: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  --animate-glow: glow 3s ease-in-out infinite alternate;
 }
 
 @layer base {
-
-  html.lenis,
-  html.lenis body {
-    height: auto;
-  }
-
-  .lenis.lenis-smooth {
-    scroll-behavior: auto !important;
-  }
-
-  .lenis.lenis-smooth [data-lenis-prevent] {
-    overscroll-behavior: contain;
-  }
-
-  .lenis.lenis-stopped {
-    overflow: hidden;
-  }
-
-  .lenis.lenis-scrolling iframe {
-    pointer-events: none;
-  }
-
   body {
     background-color: var(--color-black-void);
     color: var(--color-silver-holo);
     font-family: var(--font-family-grotesk);
     overflow-x: hidden;
+  }
+
+  a,
+  button,
+  [role="button"],
+  input[type="submit"],
+  select,
+  summary {
+    cursor: pointer;
+  }
+
+  /* Ensure minimum touch target size for mobile accessibility */
+  @media (pointer: coarse) {
+    button,
+    [role="button"],
+    input[type="submit"] {
+      min-height: 48px;
+      min-width: 48px;
+    }
   }
 
   ::selection {
@@ -80,112 +71,6 @@
   ::-webkit-scrollbar-thumb {
     background: var(--color-grey-medium);
     border-radius: 3px;
-  }
-
-  @keyframes shimmer {
-    0% {
-      transform: translateX(-100%);
-    }
-
-    100% {
-      transform: translateX(100%);
-    }
-  }
-
-  @keyframes scan {
-    0% {
-      transform: translateY(-100%);
-    }
-
-    100% {
-      transform: translateY(100%);
-    }
-  }
-
-  .animate-shimmer {
-    animation: shimmer 2s infinite;
-  }
-
-  .animate-scan {
-    animation: scan 8s linear infinite;
-  }
-
-  @keyframes grain {
-
-    0%,
-    100% {
-      transform: translate(0, 0);
-    }
-
-    10% {
-      transform: translate(-5%, -5%);
-    }
-
-    20% {
-      transform: translate(-10%, 5%);
-    }
-
-    30% {
-      transform: translate(5%, -10%);
-    }
-
-    40% {
-      transform: translate(-5%, 15%);
-    }
-
-    50% {
-      transform: translate(-10%, 5%);
-    }
-
-    60% {
-      transform: translate(15%, 0);
-    }
-
-    70% {
-      transform: translate(0, 10%);
-    }
-
-    80% {
-      transform: translate(-15%, 0);
-    }
-
-    90% {
-      transform: translate(10%, 5%);
-    }
-  }
-
-  @keyframes float {
-
-    0%,
-    100% {
-      transform: translateY(0) translateX(0);
-      opacity: 0;
-    }
-
-    25% {
-      opacity: 1;
-    }
-
-    75% {
-      opacity: 1;
-    }
-
-    100% {
-      transform: translateY(-100vh) translateX(20px);
-      opacity: 0;
-    }
-  }
-
-  .animate-grain {
-    animation: grain 8s steps(10) infinite;
-  }
-
-  .animate-float {
-    animation: float linear infinite;
-  }
-
-  .bg-noise {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");
   }
 
   ::-webkit-scrollbar-thumb:hover {
@@ -241,100 +126,6 @@
   }
 }
 
-@keyframes glow {
-  from {
-    box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
-  }
-
-  to {
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
-  }
-}
-
-/* ─── Custom Cursor (pure CSS, no GSAP) ─── */
-.cursor-dot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 999999;
-  mix-blend-mode: difference;
-  will-change: left, top, transform, background-color;
-  transition:
-    background-color 0.2s ease,
-    transform 0.15s ease,
-    opacity 0.2s ease;
-}
-
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1.5px solid #00f0ff;
-  pointer-events: none;
-  z-index: 999998;
-  mix-blend-mode: difference;
-  will-change: left, top, transform, border-color, width, height;
-  transition:
-    left 0.12s cubic-bezier(0.25, 0.1, 0.25, 1),
-    top 0.12s cubic-bezier(0.25, 0.1, 0.25, 1),
-    transform 0.25s cubic-bezier(0.25, 0.1, 0.25, 1),
-    border-color 0.2s ease,
-    width 0.25s ease,
-    height 0.25s ease,
-    opacity 0.2s ease;
-}
-
-/* Crosshair lines inside the ring */
-.cursor-crosshair-h,
-.cursor-crosshair-v {
-  position: absolute;
-  border-radius: 1px;
-  transition: opacity 0.2s ease;
-}
-
-.cursor-crosshair-h {
-  width: 100%;
-  height: 1px;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-}
-
-.cursor-crosshair-v {
-  width: 1px;
-  height: 100%;
-  left: 50%;
-  top: 0;
-  transform: translateX(-50%);
-}
-
-/* Hide default cursor only on desktop with fine pointer */
-@media (pointer: fine) and (min-width: 768px) {
-  body,
-  a,
-  button,
-  input,
-  textarea,
-  [role="button"],
-  .cursor-pointer {
-    cursor: none !important;
-  }
-}
-
-/* Show default cursor on touch/mobile */
-@media not all and (pointer: fine) {
-  body {
-    cursor: auto;
-  }
-}
-
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -344,5 +135,59 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes shrink {
+  from {
+    transform: scaleX(1);
+  }
+
+  to {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }

@@ -11,7 +11,6 @@ const LanguageSwitcher = dynamic(
 );
 import { useTranslations } from "next-intl";
 
-// AwardMenu imports GSAP + lucide-react + Magnetic — defer until user opens it
 const AwardMenu = dynamic(
   () => import("@/widgets/AwardMenu").then((mod) => mod.AwardMenu),
   { ssr: false },
@@ -22,14 +21,12 @@ export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(true);
   const lastScrollY = { current: 0 };
 
   const navItems = useMemo(
     () => [
       { label: t("work"), href: "#work" },
       { label: t("process"), href: "#process" },
-      { label: t("playground"), href: "#playground" },
       { label: t("about"), href: "#about" },
       { label: t("contact"), href: "#contact" },
     ],
@@ -51,13 +48,6 @@ export function Navigation() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
-
-  const toggleSound = useCallback(() => {
-    import("@/shared/lib/sound-manager").then(({ soundManager }) => {
-      soundManager.toggle();
-      setSoundEnabled(soundManager.isEnabled());
-    });
-  }, []);
 
   return (
     <>
@@ -97,32 +87,11 @@ export function Navigation() {
               <LanguageSwitcher />
             </div>
 
-            <button
-              type="button"
-              onClick={toggleSound}
-              className="text-gray-300 hover:text-[#00f0ff] transition-colors p-1.5 sm:p-2"
-              aria-label="Toggle sound"
+            <ScrollLink
+              href="#contact"
+              className="hidden md:inline-flex items-center justify-center px-5 py-2 text-xs font-bold uppercase tracking-widest bg-white text-black hover:bg-[#00f0ff] transition-all duration-300"
             >
-              {soundEnabled ? (
-                <div className="flex gap-[2px] items-end h-3 sm:h-4">
-                  <span className="w-[2px] h-1.5 sm:h-2 bg-current animate-pulse" />
-                  <span className="w-[2px] h-3 sm:h-4 bg-current animate-pulse delay-75" />
-                  <span className="w-[2px] h-2 sm:h-3 bg-current animate-pulse delay-150" />
-                </div>
-              ) : (
-                <div className="w-3 sm:w-4 h-[2px] bg-current" />
-              )}
-            </button>
-
-            <ScrollLink href="#contact">
-              <Button
-                variant="primary"
-                size="sm"
-                className="hidden md:inline-flex bg-white text-black hover:bg-[#00f0ff] font-bold tracking-widest text-xs"
-                withSound={false}
-              >
-                {t("contact")}
-              </Button>
+              {t("contact")}
             </ScrollLink>
 
             <button
@@ -153,17 +122,6 @@ export function Navigation() {
               </div>
             </button>
 
-            <button
-              className="hidden md:flex items-center gap-2 text-xs font-mono text-gray-400 hover:text-[#00f0ff] transition-colors p-2"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <span className="tracking-widest">{t("menuLabel")}</span>
-              <div className="flex flex-col gap-[3px]">
-                <span className="w-4 h-[2px] bg-current" />
-                <span className="w-4 h-[2px] bg-current" />
-                <span className="w-4 h-[2px] bg-current" />
-              </div>
-            </button>
           </div>
         </div>
       </nav>

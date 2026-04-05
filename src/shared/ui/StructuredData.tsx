@@ -1,5 +1,3 @@
-"use client";
-
 import { SITE_CONFIG } from "@/shared/config/constants";
 
 /**
@@ -21,25 +19,25 @@ export function StructuredData() {
       SITE_CONFIG.social.linkedin,
       SITE_CONFIG.social.twitter,
     ],
-    jobTitle: "Full Stack AI Architect",
+    jobTitle: "Full-Stack Engineer",
     worksFor: {
       "@type": "Organization",
       name: "Freelance",
       "@id": `${SITE_CONFIG.url}#organization`,
     },
     description:
-      "Andriamandresy Mitondrasoa Jimmy Julio is a Full Stack AI Architect specializing in high-performance web applications, 3D interactive experiences, and AI integrations using LangChain, Next.js, and Three.js.",
+      "Full-Stack Engineer specializing in real-time distributed systems and high-performance web applications.",
     knowsAbout: [
       "Next.js",
       "React",
       "TypeScript",
-      "Three.js",
-      "Artificial Intelligence",
+      "Node.js",
+      "NestJS",
+      "Socket.io",
+      "PostgreSQL",
       "Full Stack Development",
-      "WebGL",
-      "LangChain",
-      "Machine Learning",
-      "AI Integration",
+      "Real-Time Systems",
+      "System Architecture",
     ],
     address: {
       "@type": "PostalAddress",
@@ -76,9 +74,9 @@ export function StructuredData() {
     "@id": `${SITE_CONFIG.url}#profilepage`,
     mainEntity: { "@id": `${SITE_CONFIG.url}#person` },
     url: SITE_CONFIG.url,
-    name: "Jimmy Julio - Full Stack AI Architect",
+    name: "Jimmy Julio - Full-Stack Engineer",
     description:
-      "Professional portfolio and contact information for Jimmy Julio, Full Stack AI Architect",
+      "Professional portfolio and contact information for Jimmy Julio, Full-Stack Engineer",
     inLanguage: ["en", "fr", "ja", "zh", "de", "ar"],
   };
 
