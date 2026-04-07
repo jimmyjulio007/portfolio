@@ -175,6 +175,7 @@ export default async function LocaleLayout({
       lang={locale}
       className={`scroll-smooth ${outfit.variable} ${spaceGrotesk.variable} ${migumono.variable}`}
       dir={locale === "ar" ? "rtl" : "ltr"}
+      data-locale={locale}
     >
       <head>
         <link rel="manifest" href="/manifest.json" />
