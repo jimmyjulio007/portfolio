@@ -96,8 +96,8 @@
   }
 
   .font-migumono {
-    font-family: var(--font-migumono), monospace;
-    letter-spacing: 0.02em;
+    font-family: var(--font-grotesk), sans-serif;
+    letter-spacing: -0.02em;
   }
 
   .font-outfit {

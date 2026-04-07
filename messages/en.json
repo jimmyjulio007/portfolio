@@ -129,8 +129,24 @@
     "retry": "RETRY",
     "close": "CLOSE",
     "minimize": "MINIMIZE",
-    "voiceStart": "START LISTENING",
-    "voiceStop": "STOP LISTENING",
-    "voiceNotSupported": "VOICE NOT SUPPORTED"
+    "loading1": "Thinking...",
+    "loading2": "Processing...",
+    "loading3": "Analyzing...",
+    "loading4": "Preparing response...",
+    "teaser1": "Need a full-stack engineer? I'm online.",
+    "teaser2": "Curious about Jimmy's work? Let's talk.",
+    "teaser3": "I can walk you through the portfolio.",
+    "teaser4": "Looking for a developer? Ask me anything.",
+    "hintWork": "You're viewing projects — ask me about any of them!",
+    "hintProcess": "Curious about Jimmy's workflow? I can explain.",
+    "hintContact": "Ready to reach out? I can help fill the form.",
+    "hintAbout": "Want to know more about Jimmy?",
+    "actionProjects": "Projects",
+    "actionProjectsMsg": "Show me Jimmy's projects",
+    "actionSkills": "Skills",
+    "actionSkillsMsg": "What are Jimmy's technical skills?",
+    "actionContact": "Contact",
+    "actionContactMsg": "I want to contact Jimmy",
+    "actionHelp": "Help"
   }
 }

@@ -33,7 +33,9 @@ const markdownComponents = {
     ol: ({ children }: ComponentPropsWithoutRef<"ol">) => <ol className="list-decimal ml-4 mb-2">{children}</ol>,
     li: ({ children }: ComponentPropsWithoutRef<"li">) => <li className="mb-1 break-words">{children}</li>,
     strong: ({ children }: ComponentPropsWithoutRef<"strong">) => <strong className="text-[#00f0ff] font-bold">{children}</strong>,
-    code: ({ children }: ComponentPropsWithoutRef<"code">) => <code className="bg-white/10 px-1 rounded font-mono text-xs break-all inline-block max-w-full">{children}</code>,
+    code: ({ children }: ComponentPropsWithoutRef<"code">) => <code className="bg-white/10 px-1.5 py-0.5 rounded font-mono text-xs break-all">{children}</code>,
+    pre: ({ children }: ComponentPropsWithoutRef<"pre">) => <pre className="bg-white/5 p-3 rounded overflow-x-auto text-xs font-mono mb-2 max-w-full">{children}</pre>,
+    a: ({ href, children }: ComponentPropsWithoutRef<"a">) => <a href={href} target="_blank" rel="noopener noreferrer" className="text-[#00f0ff] underline underline-offset-2 break-all">{children}</a>,
 };
 
 function cleanNLPTags(text: string): string {
@@ -42,6 +44,10 @@ function cleanNLPTags(text: string): string {
         .replace(/\[(SCROLL|OPEN):.*?\]/g, "")
         .replace(/\[FILL_FORM:[\s\S]*?\]/g, "")
         .replace(/\[FILL_FORM:[\s\S]*$/g, "")
+        // Strip leaked JSON objects ({"key":"value"...})
+        .replace(/\{(?:"[^"]*"\s*:\s*"[^"]*"[,\s]*){2,}\}/g, "")
+        // Strip incomplete JSON at end of stream
+        .replace(/\{(?:"[^"]*"\s*:\s*"[^"]*"[,\s]*)*"[^"]*"\s*:\s*"[^"]*$/g, "")
         .trim();
 }
 
@@ -66,24 +72,8 @@ function sanitizeStreamingMarkdown(text: string): string {
 }
 
 // ─── Cyberpunk Loading Messages ───
-const LOADING_MESSAGES = [
-    "Decrypting neural pathway...",
-    "Syncing with mainframe...",
-    "Compiling response matrix...",
-    "Traversing knowledge graph...",
-    "Bootstrapping cognition...",
-    "Establishing secure channel...",
-    "Parsing quantum data...",
-    "Rendering thought vector...",
-];
-
-// ─── Quick Action Chips ───
-const QUICK_ACTIONS = [
-    { label: "View Projects", icon: Briefcase, message: "Show me Jimmy's projects" },
-    { label: "Skills", icon: Cpu, message: "What are Jimmy's technical skills?" },
-    { label: "Contact", icon: Mail, message: "I want to contact Jimmy" },
-    { label: "Help", icon: HelpCircle, message: "/help" },
-];
+// Icons for quick actions (stable references)
+const QUICK_ACTION_ICONS = [Briefcase, Cpu, Mail, HelpCircle];
 
 // ─── Slash Command Handler ───
 function handleSlashCommand(cmd: string): string | null {
@@ -136,13 +126,12 @@ function useVisibleSection(): string | null {
     return visible;
 }
 
-function getContextHint(section: string | null): string | null {
+function getContextHint(section: string | null, t: (key: string) => string): string | null {
     switch (section) {
-        case "work": return "You're viewing projects — ask me about any of them!";
-        case "process": return "Curious about Jimmy's workflow? I can explain.";
-        case "contact": return "Ready to reach out? I can help fill the form.";
-        case "playground": return "Exploring the playground? Try the 3D demos!";
-        case "about": return "Want to know more about Jimmy's journey?";
+        case "work": return t("hintWork");
+        case "process": return t("hintProcess");
+        case "contact": return t("hintContact");
+        case "about": return t("hintAbout");
         default: return null;
     }
 }
@@ -154,26 +143,33 @@ function preloadChatSounds() {
     soundsPreloaded = true;
 }
 
-// ─── Notification Pulse Messages ───
-const TEASER_MESSAGES = [
-    "Need a full-stack AI architect? I'm online.",
-    "Curious about Jimmy's work? Let's talk.",
-    "I can walk you through the portfolio.",
-    "Looking for a developer? Ask me anything.",
-];
 
 // ─── Main Component ───
 export function AIChatbot() {
     const t = useTranslations("Chatbot");
+
+    const loadingMessages = useMemo(() => [
+        t("loading1"), t("loading2"), t("loading3"), t("loading4"),
+    ], [t]);
+
+    const teaserMessages = useMemo(() => [
+        t("teaser1"), t("teaser2"), t("teaser3"), t("teaser4"),
+    ], [t]);
+
+    const quickActions = useMemo(() => [
+        { label: t("actionProjects"), icon: QUICK_ACTION_ICONS[0], message: t("actionProjectsMsg") },
+        { label: t("actionSkills"), icon: QUICK_ACTION_ICONS[1], message: t("actionSkillsMsg") },
+        { label: t("actionContact"), icon: QUICK_ACTION_ICONS[2], message: t("actionContactMsg") },
+        { label: t("actionHelp"), icon: QUICK_ACTION_ICONS[3], message: "/help" },
+    ], [t]);
+
     const [isOpen, setIsOpen] = useState(false);
     const [isMinimized, setIsMinimized] = useState(false);
     const [input, setInput] = useState("");
     const [isAppReady, setIsAppReady] = useState(false);
-    const [loadingMsg, setLoadingMsg] = useState(LOADING_MESSAGES[0]);
+    const [loadingMsg, setLoadingMsg] = useState("");
     const [showPulse, setShowPulse] = useState(false);
-    const [pulseMessage] = useState(() =>
-        TEASER_MESSAGES[Math.floor(Math.random() * TEASER_MESSAGES.length)]
-    );
+    const [pulseIndex] = useState(() => Math.floor(Math.random() * 4));
     const pulseTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
     const [unreadCount, setUnreadCount] = useState(0);
     const prevMsgCountRef = useRef(0);
@@ -204,10 +200,10 @@ export function AIChatbot() {
     const loadingIntervalRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
 
     // Context hint (memoized to avoid recalculating)
-    const contextHint = useMemo(() => getContextHint(visibleSection), [visibleSection]);
+    const contextHint = useMemo(() => getContextHint(visibleSection, t), [visibleSection, t]);
 
-    // ─── Preload sounds on mount ───
-    useEffect(() => { preloadChatSounds(); }, []);
+    // Init loading message with translation
+    useEffect(() => { setLoadingMsg(loadingMessages[0]); }, [loadingMessages]);
 
     // ─── Mobile detection ───
     useEffect(() => {
@@ -220,9 +216,9 @@ export function AIChatbot() {
     // ─── Rotate loading messages ───
     useEffect(() => {
         if (isLoading) {
-            setLoadingMsg(LOADING_MESSAGES[Math.floor(Math.random() * LOADING_MESSAGES.length)]);
+            setLoadingMsg(loadingMessages[Math.floor(Math.random() * loadingMessages.length)]);
             loadingIntervalRef.current = setInterval(() => {
-                setLoadingMsg(LOADING_MESSAGES[Math.floor(Math.random() * LOADING_MESSAGES.length)]);
+                setLoadingMsg(loadingMessages[Math.floor(Math.random() * loadingMessages.length)]);
             }, 2000);
         } else {
             clearInterval(loadingIntervalRef.current);
@@ -664,7 +660,7 @@ export function AIChatbot() {
                                                 </div>
                                             </div>
                                             {/* Quick Action Chips */}
-                                            <QuickActionChips onAction={handleQuickAction} />
+                                            <QuickActionChips onAction={handleQuickAction} actions={quickActions} />
                                         </div>
                                     )}
 
@@ -674,7 +670,7 @@ export function AIChatbot() {
                                             {/* Show quick actions after last assistant message when idle */}
                                             {m.role === "assistant" && idx === messages.length - 1 && status === "ready" && (
                                                 <div className="mt-3 ml-11">
-                                                    <QuickActionChips onAction={handleQuickAction} compact />
+                                                    <QuickActionChips onAction={handleQuickAction} actions={quickActions} compact />
                                                 </div>
                                             )}
                                         </div>
@@ -790,7 +786,7 @@ export function AIChatbot() {
                                         Neural Link
                                     </p>
                                     <p className="text-xs text-gray-300 leading-relaxed font-sans">
-                                        {pulseMessage}
+                                        {teaserMessages[pulseIndex]}
                                     </p>
                                 </div>
                             </div>
@@ -885,14 +881,16 @@ export function AIChatbot() {
 // ─── Quick Action Chips Component ───
 const QuickActionChips = memo(function QuickActionChips({
     onAction,
+    actions,
     compact = false,
 }: {
     onAction: (message: string) => void;
+    actions: { label: string; icon: typeof Briefcase; message: string }[];
     compact?: boolean;
 }) {
     return (
         <div className={cn("flex flex-wrap gap-2", compact ? "gap-1.5" : "pl-11")}>
-            {QUICK_ACTIONS.map((action) => (
+            {actions.map((action) => (
                 <button
                     key={action.label}
                     type="button"

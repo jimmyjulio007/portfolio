@@ -129,8 +129,24 @@
     "retry": "WIEDERHOLEN",
     "close": "SCHLIESSEN",
     "minimize": "MINIMIEREN",
-    "voiceStart": "HÖREN STARTEN",
-    "voiceStop": "HÖREN STOPPEN",
-    "voiceNotSupported": "SPRACHEINGABE NICHT UNTERSTÜTZT"
+    "loading1": "Denke nach...",
+    "loading2": "Verarbeitung läuft...",
+    "loading3": "Analysiere...",
+    "loading4": "Vorbereitung der Antwort...",
+    "teaser1": "Suchst du einen Full-Stack-Engineer? Ich bin online.",
+    "teaser2": "Neugierig auf Jimmys Arbeiten? Lass uns reden.",
+    "teaser3": "Ich kann dir das Portfolio zeigen.",
+    "teaser4": "Suchst du einen Entwickler? Frag mich alles.",
+    "hintWork": "Du schaust dir Projekte an — stell mir Fragen dazu!",
+    "hintProcess": "Neugierig auf Jimmys Arbeitsweise? Ich kann das erklären.",
+    "hintContact": "Bereit Kontakt aufzunehmen? Ich kann dir beim Ausfüllen des Formulars helfen.",
+    "hintAbout": "Möchtest du mehr über Jimmy erfahren?",
+    "actionProjects": "Projekte",
+    "actionProjectsMsg": "Zeig mir Jimmys Projekte",
+    "actionSkills": "Fähigkeiten",
+    "actionSkillsMsg": "Was sind Jimmys technische Fähigkeiten?",
+    "actionContact": "Kontakt",
+    "actionContactMsg": "Ich möchte Jimmy kontaktieren",
+    "actionHelp": "Hilfe"
   }
 }

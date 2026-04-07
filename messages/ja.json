@@ -129,8 +129,24 @@
     "retry": "再試行",
     "close": "閉じる",
     "minimize": "最小化",
-    "voiceStart": "音声入力を開始",
-    "voiceStop": "音声入力を停止",
-    "voiceNotSupported": "音声入力はサポートされていません"
+    "loading1": "思考中...",
+    "loading2": "処理中...",
+    "loading3": "分析中...",
+    "loading4": "応答を準備中...",
+    "teaser1": "フルスタックエンジニアをお探しですか？私はオンラインです。",
+    "teaser2": "ジミーの作品に興味がありますか？話しましょう。",
+    "teaser3": "ポートフォリオをご説明することができます。",
+    "teaser4": "開発者をお探しですか？何でもお気軽にお尋ねください。",
+    "hintWork": "プロジェクトを見ていますね。何でも聞いてください！",
+    "hintProcess": "ジミーのワークフロー気になりますか？説明できます。",
+    "hintContact": "連絡を取る準備はできていますか？フォーム入力をお手伝いします。",
+    "hintAbout": "ジミーについてもっと知りたいですか？",
+    "actionProjects": "プロジェクト",
+    "actionProjectsMsg": "ジミーのプロジェクトを見せてください",
+    "actionSkills": "スキル",
+    "actionSkillsMsg": "ジミーの技術スキルは何ですか？",
+    "actionContact": "連絡",
+    "actionContactMsg": "ジミーに連絡したいです",
+    "actionHelp": "ヘルプ"
   }
 }

@@ -129,8 +129,24 @@
     "retry": "重试",
     "close": "关闭",
     "minimize": "最小化",
-    "voiceStart": "开始聆听",
-    "voiceStop": "停止聆听",
-    "voiceNotSupported": "不支持语音输入"
+    "loading1": "思考中...",
+    "loading2": "处理中...",
+    "loading3": "分析中...",
+    "loading4": "准备回复中...",
+    "teaser1": "寻找全栈工程师？我在线。",
+    "teaser2": "对Jimmy的作品感兴趣？聊聊吧。",
+    "teaser3": "我可以为您介绍这个作品集。",
+    "teaser4": "找开发者？随便问我什么。",
+    "hintWork": "您在看项目 — 问我关于任何项目的问题！",
+    "hintProcess": "对Jimmy的工作流程感到好奇？我可以解释。",
+    "hintContact": "准备好联系了？我可以帮助您填写表单。",
+    "hintAbout": "想了解更多关于Jimmy的信息吗？",
+    "actionProjects": "项目",
+    "actionProjectsMsg": "展示Jimmy的项目",
+    "actionSkills": "技能",
+    "actionSkillsMsg": "Jimmy有哪些技术技能？",
+    "actionContact": "联系",
+    "actionContactMsg": "我想联系Jimmy",
+    "actionHelp": "帮助"
   }
 }
