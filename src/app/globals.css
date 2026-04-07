@@ -23,7 +23,6 @@
   --font-family-migumono: var(--font-migumono), sans-serif;
 
   /* Font Utilities */
-  --font-migumono: var(--font-migumono), sans-serif;
   --font-outfit: var(--font-outfit), sans-serif;
   --font-grotesk: var(--font-grotesk), sans-serif;
 }
@@ -96,7 +95,6 @@
   }
 
   .font-migumono {
-    font-family: var(--font-grotesk), sans-serif;
     letter-spacing: -0.02em;
   }
 
@@ -124,6 +122,18 @@
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 240, 255, 0.5);
   }
+}
+
+@utility font-migumono {
+  font-family: var(--font-migumono), var(--font-grotesk), sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* Locales with accented characters: use Space Grotesk instead of Migumono
+   (Migumono has empty glyphs for accented chars, preventing proper fallback) */
+:root[data-locale="fr"] .font-migumono,
+:root[data-locale="de"] .font-migumono {
+  font-family: var(--font-grotesk), sans-serif;
 }
 
 @keyframes fadeInUp {
