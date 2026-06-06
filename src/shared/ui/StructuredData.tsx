@@ -1,3 +1,4 @@
+// biome-ignore-all lint/security/noDangerouslySetInnerHtml: first-party trusted content (analytics / JSON-LD / localized copy), not user input
 import { SITE_CONFIG } from "@/shared/config/constants";
 
 /**

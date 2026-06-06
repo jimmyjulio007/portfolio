@@ -61,6 +61,11 @@
     "project4Tags": "Python • Automation • Data",
     "project4Details": "IGS is a Python-based automation system designed for intelligent data processing and workflow orchestration. The project handles data extraction, transformation, and automated pipeline execution, streamlining repetitive tasks into efficient, reproducible workflows.",
     "project4Category": "PYTHON / AUTOMATION",
+    "project5Title": "AVM OSGRIM",
+    "project5Description": "Multi-tenant SaaS platform that digitizes the security operations daybook (main courante) for professional guarding companies — with a no-code WYSIWYG form builder, real-time SignalR notifications, validated reports and PDF export.",
+    "project5Tags": ".NET 8 • React 19 • SQL Server • Keycloak • SignalR • Azure",
+    "project5Details": "AVM OSGRIM (codename OSGRIMXV) is a full-stack electronic security-operations logbook that replaces paper main courante daybooks with a real-time, auditable, multi-tenant web application. Built on ASP.NET Core 8 with Clean Architecture and a React 19 + TypeScript SPA, it lets administrators design no-code data-entry forms in a WYSIWYG editor that are sanitized and re-hydrated into live React controls at runtime. It covers interventions, incidents, people and equipment movements, personnel shifts, first-aid assessments and training, secured by fine-grained multi-tenant RBAC (Partitions / Zones / Elements) and Keycloak OIDC, with real-time SignalR notifications, validated reports with full history, and PDF export. Deployed on Azure via Terraform with GitLab CI/CD.",
+    "project5Category": "FULL-STACK / SAAS",
     "viewCaseStudy": "VIEW PROJECT",
     "seeMoreTitle": "Want to see more?",
     "viewGithub": "VIEW GITHUB"

@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useLocale } from "next-intl";
+import { useEffect, useState } from "react";
 import { Link } from "@/i18n/routing";
 
 const COOKIE_TRANSLATIONS = {
@@ -97,7 +97,7 @@ export function CookieConsent() {
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
               <div className="flex-1 min-w-0">
                 <h3 className="text-sm sm:text-base md:text-lg font-bold text-white mb-1 sm:mb-2 font-mono tracking-tight">
-                  <span className="text-[#00f0ff]">// </span>
+                  <span className="text-[#00f0ff]">{"// "}</span>
                   {t.title}
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
@@ -107,6 +107,7 @@ export function CookieConsent() {
 
               <div className="flex flex-row sm:flex-col lg:flex-row gap-2 sm:gap-3 shrink-0 w-full sm:w-auto">
                 <button
+                  type="button"
                   onClick={() => handleDismiss("accepted")}
                   className="flex-1 sm:flex-none px-4 sm:px-6 py-2 sm:py-2.5 bg-white text-black font-bold tracking-widest text-xs sm:text-sm transition-all duration-300 hover:bg-[#00f0ff]"
                 >
@@ -114,6 +115,7 @@ export function CookieConsent() {
                 </button>
 
                 <button
+                  type="button"
                   onClick={() => handleDismiss("declined")}
                   className="flex-1 sm:flex-none px-4 sm:px-6 py-2 sm:py-2.5 border-2 border-gray-700 text-gray-400 font-bold tracking-widest text-xs sm:text-sm transition-all duration-300 hover:border-[#ccff00] hover:text-[#ccff00]"
                 >

@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
 import { google } from "googleapis";
+import { type NextRequest, NextResponse } from "next/server";
+import nodemailer from "nodemailer";
+import { generateEmailHTML } from "@/shared/lib/email-templates";
 import {
   getContactFormSchema,
   type Locale,
 } from "@/shared/lib/validations/contact";
-import { generateEmailHTML } from "@/shared/lib/email-templates";
 
 export const runtime = "nodejs";
 export const maxDuration = 15;

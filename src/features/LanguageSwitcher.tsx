@@ -1,8 +1,8 @@
 "use client";
 
 import { useLocale } from "next-intl";
-import { useRouter, usePathname } from "@/i18n/routing";
-import { useState, useTransition, useRef, useEffect } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
+import { usePathname, useRouter } from "@/i18n/routing";
 
 const LOCALES = [
   { code: "en", name: "English", flag: "🇬🇧" },
@@ -31,6 +31,7 @@ function GlobeIcon({ className }: { className?: string }) {
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
+      aria-hidden="true"
     >
       <circle cx="12" cy="12" r="10" />
       <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
@@ -51,7 +52,10 @@ export function LanguageSwitcher({ dropUp = false }: LanguageSwitcherProps) {
   useEffect(() => {
     if (!isOpen) return;
     const close = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -75,6 +79,7 @@ export function LanguageSwitcher({ dropUp = false }: LanguageSwitcherProps) {
   return (
     <div className="relative" ref={dropdownRef}>
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         disabled={isPending}
         className="flex items-center gap-2 px-4 py-2 bg-black/60 backdrop-blur-md border border-gray-800 hover:border-[#00f0ff] rounded-full transition-all duration-300 group shadow-lg"
@@ -92,8 +97,10 @@ export function LanguageSwitcher({ dropUp = false }: LanguageSwitcherProps) {
 
       {isOpen && (
         <>
-          <div
+          <button
+            type="button"
             className="fixed inset-0 z-40 bg-black/5"
+            aria-label="Close language menu"
             onClick={() => setIsOpen(false)}
           />
 
@@ -106,6 +113,7 @@ export function LanguageSwitcher({ dropUp = false }: LanguageSwitcherProps) {
             </div>
             {LOCALES.map((loc) => (
               <button
+                type="button"
                 key={loc.code}
                 onClick={() => handleLocaleChange(loc.code)}
                 disabled={isPending}

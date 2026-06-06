@@ -1,7 +1,7 @@
 "use client";
 
+import { AlertCircle, CheckCircle2, X, XCircle } from "lucide-react";
 import { useEffect, useRef } from "react";
-import { CheckCircle2, XCircle, AlertCircle, X } from "lucide-react";
 
 interface FuturisticToastProps {
   type: "success" | "error" | "info";
@@ -72,6 +72,7 @@ export function FuturisticToast({
           </div>
 
           <button
+            type="button"
             onClick={onClose}
             className={`
               ${config[type].textColor} hover:bg-white/10

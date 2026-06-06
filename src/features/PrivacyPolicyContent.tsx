@@ -1,10 +1,9 @@
 "use client";
 
+import { useLocale } from "next-intl";
 import { useRef } from "react";
 import { Link } from "@/i18n/routing";
-import { useLocale } from "next-intl";
 import { Button } from "@/shared/ui/Button";
-
 
 const PRIVACY_CONTENT = {
   en: {
@@ -273,7 +272,8 @@ export function PrivacyPolicyContent() {
             {content.title}
           </h1>
           <p className="text-[#00f0ff] font-mono tracking-widest text-sm md:text-base">
-            // {content.subtitle}
+            {"// "}
+            {content.subtitle}
           </p>
           <div className="mt-4 text-gray-500 text-xs font-mono">
             {content.lastUpdated}
@@ -282,7 +282,7 @@ export function PrivacyPolicyContent() {
 
         {/* Content Sections */}
         <div className="space-y-12">
-          {content.sections.map((section, index) => (
+          {content.sections.map((section, _index) => (
             <div key={section.id} className="privacy-section relative group">
               {/* Section Border/Card */}
               <div className="absolute -inset-4 bg-gray-900/50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 border border-[#00f0ff]/20" />
@@ -321,7 +321,6 @@ export function PrivacyPolicyContent() {
             </Button>
           </Link>
         </div>
-
       </div>
     </main>
   );

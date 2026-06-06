@@ -61,6 +61,11 @@
     "project4Tags": "Python • Automation • Data",
     "project4Details": "IGS是一个基于Python的自动化系统，专为智能数据处理和工作流编排而设计。该项目处理数据提取、转换和自动化管道执行，将重复性任务简化为高效、可复现的工作流程。",
     "project4Category": "PYTHON / AUTOMATION",
+    "project5Title": "AVM OSGRIM",
+    "project5Description": "面向专业安保公司的多租户 SaaS 平台，将安保运营的 main courante（执勤日志）全面数字化——配备无代码 WYSIWYG 表单构建器、实时 SignalR 通知、经校验的报告以及 PDF 导出。",
+    "project5Tags": ".NET 8 • React 19 • SQL Server • Keycloak • SignalR • Azure",
+    "project5Details": "AVM OSGRIM（代号 OSGRIMXV）是一套全栈式电子安保运营日志系统，以实时、可审计、多租户的 Web 应用取代传统纸质 main courante（执勤日志）。系统基于采用 Clean Architecture 的 ASP.NET Core 8，并搭配 React 19 + TypeScript 单页应用（SPA），管理员可在 WYSIWYG 编辑器中以无代码方式设计数据录入表单，这些表单在运行时经过净化并重新还原为实时的 React 控件。系统覆盖干预处置、事件、人员与设备进出、人员排班、急救评估与培训等场景，并通过细粒度的多租户 RBAC（Partitions / Zones / Elements）与 Keycloak OIDC 加以保护，同时提供实时 SignalR 通知、带完整历史记录且经校验的报告，以及 PDF 导出。整套系统通过 Terraform 部署于 Azure，并采用 GitLab CI/CD。",
+    "project5Category": "FULL-STACK / SAAS",
     "viewCaseStudy": "查看案例研究",
     "seeMoreTitle": "想看更多？",
     "viewGithub": "查看GITHUB"

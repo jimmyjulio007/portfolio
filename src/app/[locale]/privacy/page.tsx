@@ -1,5 +1,5 @@
-import { PrivacyPolicyContent } from "@/features/PrivacyPolicyContent";
 import { getTranslations } from "next-intl/server";
+import { PrivacyPolicyContent } from "@/features/PrivacyPolicyContent";
 
 export async function generateMetadata({
   params,

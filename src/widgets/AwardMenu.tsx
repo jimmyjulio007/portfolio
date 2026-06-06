@@ -1,10 +1,10 @@
 "use client";
 
-import { useMemo } from "react";
 import { X } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { LanguageSwitcher } from "@/features/LanguageSwitcher";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { useMemo } from "react";
+import { LanguageSwitcher } from "@/features/LanguageSwitcher";
 
 interface AwardMenuProps {
   isOpen: boolean;
@@ -80,15 +80,18 @@ export function AwardMenu({ isOpen, onClose }: AwardMenuProps) {
 
   return (
     <>
-      <div
+      <button
+        type="button"
         className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[10002] animate-[fadeIn_0.3s_ease-out]"
         onClick={onClose}
+        aria-label="Close menu"
       />
 
       <div className="fixed top-0 right-0 h-full w-full md:w-[600px] bg-gradient-to-br from-black via-[#0a0a0a] to-black border-l border-[#00f0ff]/20 z-[10003] overflow-y-auto animate-[slideInRight_0.4s_ease-out]">
         <div className="relative h-full p-12 flex flex-col">
           <div className="absolute top-8 right-8">
             <button
+              type="button"
               onClick={onClose}
               className="w-14 h-14 rounded-full border border-gray-700 hover:border-[#00f0ff] flex items-center justify-center transition-all duration-300 group"
               aria-label="Close menu"

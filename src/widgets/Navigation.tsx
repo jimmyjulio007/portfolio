@@ -1,14 +1,16 @@
 "use client";
 
-import { useMemo, useState, useEffect, useCallback } from "react";
 import dynamic from "next/dynamic";
-import { Button } from "@/shared/ui/Button";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { cn } from "@/shared/lib/utils";
 import { ScrollLink } from "@/shared/ui/ScrollLink";
+
 const LanguageSwitcher = dynamic(
-  () => import("@/features/LanguageSwitcher").then((mod) => mod.LanguageSwitcher),
+  () =>
+    import("@/features/LanguageSwitcher").then((mod) => mod.LanguageSwitcher),
   { ssr: false },
 );
+
 import { useTranslations } from "next-intl";
 
 const AwardMenu = dynamic(
@@ -33,6 +35,7 @@ export function Navigation() {
     [t],
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: lastScrollY is a stable mutable ref-like object used for cross-render scroll tracking; adding it would recreate the callback every render and churn the scroll listener
   const handleScroll = useCallback(() => {
     const y = window.scrollY;
     setIsScrolled(y > 100);
@@ -95,6 +98,7 @@ export function Navigation() {
             </ScrollLink>
 
             <button
+              type="button"
               className="md:hidden text-white p-1.5 sm:p-2"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
@@ -121,7 +125,6 @@ export function Navigation() {
                 />
               </div>
             </button>
-
           </div>
         </div>
       </nav>

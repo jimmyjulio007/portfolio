@@ -1,8 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
 import { useMemo } from "react";
+import { Link } from "@/i18n/routing";
 
 export function Footer() {
   const t = useTranslations("Footer");
