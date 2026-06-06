@@ -1,10 +1,10 @@
 import { createHuggingFace } from "@ai-sdk/huggingface";
-import { convertToModelMessages, streamText } from "ai";
 import type { UIMessage } from "ai";
+import { convertToModelMessages, streamText } from "ai";
 import { NextResponse } from "next/server";
 
 const hf = createHuggingFace({
-    apiKey: process.env.HUGGINGFACE_API_KEY,
+  apiKey: process.env.HUGGINGFACE_API_KEY,
 });
 
 export const maxDuration = 30;
@@ -15,64 +15,68 @@ const RATE_LIMIT = 20;
 const RATE_WINDOW = 60_000;
 
 function isRateLimited(ip: string): boolean {
-    const now = Date.now();
-    const entry = rateLimitMap.get(ip);
-    if (!entry || now > entry.resetAt) {
-        if (rateLimitMap.size > 100) {
-            for (const [key, val] of rateLimitMap) {
-                if (now > val.resetAt) rateLimitMap.delete(key);
-            }
-        }
-        rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW });
-        return false;
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    if (rateLimitMap.size > 100) {
+      for (const [key, val] of rateLimitMap) {
+        if (now > val.resetAt) rateLimitMap.delete(key);
+      }
     }
-    entry.count++;
-    return entry.count > RATE_LIMIT;
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW });
+    return false;
+  }
+  entry.count++;
+  return entry.count > RATE_LIMIT;
 }
 
 // ─── Section context mapping ───
 function getSectionContext(section: string | undefined): string {
-    if (!section || typeof section !== "string") return "";
-    switch (section) {
-        case "hero":
-            return `\n### Current Context: The user is on the **Hero/Landing** section.\nThey just arrived. Give a strong first impression. Highlight Jimmy's core strengths: real-time systems, Socket.io top 0.01%, Next.js top 1%. Invite them to explore.\n`;
-        case "about":
-            return `\n### Current Context: The user is viewing the **About** section.\nThey want to know Jimmy. Talk about his engineering approach, his focus on technical excellence and fast delivery. Mention his full technical ecosystem.\n`;
-        case "work":
-            return `\n### Current Context: The user is viewing the **Work/Projects** section.\nThey are looking at Jimmy's projects. Describe them:\n- STOCK TSIKA: Large-scale inventory ERP (Next.js, tRPC, Prisma, Socket.io, Redis, BullMQ, Meilisearch, AI, PWA)\n- DESK JIM: Tauri desktop app with Rust backend, Socket.io real-time sync, barcode scanning\n- DEV LINGO: React Native mobile learning app with Expo, SSE streaming, offline-first\n- IGS: Python automation for data processing\nOffer to dive deeper into any project.\n`;
-        case "process":
-            return `\n### Current Context: The user is viewing the **Process** section.\nThey want to understand Jimmy's workflow. Discuss: understand requirements first, architect scalable systems, ship clean tested code, iterate based on real data.\n`;
-        case "contact":
-            return `\n### Current Context: The user is on the **Contact** section.\nThey are ready to reach out! Proactively offer to help fill the contact form using the FILL_FORM protocol. Ask for their name, email, and project details.\n`;
-        default:
-            return "";
-    }
+  if (!section || typeof section !== "string") return "";
+  switch (section) {
+    case "hero":
+      return `\n### Current Context: The user is on the **Hero/Landing** section.\nThey just arrived. Give a strong first impression. Highlight Jimmy's core strengths: real-time systems, Socket.io top 0.01%, Next.js top 1%. Invite them to explore.\n`;
+    case "about":
+      return `\n### Current Context: The user is viewing the **About** section.\nThey want to know Jimmy. Talk about his engineering approach, his focus on technical excellence and fast delivery. Mention his full technical ecosystem.\n`;
+    case "work":
+      return `\n### Current Context: The user is viewing the **Work/Projects** section.\nThey are looking at Jimmy's projects. Describe them:\n- STOCK TSIKA: Large-scale inventory ERP (Next.js, tRPC, Prisma, Socket.io, Redis, BullMQ, Meilisearch, AI, PWA)\n- DESK JIM: Tauri desktop app with Rust backend, Socket.io real-time sync, barcode scanning\n- DEV LINGO: React Native mobile learning app with Expo, SSE streaming, offline-first\n- IGS: Python automation for data processing\nOffer to dive deeper into any project.\n`;
+    case "process":
+      return `\n### Current Context: The user is viewing the **Process** section.\nThey want to understand Jimmy's workflow. Discuss: understand requirements first, architect scalable systems, ship clean tested code, iterate based on real data.\n`;
+    case "contact":
+      return `\n### Current Context: The user is on the **Contact** section.\nThey are ready to reach out! Proactively offer to help fill the contact form using the FILL_FORM protocol. Ask for their name, email, and project details.\n`;
+    default:
+      return "";
+  }
 }
 
 export async function POST(req: Request) {
-    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-    if (isRateLimited(ip)) {
-        return NextResponse.json({ error: "Too many requests" }, { status: 429 });
-    }
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (isRateLimited(ip)) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
 
-    let body: { messages?: Omit<UIMessage, "id">[]; visibleSection?: string };
-    try {
-        body = await req.json();
-    } catch {
-        return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
-    }
+  let body: { messages?: Omit<UIMessage, "id">[]; visibleSection?: string };
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+  }
 
-    const { messages, visibleSection } = body;
-    if (!Array.isArray(messages) || messages.length > 50) {
-        return NextResponse.json({ error: "Invalid messages" }, { status: 400 });
-    }
-    if (messages.length === 0) {
-        return NextResponse.json({ error: "No messages provided" }, { status: 200 });
-    }
+  const { messages, visibleSection } = body;
+  if (!Array.isArray(messages) || messages.length > 50) {
+    return NextResponse.json({ error: "Invalid messages" }, { status: 400 });
+  }
+  if (messages.length === 0) {
+    return NextResponse.json(
+      { error: "No messages provided" },
+      { status: 200 },
+    );
+  }
 
-    const sectionContext = getSectionContext(visibleSection);
+  const sectionContext = getSectionContext(visibleSection);
 
-    const systemPrompt = `
+  const systemPrompt = `
 You are Jimmy Julio's portfolio assistant.
 You exist ONLY to help visitors learn about Jimmy and connect with him.
 ${sectionContext}
@@ -120,11 +124,11 @@ When a user wants to contact Jimmy:
 Use \\n for line breaks. Write the message FOR the user in a polished tone.
 `;
 
-    const result = streamText({
-        model: hf("Qwen/Qwen2.5-72B-Instruct"),
-        system: systemPrompt,
-        messages: await convertToModelMessages(messages),
-    });
+  const result = streamText({
+    model: hf("Qwen/Qwen2.5-72B-Instruct"),
+    system: systemPrompt,
+    messages: await convertToModelMessages(messages),
+  });
 
-    return result.toUIMessageStreamResponse();
+  return result.toUIMessageStreamResponse();
 }

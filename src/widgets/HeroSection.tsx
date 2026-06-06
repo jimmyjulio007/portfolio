@@ -27,7 +27,7 @@ export function HeroSection() {
 
         <div className="relative z-10 max-w-6xl mx-auto w-full">
           <div className="font-mono text-[#ccff00] text-xs tracking-[0.4em] mb-6 uppercase animate-[fadeInUp_0.6s_ease-out_both]">
-            // FULL-STACK_ENGINEER // REAL-TIME_SYSTEMS
+            {"// FULL-STACK_ENGINEER // REAL-TIME_SYSTEMS"}
           </div>
 
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.9] tracking-tight mb-8 font-migumono animate-[fadeInUp_0.6s_ease-out_0.1s_both]">
@@ -75,7 +75,7 @@ export function HeroSection() {
         <div className="absolute right-0 bottom-0 w-[300px] h-[300px] bg-[#ccff00]/5 blur-[120px] rounded-full pointer-events-none" />
         <div className="max-w-7xl mx-auto">
           <div className="font-mono text-[#00f0ff] text-[10px] tracking-[0.4em] mb-4 uppercase">
-            // PERFORMANCE_METRICS
+            {"// PERFORMANCE_METRICS"}
           </div>
           <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight uppercase mb-16 font-migumono">
             {t("rankingsTitle", { defaultValue: "Global Rankings" })}
@@ -85,24 +85,43 @@ export function HeroSection() {
             {/* Socket.io */}
             <div className="border border-gray-800/30 bg-gradient-to-br from-[#131313] to-[#0e0e0e] p-10 hover:border-[#00f0ff]/50 transition-all group">
               <div className="flex justify-between items-start mb-8">
-                <span className="text-[#ccff00] text-3xl font-mono">{">"}_</span>
-                <span className="font-mono text-[10px] text-white/30 tracking-widest">REALTIME_CORE</span>
+                <span className="text-[#ccff00] text-3xl font-mono">
+                  {">"}_
+                </span>
+                <span className="font-mono text-[10px] text-white/30 tracking-widest">
+                  REALTIME_CORE
+                </span>
               </div>
-              <div className="text-[#00f0ff] text-5xl font-bold font-migumono mb-2">0.01%</div>
-              <div className="font-bold uppercase tracking-widest text-xs mb-4 text-white">Socket.io World Rank</div>
+              <div className="text-[#00f0ff] text-5xl font-bold font-migumono mb-2">
+                0.01%
+              </div>
+              <div className="font-bold uppercase tracking-widest text-xs mb-4 text-white">
+                Socket.io World Rank
+              </div>
               <div className="w-full bg-white/5 h-1">
-                <div className="bg-[#00f0ff] h-full" style={{ width: "99.99%" }} />
+                <div
+                  className="bg-[#00f0ff] h-full"
+                  style={{ width: "99.99%" }}
+                />
               </div>
             </div>
 
             {/* Next.js */}
             <div className="border border-gray-800/30 bg-gradient-to-br from-[#131313] to-[#0e0e0e] p-10 hover:border-[#00f0ff]/50 transition-all group">
               <div className="flex justify-between items-start mb-8">
-                <span className="text-[#ccff00] text-3xl font-mono">{"{"}_</span>
-                <span className="font-mono text-[10px] text-white/30 tracking-widest">FRONTEND_OPS</span>
+                <span className="text-[#ccff00] text-3xl font-mono">
+                  {"{"}_
+                </span>
+                <span className="font-mono text-[10px] text-white/30 tracking-widest">
+                  FRONTEND_OPS
+                </span>
               </div>
-              <div className="text-[#00f0ff] text-5xl font-bold font-migumono mb-2">Top 1%</div>
-              <div className="font-bold uppercase tracking-widest text-xs mb-4 text-white">Next.js Global Index</div>
+              <div className="text-[#00f0ff] text-5xl font-bold font-migumono mb-2">
+                Top 1%
+              </div>
+              <div className="font-bold uppercase tracking-widest text-xs mb-4 text-white">
+                Next.js Global Index
+              </div>
               <div className="w-full bg-white/5 h-1">
                 <div className="bg-[#00f0ff] h-full" style={{ width: "99%" }} />
               </div>
@@ -111,11 +130,19 @@ export function HeroSection() {
             {/* CodersRank */}
             <div className="border border-gray-800/30 bg-gradient-to-br from-[#131313] to-[#0e0e0e] p-10 hover:border-[#00f0ff]/50 transition-all group">
               <div className="flex justify-between items-start mb-8">
-                <span className="text-[#ccff00] text-3xl font-mono">{"#"}_</span>
-                <span className="font-mono text-[10px] text-white/30 tracking-widest">ENGINEERING_TIER</span>
+                <span className="text-[#ccff00] text-3xl font-mono">
+                  {"#"}_
+                </span>
+                <span className="font-mono text-[10px] text-white/30 tracking-widest">
+                  ENGINEERING_TIER
+                </span>
               </div>
-              <div className="text-[#00f0ff] text-5xl font-bold font-migumono mb-2">Senior+</div>
-              <div className="font-bold uppercase tracking-widest text-xs mb-4 text-white">CodersRank Top 0.01%</div>
+              <div className="text-[#00f0ff] text-5xl font-bold font-migumono mb-2">
+                Senior+
+              </div>
+              <div className="font-bold uppercase tracking-widest text-xs mb-4 text-white">
+                CodersRank Top 0.01%
+              </div>
               <div className="flex gap-1 mt-4">
                 <span className="w-2 h-2 bg-[#ccff00]" />
                 <span className="w-2 h-2 bg-[#ccff00]" />

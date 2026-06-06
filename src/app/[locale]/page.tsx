@@ -1,24 +1,36 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
 import dynamic from "next/dynamic";
-import { Navigation } from "@/widgets/Navigation";
+import { useEffect, useRef, useState } from "react";
 import { HeroSection } from "@/widgets/HeroSection";
+import { Navigation } from "@/widgets/Navigation";
 
 const ProcessSection = dynamic(
-  () => import("@/widgets/ProcessSection").then((mod) => ({ default: mod.ProcessSection })),
+  () =>
+    import("@/widgets/ProcessSection").then((mod) => ({
+      default: mod.ProcessSection,
+    })),
   { ssr: false },
 );
 const WorkSection = dynamic(
-  () => import("@/widgets/WorkSection").then((mod) => ({ default: mod.WorkSection })),
+  () =>
+    import("@/widgets/WorkSection").then((mod) => ({
+      default: mod.WorkSection,
+    })),
   { ssr: false },
 );
 const AboutSection = dynamic(
-  () => import("@/widgets/AboutSection").then((mod) => ({ default: mod.AboutSection })),
+  () =>
+    import("@/widgets/AboutSection").then((mod) => ({
+      default: mod.AboutSection,
+    })),
   { ssr: false },
 );
 const ContactSection = dynamic(
-  () => import("@/widgets/ContactSection").then((mod) => ({ default: mod.ContactSection })),
+  () =>
+    import("@/widgets/ContactSection").then((mod) => ({
+      default: mod.ContactSection,
+    })),
   { ssr: false },
 );
 const Footer = dynamic(
@@ -54,9 +66,7 @@ function LazySection({
   }, [rootMargin]);
 
   return (
-    <div ref={ref}>
-      {visible ? children : <div className="min-h-[50vh]" />}
-    </div>
+    <div ref={ref}>{visible ? children : <div className="min-h-[50vh]" />}</div>
   );
 }
 
@@ -80,7 +90,7 @@ export default function HomePage() {
       <LazySection>
         <WorkSection />
       </LazySection>
-<LazySection>
+      <LazySection>
         <AboutSection />
       </LazySection>
       <LazySection>

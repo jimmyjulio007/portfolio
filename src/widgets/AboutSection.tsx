@@ -1,8 +1,9 @@
+// biome-ignore-all lint/security/noDangerouslySetInnerHtml: first-party trusted content (analytics / JSON-LD / localized copy), not user input
 "use client";
 
-import { useMemo } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { useMemo } from "react";
 
 const TECH_STACK = [
   {
@@ -153,7 +154,7 @@ export function AboutSection() {
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
             <div>
               <div className="font-mono text-[#00f0ff] text-xs tracking-[0.4em] mb-4 uppercase">
-                // TECH_STACK
+                {"// TECH_STACK"}
               </div>
               <h2 className="text-5xl md:text-7xl font-bold text-white tracking-tight uppercase font-migumono">
                 {t("technicalArsenal")}

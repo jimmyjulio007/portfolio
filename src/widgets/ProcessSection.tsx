@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
 import { useTranslations } from "next-intl";
+import { useMemo } from "react";
 
 interface ProcessStep {
   id: string;
@@ -46,16 +46,39 @@ export function ProcessSection() {
 
   const steps = useMemo(
     () => [
-      { id: "01", title: t("step1Title"), desc: t("step1Description"), color: "#00f0ff" },
-      { id: "02", title: t("step2Title"), desc: t("step2Description"), color: "#ccff00" },
-      { id: "03", title: t("step3Title"), desc: t("step3Description"), color: "#ffffff" },
-      { id: "04", title: t("step4Title"), desc: t("step4Description"), color: "#00f0ff" },
+      {
+        id: "01",
+        title: t("step1Title"),
+        desc: t("step1Description"),
+        color: "#00f0ff",
+      },
+      {
+        id: "02",
+        title: t("step2Title"),
+        desc: t("step2Description"),
+        color: "#ccff00",
+      },
+      {
+        id: "03",
+        title: t("step3Title"),
+        desc: t("step3Description"),
+        color: "#ffffff",
+      },
+      {
+        id: "04",
+        title: t("step4Title"),
+        desc: t("step4Description"),
+        color: "#00f0ff",
+      },
     ],
     [t],
   );
 
   return (
-    <section id="process" className="py-32 bg-[#050505] relative border-t border-gray-900 overflow-hidden">
+    <section
+      id="process"
+      className="py-32 bg-[#050505] relative border-t border-gray-900 overflow-hidden"
+    >
       <div className="absolute right-[-100px] top-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#00f0ff]/5 blur-[150px] rounded-full pointer-events-none" />
       <div className="absolute left-[-100px] bottom-0 w-[400px] h-[400px] bg-[#ccff00]/4 blur-[130px] rounded-full pointer-events-none" />
       <div className="relative z-10 max-w-7xl mx-auto px-6">

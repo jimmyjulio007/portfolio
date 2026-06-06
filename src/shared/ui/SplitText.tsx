@@ -1,5 +1,3 @@
-import { type ReactNode } from "react";
-
 interface SplitTextProps {
   children: string;
   className?: string;
@@ -14,6 +12,7 @@ export function SplitText({ children, className }: SplitTextProps) {
     <span className={`inline-block overflow-hidden ${className}`}>
       {children.split("").map((char, i) => (
         <span
+          // biome-ignore lint/suspicious/noArrayIndexKey: static fixed-order list
           key={`${char}-${i}`}
           className="char inline-block"
           style={{ whiteSpace: "pre" }}

@@ -1,17 +1,17 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useForm, type UseFormRegisterReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useLocale, useTranslations } from "next-intl";
 import { Loader2, Send } from "lucide-react";
-import {
-  getContactFormSchema,
-  type ContactFormData,
-} from "@/shared/lib/validations/contact";
-import { SITE_CONFIG } from "@/shared/config/constants";
-import { FuturisticToast } from "@/shared/ui/FuturisticToast";
 import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type UseFormRegisterReturn, useForm } from "react-hook-form";
+import { SITE_CONFIG } from "@/shared/config/constants";
+import {
+  type ContactFormData,
+  getContactFormSchema,
+} from "@/shared/lib/validations/contact";
+import { FuturisticToast } from "@/shared/ui/FuturisticToast";
 
 interface FormFieldProps {
   register: UseFormRegisterReturn;
@@ -48,9 +48,7 @@ function FormField({
         placeholder={placeholder}
         aria-invalid={error ? "true" : "false"}
       />
-      {error && (
-        <p className="text-red-500 text-xs font-mono mt-2">{error}</p>
-      )}
+      {error && <p className="text-red-500 text-xs font-mono mt-2">{error}</p>}
       <div className="absolute -bottom-[2px] left-0 h-[2px] bg-[#00f0ff] w-0 group-focus-within:w-full transition-all duration-500" />
     </div>
   );
@@ -82,14 +80,18 @@ export function ContactSection() {
       const { name, email, message } = (e as CustomEvent).detail;
       if (name) setValue("name", name, { shouldValidate: true });
       if (email) setValue("email", email, { shouldValidate: true });
-      if (message) setValue("message", message.replace(/\\n/g, "\n"), { shouldValidate: true });
+      if (message)
+        setValue("message", message.replace(/\\n/g, "\n"), {
+          shouldValidate: true,
+        });
     },
     [setValue],
   );
 
   useEffect(() => {
     window.addEventListener("fill-contact-form", handleFormFill);
-    return () => window.removeEventListener("fill-contact-form", handleFormFill);
+    return () =>
+      window.removeEventListener("fill-contact-form", handleFormFill);
   }, [handleFormFill]);
 
   const socialLinks = useMemo(
@@ -122,7 +124,10 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="relative py-32 bg-[#050505] overflow-hidden">
+    <section
+      id="contact"
+      className="relative py-32 bg-[#050505] overflow-hidden"
+    >
       <div className="absolute left-1/2 -translate-x-1/2 top-0 w-[600px] h-[400px] bg-[#00f0ff]/5 blur-[160px] rounded-full pointer-events-none" />
       <div className="absolute right-[-100px] bottom-0 w-[350px] h-[350px] bg-[#ccff00]/4 blur-[120px] rounded-full pointer-events-none" />
       <div className="relative z-10 max-w-4xl mx-auto px-6">

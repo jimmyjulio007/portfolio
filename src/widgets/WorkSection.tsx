@@ -1,12 +1,12 @@
 "use client";
 
-import { useMemo, useState, useCallback, useEffect } from "react";
-import { useTranslations } from "next-intl";
-import Link from "next/link";
-import { Button } from "@/shared/ui/Button";
-import { SITE_CONFIG } from "@/shared/config/constants";
 import { X } from "lucide-react";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { SITE_CONFIG } from "@/shared/config/constants";
 import type { Project } from "@/shared/types";
+import { Button } from "@/shared/ui/Button";
 
 function ProjectCard({
   project,
@@ -95,9 +95,11 @@ function ProjectDialog({
   return (
     <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 md:p-8">
       {/* Backdrop */}
-      <div
+      <button
+        type="button"
         className="absolute inset-0 bg-black/80 backdrop-blur-sm animate-[fadeIn_0.2s_ease-out]"
         onClick={onClose}
+        aria-label="Close dialog"
       />
 
       {/* Dialog */}
@@ -117,6 +119,7 @@ function ProjectDialog({
               </h2>
             </div>
             <button
+              type="button"
               onClick={onClose}
               className="w-10 h-10 flex items-center justify-center border border-gray-800 hover:border-[#00f0ff] transition-colors group"
               aria-label="Close"
@@ -157,9 +160,7 @@ function ProjectDialog({
             <span className="font-mono text-[10px] text-white/30 tracking-widest">
               YEAR
             </span>
-            <span className="font-mono text-sm text-white">
-              {project.year}
-            </span>
+            <span className="font-mono text-sm text-white">{project.year}</span>
           </div>
 
           {/* Footer */}
@@ -206,7 +207,9 @@ export function WorkSection() {
         title: t("project2Title"),
         description: t("project2Description"),
         details: t("project2Details"),
-        category: t("project2Category", { defaultValue: "DESKTOP / REAL-TIME" }),
+        category: t("project2Category", {
+          defaultValue: "DESKTOP / REAL-TIME",
+        }),
         year: 2026,
         tags: t("project2Tags").split(" • "),
       },
@@ -215,18 +218,48 @@ export function WorkSection() {
         title: t("project3Title"),
         description: t("project3Description"),
         details: t("project3Details"),
-        category: t("project3Category", { defaultValue: "MOBILE / REACT NATIVE" }),
+        category: t("project3Category", {
+          defaultValue: "MOBILE / REACT NATIVE",
+        }),
         year: 2026,
         tags: t("project3Tags").split(" • "),
       },
       {
         id: "4",
         title: t("project4Title", { defaultValue: "IGS" }),
-        description: t("project4Description", { defaultValue: "Python automation system for data processing and intelligent workflow orchestration." }),
-        details: t("project4Details", { defaultValue: "IGS is a Python-based automation system designed for intelligent data processing and workflow orchestration. The project handles data extraction, transformation, and automated pipeline execution, streamlining repetitive tasks into efficient, reproducible workflows." }),
-        category: t("project4Category", { defaultValue: "PYTHON / AUTOMATION" }),
+        description: t("project4Description", {
+          defaultValue:
+            "Python automation system for data processing and intelligent workflow orchestration.",
+        }),
+        details: t("project4Details", {
+          defaultValue:
+            "IGS is a Python-based automation system designed for intelligent data processing and workflow orchestration. The project handles data extraction, transformation, and automated pipeline execution, streamlining repetitive tasks into efficient, reproducible workflows.",
+        }),
+        category: t("project4Category", {
+          defaultValue: "PYTHON / AUTOMATION",
+        }),
         year: 2026,
-        tags: t("project4Tags", { defaultValue: "Python • Automation • Data" }).split(" • "),
+        tags: t("project4Tags", {
+          defaultValue: "Python • Automation • Data",
+        }).split(" • "),
+      },
+      {
+        id: "5",
+        title: t("project5Title", { defaultValue: "AVM OSGRIM" }),
+        description: t("project5Description", {
+          defaultValue:
+            "Multi-tenant SaaS platform that digitizes the security operations daybook (main courante) for professional guarding companies — with a no-code WYSIWYG form builder, real-time SignalR notifications, validated reports and PDF export.",
+        }),
+        details: t("project5Details", {
+          defaultValue:
+            "AVM OSGRIM (codename OSGRIMXV) is a full-stack electronic security-operations logbook that replaces paper main courante daybooks with a real-time, auditable, multi-tenant web application. Built on ASP.NET Core 8 with Clean Architecture and a React 19 + TypeScript SPA, it lets administrators design no-code data-entry forms in a WYSIWYG editor that are sanitized and re-hydrated into live React controls at runtime. It covers interventions, incidents, people and equipment movements, personnel shifts, first-aid assessments and training, secured by fine-grained multi-tenant RBAC (Partitions / Zones / Elements) and Keycloak OIDC, with real-time SignalR notifications, validated reports with full history, and PDF export. Deployed on Azure via Terraform with GitLab CI/CD.",
+        }),
+        category: t("project5Category", { defaultValue: "FULL-STACK / SAAS" }),
+        year: 2026,
+        tags: t("project5Tags", {
+          defaultValue:
+            ".NET 8 • React 19 • SQL Server • Keycloak • SignalR • Azure",
+        }).split(" • "),
       },
     ],
     [t],

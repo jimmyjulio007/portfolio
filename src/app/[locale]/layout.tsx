@@ -1,24 +1,24 @@
+// biome-ignore-all lint/security/noDangerouslySetInnerHtml: first-party trusted content (analytics / JSON-LD / localized copy), not user input
 import type { Metadata, Viewport } from "next";
 import { Outfit, Space_Grotesk } from "next/font/google";
 import "../globals.css";
 import "../hero-animations.css";
-import { SITE_CONFIG } from "@/shared/config/constants";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-
-import { getTranslations } from "next-intl/server";
+import { SITE_CONFIG } from "@/shared/config/constants";
 
 /** Returns the URL path for a given locale, respecting `localePrefix: "as-needed"` */
 function localePath(locale: string): string {
   return locale === routing.defaultLocale ? "/" : `/${locale}`;
 }
+
+import { Analytics } from "@vercel/analytics/next";
 import localFont from "next/font/local";
 import Script from "next/script";
-import { StructuredData } from "@/shared/ui/StructuredData";
 import { DeferredComponents } from "@/shared/ui/DeferredComponents";
-import { Analytics } from "@vercel/analytics/next";
+import { StructuredData } from "@/shared/ui/StructuredData";
 
 // Initialize fonts
 const outfit = Outfit({
@@ -164,7 +164,7 @@ export default async function LocaleLayout({
 }>) {
   const { locale } = await params;
 
-  if (!routing.locales.includes(locale as any)) {
+  if (!(routing.locales as readonly string[]).includes(locale)) {
     notFound();
   }
 
@@ -223,6 +223,7 @@ export default async function LocaleLayout({
       <body className="antialiased font-sans">
         <noscript>
           <iframe
+            title="Google Tag Manager"
             src="https://www.googletagmanager.com/ns.html?id=GTM-M7X94SM9"
             height="0"
             width="0"
